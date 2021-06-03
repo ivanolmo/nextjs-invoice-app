@@ -1,13 +1,47 @@
-import { useEffect, useContext, useRef } from 'react';
+import { useEffect, useContext, useRef, useState } from 'react';
 import Image from 'next/image';
 
 import InvoiceContext from '../../store/context';
 import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
+import { toast } from 'react-toastify';
 
 export default function InvoiceEdit() {
+  const { setShowEditInvoiceForm, currentInvoice, setCurrentInvoice } =
+    useContext(InvoiceContext);
+
   const formRef = useRef(null);
-  const { setShowEditInvoiceForm, currentInvoice } = useContext(InvoiceContext);
+
+  const handleSubmit = () => {
+    formRef.current.handleSubmit();
+  };
+
+  // handles closing edit form and setting current invoice to updated
+  // invoice after form submit
+  const handleUpdate = (updatedInvoice) => {
+    setShowEditInvoiceForm(false);
+    setCurrentInvoice(updatedInvoice);
+  };
+
+  const onSubmit = async () => {
+    const res = await toast.promise(
+      fetch('/api/invoices/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...formRef.current.values }),
+      }),
+      {
+        pending: 'Invoice is being updated...',
+        success: 'Invoice has been successfully updated!',
+        error: 'There was an error updating this invoice',
+      }
+    );
+    const data = await res.json();
+
+    handleUpdate(data.updatedInvoice);
+  };
 
   useEffect(() => {
     if (currentInvoice) {
@@ -52,7 +86,7 @@ export default function InvoiceEdit() {
           containerClasses='bg-one hover:bg-two px-6'
           textClasses='text-white'
           buttonText='Save Changes'
-          onClick={() => {}} //TODO implement update doc in firebase
+          onClick={() => handleSubmit()}
         />
       </div>
     </div>
