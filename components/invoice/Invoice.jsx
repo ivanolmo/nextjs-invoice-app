@@ -25,6 +25,7 @@ export default function Invoice({ invoice }) {
     total,
   } = invoice;
 
+  // add status to state to re-render on status change
   const [invoiceStatus, setInvoiceStatus] = useState(status);
 
   const {
@@ -36,11 +37,7 @@ export default function Invoice({ invoice }) {
 
   const router = useRouter();
 
-  const handleClose = () => {
-    setCurrentInvoice(null);
-    router.push('/');
-  };
-
+  // handles invoice delete
   const handleDelete = async (id) => {
     const res = await toast.promise(
       fetch('/api/invoices/', {
@@ -59,8 +56,16 @@ export default function Invoice({ invoice }) {
     );
   };
 
+  // closes delete modal
   const handleClosePopup = () => setShowDeletePopup(false);
 
+  // clears invoice from state and navigates to / after delete
+  const handleClose = () => {
+    setCurrentInvoice(null);
+    router.push('/');
+  };
+
+  // handles invoice status update pending -> paid
   const handleStatusUpdate = async () => {
     const res = await toast.promise(
       fetch('/api/invoices/', {
@@ -71,9 +76,9 @@ export default function Invoice({ invoice }) {
         body: JSON.stringify({ id }),
       }),
       {
-        pending: 'Invoice is being updated...',
-        success: 'Invoice has been successfully updated',
-        error: 'There was an error updating this invoice',
+        pending: 'Invoice status is being updated...',
+        success: 'Invoice status has been successfully updated',
+        error: 'There was an error updating the status',
       }
     );
     setInvoiceStatus('paid');
@@ -81,6 +86,7 @@ export default function Invoice({ invoice }) {
 
   useEffect(() => {
     setCurrentInvoice(invoice);
+    setInvoiceStatus(invoice.status);
   }, [setCurrentInvoice, invoice]);
 
   return (
