@@ -1,12 +1,10 @@
-import React from 'react';
-
 import FilterButton from '../ui/FilterButton';
 import Button from '../ui/Button';
 
 // component needs to know the total amount of invoices, for example:
-const invoiceCount = 0;
+const invoiceCount = 7;
 
-export default function InvoiceHeader() {
+export default function UtilityHeader() {
   return (
     <header className='flex justify-between items-center mt-8 px-6'>
       <div>

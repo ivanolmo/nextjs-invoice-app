@@ -1,5 +1,5 @@
 import InvoiceList from '../../components/invoice/InvoiceList';
-import InvoiceHeader from '../../components/layout/InvoiceHeader';
+import UtilityHeader from '../../components/layout/UtilityHeader';
 import Invoice404 from '../../components/layout/Invoice404';
 
 export default function Invoices() {
@@ -8,7 +8,7 @@ export default function Invoices() {
 
   return (
     <main>
-      <InvoiceHeader />
+      <UtilityHeader />
       {invoiceCount === 0 ? <Invoice404 /> : <InvoiceList />}
     </main>
   );
