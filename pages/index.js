@@ -1,6 +1,14 @@
-import Head from 'next/head';
-import Image from 'next/image';
+import InvoiceList from '../components/invoice/InvoiceList';
+import InvoiceHeader from '../components/layout/InvoiceHeader';
+import Invoice404 from '../components/layout/Invoice404';
 
 export default function Home() {
-  return <h1 className='text-3xl'>Invoice app</h1>;
+  return (
+    <main>
+      <InvoiceHeader />
+      {/* TODO make this conditional */}
+      {/* <Invoice404 /> */}
+      <InvoiceList />
+    </main>
+  );
 }
