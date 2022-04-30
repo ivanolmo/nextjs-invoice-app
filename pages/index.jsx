@@ -1,14 +1,14 @@
-import InvoiceList from '../components/invoice/InvoiceList';
-import InvoiceHeader from '../components/layout/InvoiceHeader';
-import Invoice404 from '../components/layout/Invoice404';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function Home() {
-  return (
-    <main>
-      <InvoiceHeader />
-      {/* TODO make this conditional */}
-      {/* <Invoice404 /> */}
-      <InvoiceList />
-    </main>
-  );
+  const router = useRouter();
+
+  // redirect to invoices page to simulate login
+  // plan is for the / route to be a login page
+  useEffect(() => {
+    router.push('/invoices');
+  }, [router]);
+
+  return <main>{/* TODO do some login stuff here */}</main>;
 }
