@@ -1,7 +1,7 @@
 import React from 'react';
 
 import FilterButton from '../ui/FilterButton';
-import ButtonOne from '../ui/ButtonOne';
+import Button from '../ui/Button';
 
 // component needs to know the total amount of invoices, for example:
 const invoiceCount = 0;
@@ -19,7 +19,7 @@ export default function InvoiceHeader() {
       </div>
       <div className='flex justify-between items-center gap-4'>
         <FilterButton />
-        <ButtonOne buttonText={'New'} buttonIcon={true} />
+        <Button buttonText={'New'} buttonIcon={true} />
       </div>
     </header>
   );
