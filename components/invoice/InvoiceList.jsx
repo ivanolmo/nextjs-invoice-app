@@ -1,11 +1,10 @@
 import InvoiceListItem from './InvoiceListItem';
-import { DUMMY_DATA } from '../../data';
 
-export default function InvoiceList() {
+export default function InvoiceList({ invoices }) {
   return (
     <ul className='mx-6'>
-      {DUMMY_DATA.map((item) => (
-        <InvoiceListItem key={item.id} invoice={item} />
+      {invoices.map((invoice) => (
+        <InvoiceListItem key={invoice.id} invoice={invoice} />
       ))}
     </ul>
   );
