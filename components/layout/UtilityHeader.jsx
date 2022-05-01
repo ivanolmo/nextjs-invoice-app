@@ -1,10 +1,9 @@
+import Link from 'next/link';
+
 import FilterButton from '../ui/FilterButton';
 import Button from '../ui/Button';
 
-// component needs to know the total amount of invoices, for example:
-const invoiceCount = 7;
-
-export default function UtilityHeader() {
+export default function UtilityHeader({ invoiceCount }) {
   return (
     <header className='flex justify-between items-center mt-8 px-6'>
       <div>
@@ -17,7 +16,11 @@ export default function UtilityHeader() {
       </div>
       <div className='flex justify-between items-center gap-4'>
         <FilterButton />
-        <Button buttonText={'New'} buttonIcon={true} />
+        <Link href='/invoices/create'>
+          <a>
+            <Button buttonText={'New'} buttonIcon={true} />
+          </a>
+        </Link>
       </div>
     </header>
   );
