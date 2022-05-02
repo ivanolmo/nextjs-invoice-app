@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import InvoiceList from '../../components/invoice/InvoiceList';
 import UtilityHeader from '../../components/layout/UtilityHeader';
 import Invoice404 from '../../components/layout/Invoice404';
+import { getInvoices } from '../../lib/dbUtils';
 
 export default function Invoices({ invoices }) {
   const [invoiceData, setInvoiceData] = useState([]);
@@ -24,10 +25,7 @@ export default function Invoices({ invoices }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(
-    'https://invoice-app-e8de3-default-rtdb.firebaseio.com/invoices.json'
-  );
-  const invoices = await res.json();
+  const invoices = await getInvoices();
 
   return {
     props: { invoices },
