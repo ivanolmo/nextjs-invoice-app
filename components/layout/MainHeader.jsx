@@ -1,12 +1,22 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function MainHeader() {
   return (
     <header className='flex justify-between items-center bg-[#373b53]'>
-      <div className='bg-one p-6 leading-zero  rounded-r-3xl'>
-        {/* TODO this should be link back to / */}
-        <Image src='/assets/logo.svg' alt='main logo' width={28} height={26} />
-      </div>
+      <Link href='/'>
+        <a>
+          <div className='bg-one p-6 leading-zero  rounded-r-3xl'>
+            {/* TODO this should be link back to / */}
+            <Image
+              src='/assets/logo.svg'
+              alt='main logo'
+              width={28}
+              height={26}
+            />
+          </div>
+        </a>
+      </Link>
       <div className=' flex items-center leading-zero'>
         <div className='pr-6 cursor-pointer'>
           <Image
