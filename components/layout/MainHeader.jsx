@@ -7,7 +7,6 @@ export default function MainHeader() {
       <Link href='/'>
         <a>
           <div className='bg-one p-6 leading-zero  rounded-r-3xl'>
-            {/* TODO this should be link back to / */}
             <Image
               src='/assets/logo.svg'
               alt='main logo'
