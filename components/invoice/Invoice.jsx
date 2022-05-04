@@ -1,4 +1,5 @@
 import InvoiceHeader from './InvoiceHeader';
+import InvoiceActions from './InvoiceActions';
 import { formatDate, formatMoney } from '../../lib/formatUtils';
 
 export default function Invoice({ invoice }) {
@@ -19,7 +20,7 @@ export default function Invoice({ invoice }) {
   return (
     <>
       <InvoiceHeader status={status} />
-      <section className='bg-white mt-4 p-6 text-sm tracking-tight rounded-md'>
+      <section className='bg-white mt-4 mx-6 p-6 text-sm tracking-tight rounded-md'>
         <div className='font-bold'>
           <span className='text-seven'>#</span>
           {id}
@@ -35,21 +36,21 @@ export default function Invoice({ invoice }) {
           <div className='flex flex-col justify-between'>
             <div>
               <h3 className='text-seven'>Invoice Date</h3>
-              <p className='text-base font-bold mt-1'>
+              <p className='text-base font-bold mt-2'>
                 {formatDate(createdAt)}
               </p>
             </div>
             <div>
               <h3 className='text-seven'>Payment Due</h3>
-              <p className='text-base font-bold mt-1'>
+              <p className='text-base font-bold mt-2'>
                 {formatDate(paymentDue)}
               </p>
             </div>
           </div>
           <div className=''>
             <h3 className='text-seven'>Bill To</h3>
-            <div>
-              <p className='text-base font-bold'>{clientName}</p>
+            <div className='mt-2'>
+              <p className='text-base font-bold mt-2'>{clientName}</p>
               <p>{clientAddress.street}</p>
               <p>{clientAddress.city}</p>
               <p>{clientAddress.postCode}</p>
@@ -83,6 +84,7 @@ export default function Invoice({ invoice }) {
           </p>
         </div>
       </section>
+      <InvoiceActions status={status} />
     </>
   );
 }
