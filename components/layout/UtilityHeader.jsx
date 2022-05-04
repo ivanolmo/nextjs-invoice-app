@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import FilterButton from '../ui/FilterButton';
-import Button from '../ui/Button';
+import NewInvoiceBtn from '../ui/NewInvoiceBtn';
 
 export default function UtilityHeader({ invoiceCount }) {
   return (
@@ -18,7 +18,7 @@ export default function UtilityHeader({ invoiceCount }) {
         <FilterButton />
         <Link href='/invoices/create'>
           <a>
-            <Button buttonText={'New'} buttonIcon={true} />
+            <NewInvoiceBtn buttonText={'New'} buttonIcon={true} />
           </a>
         </Link>
       </div>
