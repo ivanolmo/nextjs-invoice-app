@@ -3,7 +3,7 @@ import { formatStatus, classNames } from '../../lib/formatUtils';
 
 export default function InvoiceHeader({ status }) {
   return (
-    <header className='flex justify-between items-center bg-white text-xs tracking-tight mt-8 p-6 rounded-md'>
+    <header className='flex justify-between items-center bg-white text-xs tracking-tight mt-8 mx-6 p-6 rounded-md'>
       <h3 className='text-seven'>Status</h3>
       <div
         className={classNames(

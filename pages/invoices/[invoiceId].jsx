@@ -5,7 +5,7 @@ import { getInvoiceById, getInvoices } from '../../lib/dbUtils';
 export default function InvoicePage({ invoice }) {
   return (
     <main>
-      <section className='pt-8 pb-14 px-6'>
+      <section className='mt-8'>
         <BackButton />
         <Invoice invoice={invoice} />
       </section>
