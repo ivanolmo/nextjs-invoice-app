@@ -8,7 +8,7 @@ export default function NewInvoiceActions() {
   const { submitForm } = useFormikContext();
 
   return (
-    <div className='flex justify-center items-center gap-2 bg-white py-5 -mx-6 mt-20 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.2)]'>
+    <div className='flex justify-center items-center gap-2 bg-white py-5 -mx-6 mt-20 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)]'>
       <DiscardBtn />
       <DraftBtn />
       <SaveSendBtn onSubmit={submitForm} />
