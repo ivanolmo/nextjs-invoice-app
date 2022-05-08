@@ -5,7 +5,7 @@ export default function BackButton() {
   const router = useRouter();
 
   return (
-    <button className='ml-6' type='button' onClick={() => router.back()}>
+    <button type='button' onClick={() => router.back()}>
       <Image
         src='/assets/icon-arrow-left.svg'
         alt='left arrow'
