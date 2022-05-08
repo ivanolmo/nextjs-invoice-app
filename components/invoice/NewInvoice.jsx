@@ -1,34 +1,15 @@
 import Image from 'next/image';
-import { Formik, Form, useField, FieldArray } from 'formik';
+import { Formik, Form, FieldArray } from 'formik';
 import { DatePicker, Select } from 'react-formik-ui';
 
+import Input from './new-invoice-comps/Input';
 import BackButton from '../ui/BackButton';
-
-const Input = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <div className='mt-6'>
-      <label
-        htmlFor={props.id || props.name}
-        className='text-seven text-xs tracking-tight'
-      >
-        {label}
-      </label>
-      <input
-        className='text-xs text-black font-bold border border-five p-4 mt-2 w-full rounded-md'
-        {...field}
-        {...props}
-      />
-      {meta.touched && meta.error ? <div className=''>{meta.error}</div> : null}
-    </div>
-  );
-};
+import AddItemBtn from '../ui/AddItemBtn';
+import NewInvoiceActions from './new-invoice-comps/NewInvoiceActions';
 
 export default function NewInvoice() {
   return (
-    <section className='bg-white p-6'>
-      <BackButton />
-      <h1 className='text-xl font-bold mt-4'>New Invoice</h1>
+    <section className='bg-white pt-8'>
       <Formik
         initialValues={{
           clientAddress: { street: '', city: '', postCode: '', country: '' },
@@ -47,16 +28,19 @@ export default function NewInvoice() {
             console.log(values);
             setSubmitting(false);
             resetForm();
-          }, 400);
+          }, 1000);
         }}
       >
         {({ values }) => (
-          <Form>
-            <div>
-              <h3 className='text-one text-xs font-bold mt-4'>Bill From</h3>
+          <Form className='px-6'>
+            <BackButton />
+
+            <h1 className='text-xl font-bold mt-6'>New Invoice</h1>
+
+            <div className='mt-6'>
+              <span className='text-one text-xs font-bold'>Bill From</span>
             </div>
 
-            {/* bill from stuff */}
             <div className=''>
               <Input
                 label='Street Address'
@@ -75,11 +59,10 @@ export default function NewInvoice() {
               <Input label='Country' name='senderAddress.country' type='text' />
             </div>
 
-            <div>
-              <h3 className='text-one text-xs font-bold mt-10'>Bill To</h3>
+            <div className='mt-10'>
+              <span className='text-one text-xs font-bold'>Bill To</span>
             </div>
 
-            {/* bill to / client stuff */}
             <div>
               <Input label="Client's Name" name='clientName' type='text' />
 
@@ -102,21 +85,20 @@ export default function NewInvoice() {
               <Input label='Country' name='clientAddress.country' type='text' />
             </div>
 
-            {/* date / terms / description stuff */}
             <div className='text-seven text-xs tracking-tight mt-10 space-y-6'>
               <div>
                 <DatePicker
                   label='Invoice Date'
                   name='createdAt'
                   dateFormat='dd MMM yyyy'
-                  className='text-black font-bold mt-4 p-4 border border-five rounded-md h-12 w-full'
+                  className='text-black font-bold mt-4 p-4 border border-five hover:border-one rounded-md h-12 w-full'
                 />
               </div>
               <div className=''>
                 <Select
                   label='Payment Terms'
                   name='paymentTerms'
-                  className='bg-[url("/assets/icon-arrow-down.svg")] bg-no-repeat bg-[center_right_1rem] bg-white text-black font-bold mt-4 p-4 border border-five rounded-md h-12 w-full appearance-none'
+                  className='bg-[url("/assets/icon-arrow-down.svg")] bg-no-repeat bg-[center_right_1rem] bg-white text-black font-bold mt-4 p-4 border border-five hover:border-one rounded-md h-12 w-full appearance-none'
                   options={[
                     { label: '', value: null },
                     { label: 'Net 1 Day', value: 1 },
@@ -135,9 +117,10 @@ export default function NewInvoice() {
               </div>
             </div>
 
-            {/* item list */}
             <div className='mt-16'>
-              <h3 className='text-[#777f98] text-lg font-bold'>Item List</h3>
+              <span className='text-[#777f98] text-lg font-bold'>
+                Item List
+              </span>
             </div>
 
             <div>
@@ -172,9 +155,7 @@ export default function NewInvoice() {
                         </button>
                       </div>
                     ))}
-                    {/* TODO remove this temp button */}
-                    <button
-                      type='button'
+                    <AddItemBtn
                       onClick={() =>
                         push({
                           name: '',
@@ -182,25 +163,16 @@ export default function NewInvoice() {
                           price: '',
                         })
                       }
-                    >
-                      <Image
-                        src='/assets/icon-plus.svg'
-                        alt='add icon'
-                        width={16}
-                        height={16}
-                      />
-                    </button>
+                    />
                   </>
                 )}
               </FieldArray>
             </div>
-            <pre>{JSON.stringify(values, null, 2)}</pre>
-            {/* TODO button styling */}
-            <button type='submit'>submit</button>
+
+            <NewInvoiceActions />
           </Form>
         )}
       </Formik>
-      {/* Discard/Save as draft/save and send buttons */}
     </section>
   );
 }
