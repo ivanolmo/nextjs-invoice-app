@@ -6,6 +6,7 @@ import Input from './new-invoice-comps/Input';
 import BackButton from '../ui/BackButton';
 import AddItemBtn from '../ui/AddItemBtn';
 import NewInvoiceActions from './new-invoice-comps/NewInvoiceActions';
+import { formatMoney } from '../../lib/formatUtils';
 
 export default function NewInvoice() {
   return (
@@ -41,13 +42,13 @@ export default function NewInvoice() {
               <span className='text-one text-xs font-bold'>Bill From</span>
             </div>
 
-            <div className=''>
-              <Input
-                label='Street Address'
-                name='senderAddress.street'
-                type='text'
-              />
+            <Input
+              label='Street Address'
+              name='senderAddress.street'
+              type='text'
+            />
 
+            <div className='grid grid-cols-2 gap-x-6'>
               <Input label='City' name='senderAddress.city' type='text' />
 
               <Input
@@ -56,7 +57,12 @@ export default function NewInvoice() {
                 type='text'
               />
 
-              <Input label='Country' name='senderAddress.country' type='text' />
+              <Input
+                label='Country'
+                name='senderAddress.country'
+                type='text'
+                classes='col-span-2'
+              />
             </div>
 
             <div className='mt-10'>
@@ -73,16 +79,22 @@ export default function NewInvoice() {
                 name='clientAddress.street'
                 type='text'
               />
+              <div className='grid grid-cols-2 gap-x-6'>
+                <Input label='City' name='clientAddress.city' type='text' />
 
-              <Input label='City' name='clientAddress.city' type='text' />
+                <Input
+                  label='Post Code'
+                  name='clientAddress.postCode'
+                  type='text'
+                />
 
-              <Input
-                label='Post Code'
-                name='clientAddress.postCode'
-                type='text'
-              />
-
-              <Input label='Country' name='clientAddress.country' type='text' />
+                <Input
+                  label='Country'
+                  name='clientAddress.country'
+                  type='text'
+                  classes='col-span-2'
+                />
+              </div>
             </div>
 
             <div className='text-seven text-xs tracking-tight mt-10 space-y-6'>
@@ -94,7 +106,7 @@ export default function NewInvoice() {
                   className='text-black font-bold mt-4 p-4 border border-five hover:border-one rounded-md h-12 w-full'
                 />
               </div>
-              <div className=''>
+              <div>
                 <Select
                   label='Payment Terms'
                   name='paymentTerms'
@@ -126,13 +138,17 @@ export default function NewInvoice() {
             <div>
               <FieldArray name='items'>
                 {({ push, remove }) => (
-                  <>
+                  <div className=' space-y-6'>
                     {values.items.map((item, index) => (
-                      <div key={index}>
+                      <div
+                        key={index}
+                        className='grid grid-cols-4 gap-x-4 items-end'
+                      >
                         <Input
                           label='Item Name'
                           name={`items[${index}].name`}
                           type='text'
+                          classes='col-span-4'
                         />
                         <Input
                           label='Qty'
@@ -144,8 +160,25 @@ export default function NewInvoice() {
                           name={`items[${index}].price`}
                           type='text'
                         />
-                        <span>Total {item.quantity * item.price}</span>
-                        <button type='button' onClick={() => remove(index)}>
+                        <div className='flex flex-col justify-between h-[82px]'>
+                          <div>
+                            <span className='text-seven text-xs tracking-tight'>
+                              Total
+                            </span>
+                          </div>
+                          <div className='pb-3'>
+                            <span className='text-six font-bold'>
+                              {formatMoney(
+                                item.quantity * item.price
+                              ).substring(1)}
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          type='button'
+                          onClick={() => remove(index)}
+                          className='justify-self-end pb-3 pr-2'
+                        >
                           <Image
                             src='/assets/icon-delete.svg'
                             alt='delete icon'
@@ -164,7 +197,7 @@ export default function NewInvoice() {
                         })
                       }
                     />
-                  </>
+                  </div>
                 )}
               </FieldArray>
             </div>
