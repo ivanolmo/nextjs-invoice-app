@@ -3,7 +3,7 @@ import { useField } from 'formik';
 export default function Input({ label, ...props }) {
   const [field, meta] = useField(props);
   return (
-    <div className='mt-6'>
+    <div className={`mt-6 ${props.classes ? props.classes : ''}`}>
       <label
         htmlFor={props.id || props.name}
         className='text-seven text-xs tracking-tight'
@@ -11,7 +11,7 @@ export default function Input({ label, ...props }) {
         {label}
       </label>
       <input
-        className='text-xs text-black font-bold border border-five hover:border-one p-4 mt-2 w-full rounded-md'
+        className='text-xs text-black font-bold border border-five hover:border-one p-4 mt-2 w-full rounded-md '
         {...field}
         {...props}
       />
