@@ -10,7 +10,7 @@ import { formatMoney } from '../../lib/formatUtils';
 
 export default function NewInvoice() {
   return (
-    <section className='bg-white pt-8'>
+    <section className='bg-white pt-8 absolute inset-x-0 top-[75px] bottom-0 z-40'>
       <Formik
         initialValues={{
           clientAddress: { street: '', city: '', postCode: '', country: '' },
