@@ -1,14 +1,42 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function Home() {
-  const router = useRouter();
+import InvoiceList from '../components/invoice/InvoiceList';
+import UtilityHeader from '../components/layout/UtilityHeader';
+import Invoice404 from '../components/layout/Invoice404';
+import NewInvoice from '../components/invoice/NewInvoice';
+import { getInvoices } from '../lib/dbUtils';
 
-  // redirect to invoices page to simulate login
-  // plan is for the / route to be a login page
+export default function Home({ invoices }) {
+  const [invoiceData, setInvoiceData] = useState([]);
+  const [showInvoiceForm, setShowInvoiceForm] = useState(false);
+
   useEffect(() => {
-    router.push('/invoices');
-  }, [router]);
+    setInvoiceData(invoices);
+  }, [invoices]);
 
-  return <main>{/* TODO do some login stuff here */}</main>;
+  if (!invoiceData || invoiceData.length === 0) {
+    return <Invoice404 />;
+  }
+
+  return (
+    <main>
+      <UtilityHeader
+        invoiceCount={invoiceData.length}
+        showInvoiceForm={showInvoiceForm}
+        setShowInvoiceForm={setShowInvoiceForm}
+      />
+      <InvoiceList invoices={invoices} showInvoiceForm={showInvoiceForm} />
+
+      {showInvoiceForm && <NewInvoice />}
+    </main>
+  );
+}
+
+export async function getStaticProps() {
+  const invoices = await getInvoices();
+
+  return {
+    props: { invoices },
+    revalidate: 43200,
+  };
 }
