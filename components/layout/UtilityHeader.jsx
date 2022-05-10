@@ -1,11 +1,17 @@
-import Link from 'next/link';
-
 import FilterButton from '../ui/FilterButton';
 import NewInvoiceBtn from '../ui/NewInvoiceBtn';
 
-export default function UtilityHeader({ invoiceCount }) {
+export default function UtilityHeader({
+  invoiceCount,
+  showInvoiceForm,
+  setShowInvoiceForm,
+}) {
   return (
-    <header className='flex justify-between items-center mt-8 px-6'>
+    <header
+      className={`flex justify-between items-center mt-8 px-6 ${
+        showInvoiceForm ? 'opacity-0' : 'opacity-100'
+      }`}
+    >
       <div>
         <h1 className='text-xl md:text-3xl font-bold tracking-tight'>
           Invoices
@@ -16,11 +22,11 @@ export default function UtilityHeader({ invoiceCount }) {
       </div>
       <div className='flex justify-between items-center gap-4'>
         <FilterButton />
-        <Link href='/invoices/create'>
-          <a>
-            <NewInvoiceBtn buttonText={'New'} buttonIcon={true} />
-          </a>
-        </Link>
+        <NewInvoiceBtn
+          buttonText={'New'}
+          buttonIcon={true}
+          setShowInvoiceForm={setShowInvoiceForm}
+        />
       </div>
     </header>
   );
