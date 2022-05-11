@@ -1,3 +1,6 @@
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+
 import InvoiceHeader from './InvoiceHeader';
 import InvoiceActions from './InvoiceActions';
 import { formatDate, formatMoney } from '../../lib/formatUtils';
@@ -17,8 +20,19 @@ export default function Invoice({ invoice }) {
     total,
   } = invoice;
 
+  const router = useRouter();
+
   return (
     <>
+      <div className='ml-6 cursor-pointer' onClick={() => router.back()}>
+        <Image
+          src='/assets/icon-arrow-left.svg'
+          alt='left arrow'
+          width={6}
+          height={8}
+        />
+        <span className='text-xs tracking-tight font-bold ml-6'>Go Back</span>
+      </div>
       <InvoiceHeader status={status} />
       <section className='bg-white mt-4 mx-6 p-6 text-sm tracking-tight rounded-md'>
         <div className='font-bold'>

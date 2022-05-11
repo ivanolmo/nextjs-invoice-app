@@ -3,7 +3,6 @@ import { Formik, Form, FieldArray } from 'formik';
 import { DatePicker, Select } from 'react-formik-ui';
 
 import Input from './new-invoice-comps/Input';
-import BackButton from '../ui/BackButton';
 import AddItemBtn from '../ui/AddItemBtn';
 import NewInvoiceActions from './new-invoice-comps/NewInvoiceActions';
 import { formatMoney } from '../../lib/formatUtils';
@@ -34,7 +33,20 @@ export default function NewInvoice() {
       >
         {({ values }) => (
           <Form className='px-6'>
-            <BackButton />
+            <div
+              className='cursor-pointer'
+              onClick={() => setShowInvoiceForm(false)}
+            >
+              <Image
+                src='/assets/icon-arrow-left.svg'
+                alt='left arrow'
+                width={6}
+                height={8}
+              />
+              <span className='text-xs tracking-tight font-bold ml-6'>
+                Go Back
+              </span>
+            </div>
 
             <h1 className='text-xl font-bold mt-6'>New Invoice</h1>
 
