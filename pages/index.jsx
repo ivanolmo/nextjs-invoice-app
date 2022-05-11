@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
 import InvoiceList from '../components/invoice/InvoiceList';
 import UtilityHeader from '../components/layout/UtilityHeader';
 import Invoice404 from '../components/layout/Invoice404';
 import NewInvoice from '../components/invoice/NewInvoice';
+import InvoiceContext from '../store/context';
 import { getInvoices } from '../lib/dbUtils';
 
 export default function Home({ invoices }) {
   const [invoiceData, setInvoiceData] = useState([]);
-  const [showInvoiceForm, setShowInvoiceForm] = useState(false);
+  const { showInvoiceForm } = useContext(InvoiceContext);
 
   useEffect(() => {
     setInvoiceData(invoices);
@@ -20,12 +21,8 @@ export default function Home({ invoices }) {
 
   return (
     <main>
-      <UtilityHeader
-        invoiceCount={invoiceData.length}
-        showInvoiceForm={showInvoiceForm}
-        setShowInvoiceForm={setShowInvoiceForm}
-      />
-      <InvoiceList invoices={invoices} showInvoiceForm={showInvoiceForm} />
+      <UtilityHeader invoiceCount={invoices.length} />
+      <InvoiceList invoices={invoices} />
 
       {showInvoiceForm && <NewInvoice />}
     </main>

@@ -1,6 +1,10 @@
+import { useContext } from 'react';
 import Image from 'next/image';
 
-export default function NewInvoiceBtn({ setShowInvoiceForm }) {
+import InvoiceContext from '../../store/context';
+
+export default function NewInvoiceBtn() {
+  const { setShowInvoiceForm } = useContext(InvoiceContext);
   return (
     <div
       onClick={() => setShowInvoiceForm(true)}

@@ -1,11 +1,12 @@
+import { useContext } from 'react';
+
 import FilterButton from '../ui/FilterButton';
 import NewInvoiceBtn from '../ui/NewInvoiceBtn';
+import InvoiceContext from '../../store/context';
 
-export default function UtilityHeader({
-  invoiceCount,
-  showInvoiceForm,
-  setShowInvoiceForm,
-}) {
+export default function UtilityHeader({ invoiceCount }) {
+  const { showInvoiceForm } = useContext(InvoiceContext);
+
   return (
     <header
       className={`flex justify-between items-center mt-8 px-6 ${
@@ -22,11 +23,7 @@ export default function UtilityHeader({
       </div>
       <div className='flex justify-between items-center gap-4'>
         <FilterButton />
-        <NewInvoiceBtn
-          buttonText={'New'}
-          buttonIcon={true}
-          setShowInvoiceForm={setShowInvoiceForm}
-        />
+        <NewInvoiceBtn buttonText={'New'} buttonIcon={true} />
       </div>
     </header>
   );

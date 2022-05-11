@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import Image from 'next/image';
 import { Formik, Form, FieldArray } from 'formik';
 import { DatePicker, Select } from 'react-formik-ui';
@@ -6,8 +7,11 @@ import Input from './new-invoice-comps/Input';
 import AddItemBtn from '../ui/AddItemBtn';
 import NewInvoiceActions from './new-invoice-comps/NewInvoiceActions';
 import { formatMoney } from '../../lib/formatUtils';
+import InvoiceContext from '../../store/context';
 
 export default function NewInvoice() {
+  const { setShowInvoiceForm } = useContext(InvoiceContext);
+
   return (
     <section className='bg-white pt-8 absolute inset-x-0 top-[75px] bottom-0 z-40'>
       <Formik
