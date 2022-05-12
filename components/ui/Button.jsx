@@ -6,7 +6,7 @@ export default function Button(props) {
       onClick={() => props.onClick?.()}
       className={classNames(
         props.containerClasses,
-        'flex justify-center items-center h-12 px-4 rounded-full cursor-pointer'
+        'flex justify-center items-center h-12 rounded-full cursor-pointer'
       )}
     >
       <div
