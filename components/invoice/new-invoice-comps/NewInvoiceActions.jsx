@@ -1,17 +1,29 @@
 import { useFormikContext } from 'formik';
-
-import DiscardBtn from '../../ui/DiscardBtn';
-import DraftBtn from '../../ui/DraftBtn';
-import SaveSendBtn from '../../ui/SaveSendBtn';
+import Button from '../../ui/Button';
 
 export default function NewInvoiceActions() {
   const { submitForm } = useFormikContext();
 
   return (
     <div className='flex justify-center items-center gap-2 bg-white py-5 -mx-6 mt-20 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)]'>
-      <DiscardBtn />
-      <DraftBtn />
-      <SaveSendBtn onSubmit={submitForm} />
+      <Button
+        containerClasses='bg-buttonLight hover:bg-five'
+        textClasses='text-seven'
+        buttonText='Discard'
+        onClick={() => {}}
+      />
+      <Button
+        containerClasses='bg-[#373b53] hover:bg-eight'
+        textClasses='text-six'
+        buttonText='Save as Draft'
+        onClick={() => {}}
+      />
+      <Button
+        containerClasses='bg-one hover:bg-two'
+        textClasses='text-white'
+        buttonText='Save & Send'
+        onClick={submitForm}
+      />
     </div>
   );
 }
