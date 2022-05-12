@@ -4,16 +4,16 @@ import { Formik, Form, FieldArray } from 'formik';
 import { DatePicker, Select } from 'react-formik-ui';
 
 import Input from './new-invoice-comps/Input';
-import AddItemBtn from '../ui/AddItemBtn';
 import NewInvoiceActions from './new-invoice-comps/NewInvoiceActions';
 import { formatMoney } from '../../lib/formatUtils';
 import InvoiceContext from '../../store/context';
+import Button from '../ui/Button';
 
 export default function NewInvoice() {
   const { setShowInvoiceForm } = useContext(InvoiceContext);
 
   return (
-    <section className='bg-white pt-8 absolute inset-x-0 top-[75px] bottom-0 z-40'>
+    <section className='bg-white pt-8 absolute inset-x-0 top-[75px] bottom-0'>
       <Formik
         initialValues={{
           clientAddress: { street: '', city: '', postCode: '', country: '' },
@@ -204,13 +204,12 @@ export default function NewInvoice() {
                         </button>
                       </div>
                     ))}
-                    <AddItemBtn
+                    <Button
+                      containerClasses='bg-buttonLight hover:bg-five mt-12'
+                      textClasses='text-seven'
+                      buttonText='+ Add New Item'
                       onClick={() =>
-                        push({
-                          name: '',
-                          quantity: '',
-                          price: '',
-                        })
+                        push({ name: '', quantity: '', price: '' })
                       }
                     />
                   </div>
