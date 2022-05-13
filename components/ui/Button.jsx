@@ -8,6 +8,7 @@ export default function Button(props) {
         props.containerClasses,
         'flex justify-center items-center h-12 rounded-full cursor-pointer'
       )}
+      disabled={props.disabled}
     >
       <div
         className={classNames(
