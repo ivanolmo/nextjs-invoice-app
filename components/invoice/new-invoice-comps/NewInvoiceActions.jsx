@@ -1,7 +1,11 @@
+import { useContext } from 'react';
 import { useFormikContext } from 'formik';
+
 import Button from '../../ui/Button';
+import InvoiceContext from '../../../store/context';
 
 export default function NewInvoiceActions() {
+  const { setShowInvoiceForm } = useContext(InvoiceContext);
   const { submitForm } = useFormikContext();
 
   return (
@@ -10,7 +14,7 @@ export default function NewInvoiceActions() {
         containerClasses='bg-buttonLight hover:bg-five px-4'
         textClasses='text-seven'
         buttonText='Discard'
-        onClick={() => {}}
+        onClick={() => setShowInvoiceForm(false)}
       />
       <Button
         containerClasses='bg-[#373b53] hover:bg-eight px-4'
