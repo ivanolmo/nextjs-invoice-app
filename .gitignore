@@ -17,6 +17,7 @@
 
 # misc
 .DS_Store
+.vscode
 *.pem
 *.sketch
 *.fig
@@ -38,3 +39,4 @@ yarn-error.log*
 .vercel
 
 README-template.md
+import.js
