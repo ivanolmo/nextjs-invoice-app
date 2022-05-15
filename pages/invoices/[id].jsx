@@ -1,5 +1,5 @@
 import Invoice from '../../components/invoice/Invoice';
-import { getInvoiceById, getInvoices } from '../../lib/dbUtils';
+import { getInvoiceById, getAllInvoices } from '../../lib/db';
 
 export default function InvoicePage({ invoice }) {
   return (
@@ -13,8 +13,8 @@ export default function InvoicePage({ invoice }) {
 }
 
 export async function getStaticProps(context) {
-  const invoiceId = context.params.invoiceId;
-  const invoice = await getInvoiceById(invoiceId);
+  const id = context.params.id;
+  const invoice = await getInvoiceById(id);
 
   return {
     props: {
@@ -24,10 +24,12 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const invoices = await getInvoices();
+  const invoices = await getAllInvoices();
 
   return {
-    paths: invoices.map((invoice) => ({ params: { invoiceId: invoice.id } })),
+    paths: invoices.map((invoice) => ({
+      params: { id: invoice.id },
+    })),
     fallback: false,
   };
 }
