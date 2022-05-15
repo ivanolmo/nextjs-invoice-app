@@ -24,7 +24,7 @@ export default function Invoice({ invoice }) {
 
   return (
     <>
-      <div className='ml-6 cursor-pointer' onClick={() => router.back()}>
+      <div className='ml-6 cursor-pointer' onClick={() => router.push('/')}>
         <Image
           src='/assets/icon-arrow-left.svg'
           alt='left arrow'
