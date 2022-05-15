@@ -1,21 +1,16 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 
 import InvoiceList from '../components/invoice/InvoiceList';
 import UtilityHeader from '../components/layout/UtilityHeader';
 import Invoice404 from '../components/layout/Invoice404';
 import NewInvoice from '../components/invoice/NewInvoice';
 import InvoiceContext from '../store/context';
-import { getInvoices } from '../lib/dbUtils';
+import { getAllInvoices } from '../lib/db';
 
 export default function Home({ invoices }) {
-  const [invoiceData, setInvoiceData] = useState([]);
   const { showInvoiceForm } = useContext(InvoiceContext);
 
-  useEffect(() => {
-    setInvoiceData(invoices);
-  }, [invoices]);
-
-  if (!invoiceData || invoiceData.length === 0) {
+  if (!invoices || invoices.length === 0) {
     return <Invoice404 />;
   }
 
@@ -30,7 +25,7 @@ export default function Home({ invoices }) {
 }
 
 export async function getStaticProps() {
-  const invoices = await getInvoices();
+  const invoices = await getAllInvoices();
 
   return {
     props: { invoices },
