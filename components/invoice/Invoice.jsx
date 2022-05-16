@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { nanoid } from 'nanoid';
 
 import InvoiceHeader from './InvoiceHeader';
 import InvoiceActions from './InvoiceActions';
@@ -78,7 +79,7 @@ export default function Invoice({ invoice }) {
         </div>
         <div className='bg-eleven mt-10 p-6 space-y-6 rounded-t-md'>
           {items.map((item) => (
-            <div key={item.name} className='flex justify-between items-center'>
+            <div key={nanoid(6)} className='flex justify-between items-center'>
               <div>
                 <h3 className='font-bold'>{item.name}</h3>
                 <p className='text-seven font-bold mt-2'>
