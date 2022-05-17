@@ -1,5 +1,7 @@
 import { useField } from 'formik';
 
+import { classNames } from '../../../lib/formatUtils';
+
 export default function Input({ label, ...props }) {
   const [field, meta] = useField(props);
   return (
@@ -11,11 +13,18 @@ export default function Input({ label, ...props }) {
         {label}
       </label>
       <input
-        className='text-xs text-black font-bold border border-five hover:border-one p-4 mt-2 w-full rounded-md '
+        className={classNames(
+          meta.touched && meta.error
+            ? 'border-nine'
+            : 'border-five hover:border-one',
+          'text-xs text-black font-bold border p-4 mt-2 w-full rounded-md'
+        )}
         {...field}
         {...props}
       />
-      {meta.touched && meta.error ? <div className=''>{meta.error}</div> : null}
+      {/* {meta.touched && meta.error ? (
+        <div className='text-nine text-xs mt-2 absolute'>{meta.error}</div>
+      ) : null} */}
     </div>
   );
 }
