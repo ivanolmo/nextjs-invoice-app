@@ -1,5 +1,5 @@
 import Invoice from '../../components/invoice/Invoice';
-import { getInvoiceById, getAllInvoices } from '../../lib/db';
+import { getInvoiceById } from '../../lib/dbAdmin';
 
 export default function InvoicePage({ invoice }) {
   return (
@@ -12,24 +12,19 @@ export default function InvoicePage({ invoice }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const id = context.params.id;
   const invoice = await getInvoiceById(id);
+
+  if (!invoice) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
       invoice,
     },
-  };
-}
-
-export async function getStaticPaths() {
-  const invoices = await getAllInvoices();
-
-  return {
-    paths: invoices.map((invoice) => ({
-      params: { id: invoice.id },
-    })),
-    fallback: false,
   };
 }
