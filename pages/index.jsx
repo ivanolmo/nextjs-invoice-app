@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import InvoiceList from '../components/invoice/InvoiceList';
 import UtilityHeader from '../components/layout/UtilityHeader';
 import Invoice404 from '../components/layout/Invoice404';
-import NewInvoice from '../components/invoice/NewInvoice';
+import InvoiceForm from '../components/invoice/InvoiceForm';
 import InvoiceContext from '../store/context';
 import { getAllInvoices } from '../lib/dbAdmin';
 import fetcher from '../utils/fetcher';
@@ -30,18 +30,18 @@ export default function Home({ invoiceData }) {
     }
   }, [data]);
 
-  if (!invoices || invoices.length === 0) {
-    return <Invoice404 />;
-  }
-
   mutate();
 
   return (
     <main>
       <UtilityHeader invoiceCount={invoices.length} />
-      <InvoiceList invoices={invoices} />
+      {!invoices || invoices.length === 0 ? (
+        <Invoice404 />
+      ) : (
+        <InvoiceList invoices={invoices} />
+      )}
 
-      {showInvoiceForm && <NewInvoice />}
+      {showInvoiceForm && <InvoiceForm />}
     </main>
   );
 }
