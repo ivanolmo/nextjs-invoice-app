@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Formik, Form, FieldArray } from 'formik';
 import { DatePicker, Select } from 'react-formik-ui';
@@ -10,8 +10,28 @@ import Button from '../ui/Button';
 import { classNames, formatMoney } from '../../lib/formatUtils';
 import { validationSchema } from '../../lib/validationSchema';
 
-export default function NewInvoice() {
+export default function InvoiceForm(props) {
   const { setShowInvoiceForm } = useContext(InvoiceContext);
+  const [formValues, setFormValues] = useState({
+    clientAddress: {
+      street: '',
+      city: '',
+      postCode: '',
+      country: '',
+    },
+    senderAddress: {
+      street: '',
+      city: '',
+      postCode: '',
+      country: '',
+    },
+    createdAt: '',
+    description: '',
+    paymentTerms: '',
+    clientName: '',
+    clientEmail: '',
+    items: [],
+  });
 
   const onSubmitInvoice = async (values) => {
     const res = await fetch('/api/invoice/', {
@@ -19,27 +39,40 @@ export default function NewInvoice() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(values),
+      body: JSON.stringify({ status: 'pending', ...values }),
     });
 
     const data = await res.json();
+    // do something
     console.log(data);
   };
+
+  const onSubmitDraftInvoice = async (values) => {
+    const res = await fetch('/api/invoice/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: 'draft', ...values }),
+    });
+
+    const data = await res.json();
+    // do something
+    console.log(data);
+  };
+
+  useEffect(() => {
+    if (props.invoice) {
+      setFormValues(props.invoice);
+    }
+  }, [props.invoice]);
 
   return (
     <section className='bg-white pt-8 absolute inset-x-0 top-[75px] bottom-0'>
       <Formik
-        initialValues={{
-          clientAddress: { street: '', city: '', postCode: '', country: '' },
-          senderAddress: { street: '', city: '', postCode: '', country: '' },
-          createdAt: '',
-          description: '',
-          paymentTerms: '',
-          clientName: '',
-          clientEmail: '',
-          items: [],
-        }}
+        initialValues={formValues}
         validationSchema={validationSchema}
+        enableReinitialize={true}
         onSubmit={(values, { setSubmitting }) => {
           onSubmitInvoice(values);
           setSubmitting(false);
@@ -264,7 +297,7 @@ export default function NewInvoice() {
                   )}
                 </div>
               )}
-              <NewInvoiceActions />
+              <NewInvoiceActions onSubmitDraftInvoice={onSubmitDraftInvoice} />
             </Form>
           );
         }}
