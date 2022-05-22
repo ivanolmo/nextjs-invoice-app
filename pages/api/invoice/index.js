@@ -1,5 +1,6 @@
 import { db } from '../../../lib/firebaseAdmin';
 import { formatDate, addDays, generateId } from '../../../lib/formatUtils';
+import { getAllInvoices } from '../../../lib/dbAdmin';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -9,12 +10,12 @@ export default async function handler(req, res) {
     const paymentDue = addDays(formattedCreatedAt, +paymentTerms);
 
     const total = items.reduce(
-      (acc, curr) => acc + curr.quantity * curr.price,
+      (acc, item) => acc + item.quantity * item.price,
       0
     );
 
     for (let item of items) {
-      item.total = (item.quantity * item.price).toFixed(2);
+      item.total = +(item.quantity * item.price);
     }
 
     const newInvoice = {
@@ -22,6 +23,7 @@ export default async function handler(req, res) {
       id: generateId(),
       createdAt: formattedCreatedAt,
       paymentDue,
+      paymentTerms: +paymentTerms,
       status: 'pending',
       total,
     };
@@ -29,5 +31,11 @@ export default async function handler(req, res) {
     const dbRes = await db.collection('invoices').add(newInvoice);
 
     res.status(201).json({ invoice: newInvoice });
+  }
+
+  if (req.method === 'GET') {
+    const invoices = await getAllInvoices();
+
+    res.status(200).json({ invoices });
   }
 }
