@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "date-fns": "^2.28.0",
     "firebase": "^9.8.1",
     "firebase-admin": "^10.2.0",
     "firestore-export-import": "^1.1.0",
