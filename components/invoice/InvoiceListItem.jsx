@@ -19,7 +19,9 @@ export default function InvoiceListItem({ invoice }) {
               {id}
             </div>
             <div>
-              <div className='text-seven'>Due {formatDate(paymentDue)}</div>
+              <div className='text-seven'>
+                Due {paymentDue ? formatDate(paymentDue) : 'N/A'}
+              </div>
               <div className='text-base font-bold tracking-tight'>
                 {formatMoney(total)}
               </div>
