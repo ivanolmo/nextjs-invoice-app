@@ -1,38 +1,55 @@
 import { db } from '../../../lib/firebaseAdmin';
-import { formatDate, addDays, generateId } from '../../../lib/formatUtils';
-import { getAllInvoices } from '../../../lib/dbAdmin';
+import { addDays, generateId } from '../../../lib/formatUtils';
+import { getAllInvoices, getInvoiceById } from '../../../lib/dbAdmin';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { createdAt, paymentTerms, items } = req.body;
+    try {
+      console.log(req.body);
+      const { createdAt, paymentTerms, items } = req.body;
 
-    const formattedCreatedAt = formatDate(createdAt);
-    const paymentDue = addDays(formattedCreatedAt, +paymentTerms);
+      //TODO add check for existing invoice (for updating existing invoices)
+      // if (req.body.id) {
+      //   const docRef = await getInvoiceById(req.body.id);
+      //   console.log(docRef);
+      // }
 
-    const total = items.reduce(
-      (acc, item) => acc + item.quantity * item.price,
-      0
-    );
+      const formattedCreatedAt =
+        createdAt === ''
+          ? new Date().toISOString()
+          : new Date(createdAt).toISOString();
 
-    for (let item of items) {
-      item.total = +(item.quantity * item.price);
+      const paymentDue = !paymentTerms
+        ? ''
+        : addDays(formattedCreatedAt, +paymentTerms);
+
+      const total = items.reduce(
+        (acc, item) => acc + item.quantity * item.price,
+        0
+      );
+
+      for (let item of items) {
+        item.total = item.quantity * item.price;
+      }
+
+      const newInvoice = {
+        ...req.body,
+        id: generateId(),
+        createdAt: formattedCreatedAt,
+        paymentDue,
+        paymentTerms: +paymentTerms,
+        total,
+      };
+
+      await db.collection('invoices').doc(newInvoice.id).set(newInvoice);
+
+      res.status(201).json({ invoice: newInvoice, status: newInvoice.status });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error' });
     }
-
-    const newInvoice = {
-      ...req.body,
-      id: generateId(),
-      createdAt: formattedCreatedAt,
-      paymentDue,
-      paymentTerms: +paymentTerms,
-      status: 'pending',
-      total,
-    };
-
-    const dbRes = await db.collection('invoices').add(newInvoice);
-
-    res.status(201).json({ invoice: newInvoice });
   }
 
+  // TODO route for client side useSWR, might move this to a dbclient file
   if (req.method === 'GET') {
     const invoices = await getAllInvoices();
 
