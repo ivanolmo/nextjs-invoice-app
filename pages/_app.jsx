@@ -1,6 +1,6 @@
 import { InvoiceProvider } from '../store/context';
 import MainHeader from '../components/layout/MainHeader';
-import '../styles/globals.css';
+import '../styles/globals.scss';
 
 function MyApp({ Component, pageProps }) {
   return (

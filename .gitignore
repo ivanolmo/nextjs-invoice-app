@@ -39,4 +39,13 @@ yarn-error.log*
 .vercel
 
 README-template.md
+
+# script and data file to populate firebase with data
 import.js
+data.json
+
+# temp ignores, haven't decided if I'm keeping these, ignoring to keep unstaged changes clean
+dbClient.js
+firebaseClient.js
+firebase.config.js
+FormItemList.jsx
