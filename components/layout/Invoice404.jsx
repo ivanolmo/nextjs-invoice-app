@@ -13,7 +13,7 @@ export default function Invoice404() {
         <h2 className='text-xl font-bold tracking-tighter text-center'>
           There is nothing here
         </h2>
-        <p className='text-xs text-six tracking-tight text-center mt-5 w-40'>
+        <p className='text-xs text-six tracking-tight text-center mt-5 mx-auto w-52'>
           Create an invoice by clicking the{' '}
           <span className='font-bold'>New</span> button and get started
         </p>
