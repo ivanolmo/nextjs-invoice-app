@@ -12,7 +12,7 @@ export default function InvoiceListItem({ invoice }) {
   return (
     <Link href={`/invoices/${id}`}>
       <a>
-        <li className='flex justify-between my-4 p-6 bg-white rounded-lg text-sm'>
+        <li className='flex justify-between mb-4 p-6 bg-white rounded-lg text-sm hover:scale-105 duration-100'>
           <div className='flex flex-col gap-6'>
             <div className='font-bold'>
               <span className='text-seven'>#</span>
@@ -27,8 +27,10 @@ export default function InvoiceListItem({ invoice }) {
               </div>
             </div>
           </div>
-          <div className='flex flex-col items-end gap-6 w-[6.5rem]'>
-            <div className='text-seven tracking-tight'>{clientName}</div>
+          <div className='flex flex-col items-end gap-6'>
+            <div className='text-seven tracking-tight'>
+              {clientName || 'N/A'}
+            </div>
             <div
               className={classNames(
                 status === 'paid'
@@ -36,11 +38,11 @@ export default function InvoiceListItem({ invoice }) {
                   : status === 'pending'
                   ? 'text-orange bg-orange/10'
                   : 'text-darkGray bg-darkGray/10',
-                'p-2.5 font-bold rounded-md w-full text-center'
+                'flex justify-center items-center gap-2 py-3 text-xs font-bold rounded-md w-[6.5rem]'
               )}
             >
-              <span className='bg-current inline-block mr-2 w-2 h-2 rounded-full'></span>
-              {formatStatus(status)}
+              <p className='bg-current inline-block w-2 h-2 rounded-full'></p>
+              <p>{formatStatus(status)}</p>
             </div>
           </div>
         </li>
