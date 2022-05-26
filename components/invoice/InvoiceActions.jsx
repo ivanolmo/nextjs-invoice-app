@@ -30,7 +30,7 @@ export default function InvoiceActions({ status }) {
         buttonText='Delete'
         onClick={() => {}} //TODO implement
       />
-      {currentInvoice && currentInvoice.status !== 'draft' && (
+      {currentInvoice.status !== 'draft' && (
         <Button
           containerClasses={
             status === 'paid'
