@@ -5,18 +5,12 @@ import Link from 'next/link';
 import InvoiceContext from '../../store/context';
 
 export default function MainHeader() {
-  const { setShowAddInvoiceForm, setShowEditInvoiceForm } =
-    useContext(InvoiceContext);
-
-  const handleClose = () => {
-    setShowAddInvoiceForm(false);
-    setShowEditInvoiceForm(false);
-  };
+  const { clearAll } = useContext(InvoiceContext);
 
   return (
     <header className='flex justify-between items-center bg-[#373b53] z-50'>
       <Link href='/'>
-        <a onClick={() => handleClose()}>
+        <a onClick={() => clearAll()}>
           <div className='bg-one p-6 leading-zero rounded-r-3xl'>
             <Image
               src='/assets/logo.svg'
