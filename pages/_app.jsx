@@ -1,13 +1,27 @@
+import Head from 'next/head';
+
 import { InvoiceProvider } from '../store/context';
 import MainHeader from '../components/layout/MainHeader';
 import '../styles/globals.scss';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <InvoiceProvider>
-      <MainHeader />
-      <Component {...pageProps} />
-    </InvoiceProvider>
+    <>
+      <Head>
+        <title>Next.js Invoice App</title>
+        <meta
+          name='viewport'
+          content='minimum-scale=1, initial-scale=1, width=device-width'
+        />
+      </Head>
+
+      <InvoiceProvider>
+        <div className='bg-eleven'>
+          <MainHeader />
+          <Component {...pageProps} />
+        </div>
+      </InvoiceProvider>
+    </>
   );
 }
 
