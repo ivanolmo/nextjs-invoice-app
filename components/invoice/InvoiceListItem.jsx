@@ -12,7 +12,7 @@ export default function InvoiceListItem({ invoice }) {
   return (
     <Link href={`/invoices/${id}`}>
       <a>
-        <li className='flex justify-between mb-4 p-6 bg-white rounded-lg text-sm hover:scale-105 duration-100'>
+        <li className='flex justify-between mb-4 p-6 bg-white rounded-lg text-sm border border-transparent hover:border-one'>
           <div className='flex flex-col gap-6'>
             <div className='font-bold'>
               <span className='text-seven'>#</span>
