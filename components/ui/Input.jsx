@@ -1,6 +1,6 @@
 import { useField } from 'formik';
 
-import { classNames } from '../../../lib/formatUtils';
+import { classNames } from '../../lib/formatUtils';
 
 export default function Input({ label, ...props }) {
   const [field, meta] = useField(props);
@@ -22,9 +22,6 @@ export default function Input({ label, ...props }) {
         {...field}
         {...props}
       />
-      {/* {meta.touched && meta.error ? (
-        <div className='text-nine text-xs mt-2 absolute'>{meta.error}</div>
-      ) : null} */}
     </div>
   );
 }
