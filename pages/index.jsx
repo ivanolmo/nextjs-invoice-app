@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
-import InvoiceList from '../components/invoice/InvoiceList';
-import UtilityHeader from '../components/layout/UtilityHeader';
-import Invoice404 from '../components/layout/Invoice404';
-import InvoiceForm from '../components/invoice/InvoiceForm';
 import InvoiceContext from '../store/context';
+import UtilityHeader from '../components/layout/UtilityHeader';
+import InvoiceList from '../components/invoice/InvoiceList';
+import InvoiceAdd from '../components/invoice/InvoiceAdd';
+import Invoice404 from '../components/layout/Invoice404';
 import { getAllInvoices } from '../lib/dbAdmin';
 import fetcher from '../utils/fetcher';
 
-export default function Home({ invoiceData }) {
-  const { showInvoiceForm } = useContext(InvoiceContext);
+export default function Home({ allInvoicesData }) {
+  const { showAddInvoiceForm } = useContext(InvoiceContext);
 
-  const [invoices, setInvoices] = useState(invoiceData);
+  const [invoices, setInvoices] = useState(allInvoicesData);
 
   const { data, mutate } = useSWR('/api/invoice/', fetcher, {
     revalidateOnMount: true,
@@ -33,24 +33,25 @@ export default function Home({ invoiceData }) {
   mutate();
 
   return (
-    <main>
+    <div className='py-8 px-6 relative'>
       <UtilityHeader invoiceCount={invoices.length} />
+
       {!invoices || invoices.length === 0 ? (
         <Invoice404 />
       ) : (
         <InvoiceList invoices={invoices} />
       )}
 
-      {showInvoiceForm && <InvoiceForm />}
-    </main>
+      {showAddInvoiceForm && <InvoiceAdd />}
+    </div>
   );
 }
 
 export async function getStaticProps() {
-  const invoiceData = await getAllInvoices();
+  const allInvoicesData = await getAllInvoices();
 
   return {
-    props: { invoiceData },
-    revalidate: 10,
+    props: { allInvoicesData },
+    revalidate: 30,
   };
 }
