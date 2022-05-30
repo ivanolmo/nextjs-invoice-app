@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { InvoiceProvider } from '../store/context';
 import MainHeader from '../components/layout/MainHeader';
@@ -20,6 +22,7 @@ function MyApp({ Component, pageProps }) {
           <MainHeader />
           <Component {...pageProps} />
         </div>
+        <ToastContainer autoClose={3000} />
       </InvoiceProvider>
     </>
   );
