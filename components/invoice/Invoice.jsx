@@ -2,9 +2,11 @@ import { useContext, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { nanoid } from 'nanoid';
+import { toast } from 'react-toastify';
 
 import InvoiceContext from '../../store/context';
 import InvoiceHeader from './InvoiceHeader';
+import DeletePopup from '../ui/DeletePopup';
 import Button from '../ui/Button';
 import { formatDate, formatMoney, classNames } from '../../lib/formatUtils';
 
@@ -23,8 +25,12 @@ export default function Invoice({ invoice }) {
     total,
   } = invoice;
 
-  const { setCurrentInvoice, setShowEditInvoiceForm } =
-    useContext(InvoiceContext);
+  const {
+    setCurrentInvoice,
+    setShowEditInvoiceForm,
+    showDeletePopup,
+    setShowDeletePopup,
+  } = useContext(InvoiceContext);
 
   const router = useRouter();
 
@@ -32,6 +38,26 @@ export default function Invoice({ invoice }) {
     setCurrentInvoice(null);
     router.push('/');
   };
+
+  const handleDelete = async (id) => {
+    const res = await toast.promise(
+      fetch('/api/invoice/', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      }),
+      {
+        pending: 'Invoice is being deleted...',
+        success: 'Invoice has been successfully deleted',
+        error: 'There was an error deleting this invoice',
+      },
+      handleClose()
+    );
+  };
+
+  const handleClosePopup = () => setShowDeletePopup(false);
 
   useEffect(() => {
     setCurrentInvoice(invoice);
@@ -146,7 +172,7 @@ export default function Invoice({ invoice }) {
             )}
             textClasses='text-white'
             buttonText='Delete'
-            onClick={() => {}} //TODO implement
+            onClick={() => setShowDeletePopup(true)}
           />
           <Button
             containerClasses={
@@ -161,6 +187,13 @@ export default function Invoice({ invoice }) {
             onClick={status === 'paid' ? () => {} : () => {}} //TODO implement
           />
         </div>
+        {showDeletePopup && (
+          <DeletePopup
+            id={id}
+            handleDelete={handleDelete}
+            handleClosePopup={handleClosePopup}
+          />
+        )}
       </div>
     </>
   );
