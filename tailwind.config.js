@@ -29,6 +29,9 @@ module.exports = {
     },
     lineHeight: {
       zero: '0',
+      normal: '1.5',
+      medium: '1.6',
+      large: '1.8',
     },
     extend: {},
   },
