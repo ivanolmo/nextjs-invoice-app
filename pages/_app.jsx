@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <InvoiceProvider>
-        <div className='bg-eleven'>
+        <div className='bg-eleven relative'>
           <MainHeader />
           <Component {...pageProps} />
         </div>

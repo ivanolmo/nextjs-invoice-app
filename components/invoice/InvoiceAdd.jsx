@@ -31,12 +31,12 @@ export default function InvoiceAdd() {
     const data = await res.json();
 
     setShowAddInvoiceForm(false);
-    // do something
+    // TODO toast add confirmation
     console.log(data);
   };
 
   return (
-    <div className='absolute bg-white pt-8 px-6 inset-0'>
+    <div className='absolute top-[4.625rem] bg-white pt-8 px-6 inset-0'>
       <div
         className='cursor-pointer'
         onClick={() => setShowAddInvoiceForm(false)}

@@ -9,11 +9,11 @@ export default function InvoicePage({ invoiceData }) {
   const { showEditInvoiceForm } = useContext(InvoiceContext);
 
   return (
-    <div className='relative'>
+    <>
       <Invoice invoice={invoiceData} />
 
       {showEditInvoiceForm && <InvoiceEdit />}
-    </div>
+    </>
   );
 }
 

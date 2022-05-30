@@ -33,7 +33,7 @@ export default function Home({ allInvoicesData }) {
   mutate();
 
   return (
-    <div className='py-8 px-6 relative'>
+    <div className='py-8 px-6'>
       <UtilityHeader invoiceCount={invoices.length} />
 
       {!invoices || invoices.length === 0 ? (
