@@ -6,15 +6,15 @@ import UtilityHeader from '../components/layout/UtilityHeader';
 import InvoiceList from '../components/invoice/InvoiceList';
 import InvoiceAdd from '../components/invoice/InvoiceAdd';
 import Invoice404 from '../components/layout/Invoice404';
-import { getAllInvoices } from '../lib/dbAdmin';
+import { db } from '../lib/firebaseAdmin';
 import fetcher from '../utils/fetcher';
 
 export default function Home({ allInvoicesData }) {
-  const { showAddInvoiceForm } = useContext(InvoiceContext);
-
   const [invoices, setInvoices] = useState(allInvoicesData);
 
-  const { data, mutate } = useSWR('/api/invoice/', fetcher, {
+  const { showAddInvoiceForm } = useContext(InvoiceContext);
+
+  const { data, mutate } = useSWR('/api/invoices/', fetcher, {
     revalidateOnMount: true,
   });
 
@@ -48,7 +48,31 @@ export default function Home({ allInvoicesData }) {
 }
 
 export async function getStaticProps() {
-  const allInvoicesData = await getAllInvoices();
+  const snapshot = await db
+    .collection('invoices')
+    .orderBy('paymentDue', 'asc')
+    .get();
+
+  const invoices = [];
+  const undatedInvoices = [];
+
+  // check for invoices with no date and move them to end
+  // firebase treats null as first as far as ordering
+  snapshot.forEach((doc) => {
+    if (!doc.data().paymentDue) {
+      undatedInvoices.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    } else {
+      invoices.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    }
+  });
+
+  const allInvoicesData = invoices.concat(undatedInvoices);
 
   return {
     props: { allInvoicesData },

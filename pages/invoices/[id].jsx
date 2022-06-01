@@ -3,14 +3,14 @@ import { useContext } from 'react';
 import InvoiceContext from '../../store/context';
 import Invoice from '../../components/invoice/Invoice';
 import InvoiceEdit from '../../components/invoice/InvoiceEdit';
-import { getInvoiceById } from '../../lib/dbAdmin';
+import { db } from '../../lib/firebaseAdmin';
 
-export default function InvoicePage({ invoiceData }) {
+export default function InvoicePage({ invoice }) {
   const { showEditInvoiceForm } = useContext(InvoiceContext);
 
   return (
     <>
-      <Invoice invoice={invoiceData} />
+      <Invoice invoice={invoice} />
 
       {showEditInvoiceForm && <InvoiceEdit />}
     </>
@@ -19,9 +19,12 @@ export default function InvoicePage({ invoiceData }) {
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
-  const invoiceData = await getInvoiceById(id);
 
-  if (!invoiceData) {
+  const doc = await db.collection('invoices').doc(id).get();
+
+  const invoice = doc.data();
+
+  if (!invoice) {
     return {
       notFound: true,
     };
@@ -29,7 +32,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      invoiceData,
+      invoice,
     },
   };
 }
