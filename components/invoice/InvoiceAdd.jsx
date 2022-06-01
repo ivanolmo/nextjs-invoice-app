@@ -1,5 +1,6 @@
 import { useContext, useRef } from 'react';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 
 import InvoiceContext from '../../store/context';
 import InvoiceForm from './InvoiceForm';
@@ -20,19 +21,27 @@ export default function InvoiceAdd() {
   };
 
   const onSubmit = async (status = 'pending') => {
-    const res = await fetch('/api/invoice/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status, ...formRef.current.values }),
-    });
-
-    const data = await res.json();
-
-    setShowAddInvoiceForm(false);
-    // TODO toast add confirmation
-    console.log(data);
+    const res = await toast.promise(
+      fetch('/api/invoices/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status, ...formRef.current.values }),
+      }),
+      status === 'pending'
+        ? {
+            pending: 'Invoice is being created...',
+            success: 'Invoice has been successfully created!',
+            error: 'There was an error creating this invoice',
+          }
+        : {
+            pending: 'Invoice is being saved...',
+            success: 'Invoice has been successfully saved!',
+            error: 'There was an error saving this invoice',
+          },
+      setShowAddInvoiceForm(false)
+    );
   };
 
   return (
