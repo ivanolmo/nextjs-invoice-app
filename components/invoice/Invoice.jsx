@@ -153,7 +153,7 @@ export default function Invoice({ invoice }) {
             </p>
           </div>
         </div>
-        <div className='flex justify-center items-center gap-2 bg-white mt-14 -mx-6 py-5'>
+        <div className='flex justify-center items-center gap-2 bg-white mt-14 py-5 px-6'>
           <Button
             containerClasses={classNames(
               status === 'paid' ? 'invisible' : '',
@@ -180,7 +180,7 @@ export default function Invoice({ invoice }) {
                 ? 'invisible'
                 : status === 'paid'
                 ? 'bg-green px-6 justify-self-end cursor-not-allowed'
-                : 'bg-one hover:bg-two px-6'
+                : 'bg-one hover:bg-two px-[1.75rem]'
             }
             textClasses='text-white'
             buttonText={status === 'paid' ? 'Invoice Paid' : 'Mark as Paid'}
