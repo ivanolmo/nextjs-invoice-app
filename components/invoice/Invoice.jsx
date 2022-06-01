@@ -166,10 +166,7 @@ export default function Invoice({ invoice }) {
             }}
           />
           <Button
-            containerClasses={classNames(
-              status === 'paid' ? 'invisible' : '',
-              'bg-nine hover:bg-ten px-6'
-            )}
+            containerClasses='bg-nine hover:bg-ten px-6'
             textClasses='text-white'
             buttonText='Delete'
             onClick={() => setShowDeletePopup(true)}
