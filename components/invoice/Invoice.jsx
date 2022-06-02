@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { nanoid } from 'nanoid';
@@ -25,6 +25,8 @@ export default function Invoice({ invoice }) {
     total,
   } = invoice;
 
+  const [invoiceStatus, setInvoiceStatus] = useState(status);
+
   const {
     setCurrentInvoice,
     setShowEditInvoiceForm,
@@ -41,7 +43,7 @@ export default function Invoice({ invoice }) {
 
   const handleDelete = async (id) => {
     const res = await toast.promise(
-      fetch('/api/invoice/', {
+      fetch('/api/invoices/', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -59,6 +61,24 @@ export default function Invoice({ invoice }) {
 
   const handleClosePopup = () => setShowDeletePopup(false);
 
+  const handleStatusUpdate = async () => {
+    const res = await toast.promise(
+      fetch('/api/invoices/', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      }),
+      {
+        pending: 'Invoice is being updated...',
+        success: 'Invoice has been successfully updated',
+        error: 'There was an error updating this invoice',
+      }
+    );
+    setInvoiceStatus('paid');
+  };
+
   useEffect(() => {
     setCurrentInvoice(invoice);
   }, [setCurrentInvoice, invoice]);
@@ -75,7 +95,7 @@ export default function Invoice({ invoice }) {
           />
           <span className='text-xs tracking-tight font-bold ml-6'>Go Back</span>
         </div>
-        <InvoiceHeader status={status} />
+        <InvoiceHeader status={invoiceStatus} />
         <div className='bg-white mt-4 mx-6 p-6 text-sm tracking-tight rounded-md'>
           <div className='space-y-1'>
             <div className='font-bold text-xs'>
@@ -156,14 +176,12 @@ export default function Invoice({ invoice }) {
         <div className='flex justify-center items-center gap-2 bg-white mt-14 py-5 px-6'>
           <Button
             containerClasses={classNames(
-              status === 'paid' ? 'invisible' : '',
+              invoiceStatus === 'paid' ? 'invisible' : '',
               'bg-buttonLight hover:bg-five px-6'
             )}
             textClasses='text-seven'
             buttonText='Edit'
-            onClick={() => {
-              setShowEditInvoiceForm(true);
-            }}
+            onClick={() => setShowEditInvoiceForm(true)}
           />
           <Button
             containerClasses='bg-nine hover:bg-ten px-6'
@@ -173,15 +191,19 @@ export default function Invoice({ invoice }) {
           />
           <Button
             containerClasses={
-              status === 'draft'
+              invoiceStatus === 'draft'
                 ? 'invisible'
-                : status === 'paid'
+                : invoiceStatus === 'paid'
                 ? 'bg-green px-6 justify-self-end cursor-not-allowed'
                 : 'bg-one hover:bg-two px-[1.75rem]'
             }
             textClasses='text-white'
-            buttonText={status === 'paid' ? 'Invoice Paid' : 'Mark as Paid'}
-            onClick={status === 'paid' ? () => {} : () => {}} //TODO implement
+            buttonText={
+              invoiceStatus === 'paid' ? 'Invoice Paid' : 'Mark as Paid'
+            }
+            onClick={
+              invoiceStatus === 'paid' ? null : () => handleStatusUpdate()
+            }
           />
         </div>
         {showDeletePopup && (
