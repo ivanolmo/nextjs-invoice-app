@@ -20,6 +20,7 @@ export default function InvoiceAdd() {
     }
   };
 
+  // default status is pending unless 'draft' is provided as arg
   const onSubmit = async (status = 'pending') => {
     const res = await toast.promise(
       fetch('/api/invoices/', {
@@ -39,9 +40,9 @@ export default function InvoiceAdd() {
             pending: 'Invoice is being saved...',
             success: 'Invoice has been successfully saved!',
             error: 'There was an error saving this invoice',
-          },
-      setShowAddInvoiceForm(false)
+          }
     );
+    setShowAddInvoiceForm(false);
   };
 
   return (
