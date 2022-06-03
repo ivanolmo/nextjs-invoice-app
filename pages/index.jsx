@@ -14,6 +14,7 @@ export default function Home({ allInvoicesData }) {
 
   const { showAddInvoiceForm } = useContext(InvoiceContext);
 
+  // update invoices list if data is updated
   const { data, mutate } = useSWR('/api/invoices/', fetcher, {
     revalidateOnMount: true,
   });
@@ -56,8 +57,8 @@ export async function getStaticProps() {
   const invoices = [];
   const undatedInvoices = [];
 
-  // check for invoices with no date and move them to end
-  // firebase treats null as first as far as ordering
+  // check for invoices with no date and move them to end of array
+  // because firebase treats null as first as far as ordering
   snapshot.forEach((doc) => {
     if (!doc.data().paymentDue) {
       undatedInvoices.push({
