@@ -25,7 +25,7 @@ export default function InvoiceEdit() {
 
   const onSubmit = async () => {
     const res = await toast.promise(
-      fetch('/api/invoices/', {
+      fetch(`/api/invoice/${currentInvoice.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
