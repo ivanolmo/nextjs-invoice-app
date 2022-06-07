@@ -10,6 +10,9 @@ export default function Button(props) {
       )}
       disabled={props.disabled}
     >
+      {props.icon ? (
+        <div className='bg-[white] p-3 flex rounded-full'>{props.icon}</div>
+      ) : null}
       <div
         className={classNames(
           props.textClasses,
