@@ -1,4 +1,4 @@
-import { useEffect, useContext, useRef, useState } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import Image from 'next/image';
 
 import InvoiceContext from '../../store/context';
@@ -6,9 +6,8 @@ import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
 import { toast } from 'react-toastify';
 
-export default function InvoiceEdit() {
-  const { setShowEditInvoiceForm, currentInvoice, setCurrentInvoice } =
-    useContext(InvoiceContext);
+export default function InvoiceEdit({ setInvoice }) {
+  const { setShowEditInvoiceForm, currentInvoice } = useContext(InvoiceContext);
 
   const formRef = useRef(null);
 
@@ -16,11 +15,12 @@ export default function InvoiceEdit() {
     formRef.current.handleSubmit();
   };
 
-  // handles closing edit form and setting current invoice to updated
-  // invoice after form submit
+  // handles closing edit form and setting current invoice to updated ...
+  // ... invoice after form submit
+  // setInvoice updates parent InvoicePage component ([id].jsx page)
   const handleUpdate = (updatedInvoice) => {
     setShowEditInvoiceForm(false);
-    setCurrentInvoice(updatedInvoice);
+    setInvoice(updatedInvoice);
   };
 
   const onSubmit = async () => {
