@@ -5,20 +5,12 @@ import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 
 import InvoiceContext from '../../store/context';
-import InvoiceEdit from '../../components/invoice/InvoiceEdit';
-import DeletePopup from '../../components/ui/DeletePopup';
-import Button from '../../components/ui/Button';
-import {
-  formatDate,
-  formatMoney,
-  formatStatus,
-  classNames,
-} from '../../lib/formatUtils';
-import { db } from '../../lib/firebaseAdmin';
-import fetcher from '../../utils/fetcher';
+import InvoiceHeader from './InvoiceHeader';
+import DeletePopup from '../ui/DeletePopup';
+import Button from '../ui/Button';
+import { formatDate, formatMoney, classNames } from '../../lib/formatUtils';
 
-export default function InvoicePage({ invoiceData }) {
-  const [invoice, setInvoice] = useState(invoiceData);
+export default function Invoice({ invoice }) {
   const {
     id,
     status,
@@ -33,9 +25,11 @@ export default function InvoicePage({ invoiceData }) {
     total,
   } = invoice;
 
+  // add status to state to re-render on status change
+  const [invoiceStatus, setInvoiceStatus] = useState(status);
+
   const {
     setCurrentInvoice,
-    showEditInvoiceForm,
     setShowEditInvoiceForm,
     showDeletePopup,
     setShowDeletePopup,
@@ -46,26 +40,26 @@ export default function InvoicePage({ invoiceData }) {
   // handles invoice delete
   const handleDelete = async (id) => {
     const res = await toast.promise(
-      fetch(`/api/invoice/${id}`, {
+      fetch('/api/invoices/', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ id }),
       }),
       {
         pending: 'Invoice is being deleted...',
         success: 'Invoice has been successfully deleted',
         error: 'There was an error deleting this invoice',
-      }
+      },
+      handleClose()
     );
-    handleClose();
   };
 
-  // closes delete modal, passed as prop to modal cancel button
+  // closes delete modal
   const handleClosePopup = () => setShowDeletePopup(false);
 
-  // clears current invoice from state and navigates to / after delete
-  // also does same functions on click of 'Go Back' button
+  // clears invoice from state and navigates to / after delete
   const handleClose = () => {
     setCurrentInvoice(null);
     router.push('/');
@@ -74,11 +68,12 @@ export default function InvoicePage({ invoiceData }) {
   // handles invoice status update pending -> paid
   const handleStatusUpdate = async () => {
     const res = await toast.promise(
-      fetch(`/api/invoice/${id}`, {
+      fetch('/api/invoices/', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ id }),
       }),
       {
         pending: 'Invoice status is being updated...',
@@ -86,28 +81,13 @@ export default function InvoicePage({ invoiceData }) {
         error: 'There was an error updating the status',
       }
     );
-    setInvoice((prevInvoice) => ({
-      ...prevInvoice,
-      status: 'paid',
-    }));
+    setInvoiceStatus('paid');
   };
 
   useEffect(() => {
     setCurrentInvoice(invoice);
-  }, [invoice, setCurrentInvoice]);
-
-  // refresh invoice on screen if data is updated
-  const { data, mutate } = useSWR(`/api/invoice/${invoice.id}`, fetcher, {
-    revalidateOnMount: true,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setInvoice(data.invoice);
-    }
-  }, [data]);
-
-  mutate();
+    setInvoiceStatus(invoice.status);
+  }, [setCurrentInvoice, invoice]);
 
   return (
     <>
@@ -121,22 +101,7 @@ export default function InvoicePage({ invoiceData }) {
           />
           <span className='text-xs tracking-tight font-bold ml-6'>Go Back</span>
         </div>
-        <header className='flex justify-between items-center bg-white text-xs tracking-tight mt-8 mx-6 p-6 rounded-md'>
-          <h3 className='text-seven'>Status</h3>
-          <div
-            className={classNames(
-              status === 'paid'
-                ? 'text-green bg-green/10'
-                : status === 'pending'
-                ? 'text-orange bg-orange/10'
-                : 'text-darkGray bg-darkGray/10',
-              'p-3 font-bold rounded-md w-[6.5rem] text-center'
-            )}
-          >
-            <span className='bg-current inline-block mr-2 w-2 h-2 rounded-full'></span>
-            {formatStatus(status)}
-          </div>
-        </header>
+        <InvoiceHeader status={invoiceStatus} />
         <div className='bg-white mt-4 mx-6 p-6 text-sm tracking-tight rounded-md'>
           <div className='space-y-1'>
             <div className='font-bold text-xs'>
@@ -217,7 +182,7 @@ export default function InvoicePage({ invoiceData }) {
         <div className='flex justify-center items-center gap-2 bg-white mt-14 py-5 px-6'>
           <Button
             containerClasses={classNames(
-              status === 'paid' ? 'invisible' : '',
+              invoiceStatus === 'paid' ? 'invisible' : '',
               'bg-buttonLight hover:bg-five px-6'
             )}
             textClasses='text-seven'
@@ -232,18 +197,21 @@ export default function InvoicePage({ invoiceData }) {
           />
           <Button
             containerClasses={
-              status === 'draft'
+              invoiceStatus === 'draft'
                 ? 'invisible'
-                : status === 'paid'
+                : invoiceStatus === 'paid'
                 ? 'bg-green px-6 justify-self-end cursor-not-allowed'
                 : 'bg-one hover:bg-two px-[1.75rem]'
             }
             textClasses='text-white'
-            buttonText={status === 'paid' ? 'Invoice Paid' : 'Mark as Paid'}
-            onClick={status === 'paid' ? null : () => handleStatusUpdate()}
+            buttonText={
+              invoiceStatus === 'paid' ? 'Invoice Paid' : 'Mark as Paid'
+            }
+            onClick={
+              invoiceStatus === 'paid' ? null : () => handleStatusUpdate()
+            }
           />
         </div>
-
         {showDeletePopup && (
           <DeletePopup
             id={id}
@@ -252,28 +220,6 @@ export default function InvoicePage({ invoiceData }) {
           />
         )}
       </div>
-
-      {showEditInvoiceForm && <InvoiceEdit setInvoice={setInvoice} />}
     </>
   );
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id;
-
-  const doc = await db.collection('invoices').doc(id).get();
-
-  const invoiceData = doc.data();
-
-  if (!invoiceData) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      invoiceData,
-    },
-  };
 }
