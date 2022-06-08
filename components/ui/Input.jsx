@@ -17,7 +17,7 @@ export default function Input({ label, ...props }) {
           meta.touched && meta.error
             ? 'border-nine'
             : 'border-five hover:border-one',
-          'text-xs text-black font-bold border p-4 mt-2 w-full rounded-md'
+          'text-xs text-black font-bold border p-4 mt-2 w-full rounded-md cursor-pointer'
         )}
         {...field}
         {...props}

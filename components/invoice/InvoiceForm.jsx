@@ -127,7 +127,7 @@ export default function InvoiceForm(props) {
                     hasErrors && errors.paymentTerms && touched.paymentTerms
                       ? 'border-nine'
                       : 'border-five hover:border-one',
-                    'bg-[url("/assets/icon-arrow-down.svg")] bg-no-repeat bg-[center_right_1rem] bg-white text-black font-bold mt-4 p-4 border  rounded-md h-12 w-full appearance-none cursor-pointer'
+                    'bg-[url("/assets/icon-arrow-down.svg")] bg-no-repeat bg-[center_right_1rem] bg-white text-black font-bold mt-4 p-4 border rounded-md h-12 w-full appearance-none cursor-pointer'
                   )}
                   options={[
                     { label: '', value: null },
@@ -231,10 +231,10 @@ export default function InvoiceForm(props) {
             </div>
 
             {!isValid && submitCount > 0 && (
-              <div className='text-nine text-sm font-bold mt-8 -mb-12 space-y-2 overflow-hidden'>
-                <div>Please check all fields and try again</div>
+              <div className='text-nine text-[0.625rem] mt-8 -mb-12 space-y-2 overflow-hidden'>
+                <div>- All fields must be added</div>
                 {values.items.length === 0 && (
-                  <div>At least 1 item is required</div>
+                  <div>- An item must be added</div>
                 )}
               </div>
             )}

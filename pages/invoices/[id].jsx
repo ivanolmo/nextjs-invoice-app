@@ -15,7 +15,6 @@ import {
   classNames,
 } from '../../lib/formatUtils';
 import { db } from '../../lib/firebaseAdmin';
-import fetcher from '../../utils/fetcher';
 
 export default function InvoicePage({ invoiceData }) {
   const [invoice, setInvoice] = useState(invoiceData);
@@ -96,19 +95,6 @@ export default function InvoicePage({ invoiceData }) {
     setCurrentInvoice(invoice);
   }, [invoice, setCurrentInvoice]);
 
-  // refresh invoice on screen if data is updated
-  const { data, mutate } = useSWR(`/api/invoice/${invoice.id}`, fetcher, {
-    revalidateOnMount: true,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setInvoice(data.invoice);
-    }
-  }, [data]);
-
-  mutate();
-
   return (
     <>
       <div className='pt-8'>
@@ -119,7 +105,9 @@ export default function InvoicePage({ invoiceData }) {
             width={6}
             height={8}
           />
-          <span className='text-xs tracking-tight font-bold ml-6'>Go Back</span>
+          <span className='text-xs hover:text-seven tracking-tight font-bold ml-6'>
+            Go Back
+          </span>
         </div>
         <header className='flex justify-between items-center bg-white text-xs tracking-tight mt-8 mx-6 p-6 rounded-md'>
           <h3 className='text-seven'>Status</h3>

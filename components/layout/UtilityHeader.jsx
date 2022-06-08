@@ -19,7 +19,7 @@ export default function UtilityHeader({ invoiceCount }) {
       <div className='flex justify-between items-center gap-4'>
         <FilterButton />
         <Button
-          containerClasses='bg-one hover:bg-two pr-6 pl-1.5 gap-2'
+          containerClasses='bg-one hover:bg-two pr-3.5 pl-1.5 gap-2'
           textClasses='text-eleven text-sm'
           buttonText={
             <>
