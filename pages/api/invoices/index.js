@@ -78,6 +78,7 @@ export default async function handler(req, res) {
       } catch (error) {
         res.status(500).json({ message: 'Invoice creation failure' });
       }
+      break;
 
     default:
       res.setHeader('Allow', ['GET', 'POST']);
