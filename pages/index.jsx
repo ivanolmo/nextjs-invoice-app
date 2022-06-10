@@ -15,9 +15,7 @@ export default function Home({ allInvoicesData }) {
   const { showAddInvoiceForm } = useContext(InvoiceContext);
 
   // update invoices list if data is updated
-  const { data, mutate } = useSWR('/api/invoices/', fetcher, {
-    revalidateOnMount: true,
-  });
+  const { data, mutate } = useSWR('/api/invoices/', fetcher);
 
   useEffect(() => {
     if (data) {

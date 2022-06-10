@@ -18,6 +18,26 @@ import { db } from '../../lib/firebaseAdmin';
 
 export default function InvoicePage({ invoiceData }) {
   const [invoice, setInvoice] = useState(invoiceData);
+
+  const {
+    setCurrentInvoice,
+    showEditInvoiceForm,
+    setShowEditInvoiceForm,
+    showDeletePopup,
+    setShowDeletePopup,
+  } = useContext(InvoiceContext);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    setCurrentInvoice(invoice);
+  }, [invoice, setCurrentInvoice]);
+
+  // TODO add a temp loading state if page is fallback
+  if (router.isFallback) {
+    return <div className=''>Loading</div>;
+  }
+
   const {
     id,
     status,
@@ -31,16 +51,6 @@ export default function InvoicePage({ invoiceData }) {
     items,
     total,
   } = invoice;
-
-  const {
-    setCurrentInvoice,
-    showEditInvoiceForm,
-    setShowEditInvoiceForm,
-    showDeletePopup,
-    setShowDeletePopup,
-  } = useContext(InvoiceContext);
-
-  const router = useRouter();
 
   // handles invoice delete
   const handleDelete = async (id) => {
@@ -91,9 +101,7 @@ export default function InvoicePage({ invoiceData }) {
     }));
   };
 
-  useEffect(() => {
-    setCurrentInvoice(invoice);
-  }, [invoice, setCurrentInvoice]);
+  console.log('is fallback is ', router.isFallback);
 
   return (
     <>
@@ -246,7 +254,7 @@ export default function InvoicePage({ invoiceData }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const id = context.params.id;
 
   const doc = await db.collection('invoices').doc(id).get();
@@ -263,5 +271,17 @@ export async function getServerSideProps(context) {
     props: {
       invoiceData,
     },
+    revalidate: 10,
+  };
+}
+
+export async function getStaticPaths() {
+  const snapshot = await db.collection('invoices').get();
+  const invoices = [];
+  snapshot.forEach((doc) => invoices.push(doc.data()));
+
+  return {
+    paths: invoices.map((invoice) => ({ params: { id: invoice.id } })),
+    fallback: true,
   };
 }
