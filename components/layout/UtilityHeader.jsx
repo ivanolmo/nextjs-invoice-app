@@ -5,7 +5,7 @@ import Button from '../ui/Button';
 import FilterButton from '../ui/FilterButton';
 import InvoiceContext from '../../store/context';
 
-export default function UtilityHeader({ invoiceCount }) {
+export default function UtilityHeader({ invoiceCount, setFilters }) {
   const { setShowAddInvoiceForm } = useContext(InvoiceContext);
 
   return (
@@ -17,7 +17,7 @@ export default function UtilityHeader({ invoiceCount }) {
         </h3>
       </div>
       <div className='flex justify-between items-center gap-4'>
-        <FilterButton />
+        <FilterButton setFilters={setFilters} />
         <Button
           containerClasses='bg-one hover:bg-two pr-3.5 pl-1.5 gap-2'
           textClasses='text-eleven text-sm'
