@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <InvoiceProvider>
-        <div className='bg-eleven relative min-w-max'>
+        <div className='relative min-w-[23.4375rem]'>
           <MainHeader />
           <Component {...pageProps} />
         </div>

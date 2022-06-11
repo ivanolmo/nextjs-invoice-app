@@ -50,7 +50,7 @@ export default function InvoiceEdit({ setInvoice }) {
   }, [currentInvoice]);
 
   return (
-    <div className='absolute top-[4.625rem] bg-white pt-8 px-6 inset-0'>
+    <div className='absolute top-[4.625rem] bg-white pt-8 px-6 inset-0 h-max'>
       <div
         className='cursor-pointer'
         onClick={() => setShowEditInvoiceForm(false)}
