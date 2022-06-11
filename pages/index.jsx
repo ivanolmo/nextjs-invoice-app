@@ -2,10 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 import InvoiceContext from '../store/context';
-import UtilityHeader from '../components/layout/UtilityHeader';
 import InvoiceList from '../components/invoice/InvoiceList';
 import InvoiceAdd from '../components/invoice/InvoiceAdd';
-import Invoice404 from '../components/layout/Invoice404';
 import { db } from '../lib/firebaseAdmin';
 import fetcher from '../utils/fetcher';
 
@@ -33,13 +31,7 @@ export default function Home({ allInvoicesData }) {
 
   return (
     <div className='py-8 px-6'>
-      <UtilityHeader invoiceCount={invoices.length} />
-
-      {!invoices || invoices.length === 0 ? (
-        <Invoice404 />
-      ) : (
-        <InvoiceList invoices={invoices} />
-      )}
+      <InvoiceList invoices={invoices} />
 
       {showAddInvoiceForm && <InvoiceAdd />}
     </div>
