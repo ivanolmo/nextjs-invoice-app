@@ -16,7 +16,7 @@ export default function UtilityHeader({ invoiceCount, setFilters }) {
           {invoiceCount ? invoiceCount : 'No'} Invoices
         </h3>
       </div>
-      <div className='flex justify-between items-center gap-4'>
+      <div className='flex justify-between items-center gap-5 md:gap-10'>
         <FilterButton setFilters={setFilters} />
         <Button
           containerClasses='bg-one hover:bg-two pr-3.5 pl-1.5 gap-2'

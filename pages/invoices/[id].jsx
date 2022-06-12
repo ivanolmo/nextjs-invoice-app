@@ -101,8 +101,6 @@ export default function InvoicePage({ invoiceData }) {
     }));
   };
 
-  console.log('is fallback is ', router.isFallback);
-
   return (
     <>
       <div className='pt-8'>
