@@ -50,9 +50,9 @@ export default function InvoiceEdit({ setInvoice }) {
   }, [currentInvoice]);
 
   return (
-    <div className='absolute top-[4.625rem] bg-white pt-8 px-6 inset-0 h-max'>
+    <div className='absolute top-[4.625rem] bg-white dark:bg-twelve pt-8 px-6 inset-0 h-max'>
       <div
-        className='cursor-pointer'
+        className='cursor-pointer w-fit'
         onClick={() => setShowEditInvoiceForm(false)}
       >
         <Image
@@ -61,10 +61,12 @@ export default function InvoiceEdit({ setInvoice }) {
           width={6}
           height={8}
         />
-        <span className='text-xs tracking-tight font-bold ml-6'>Go Back</span>
+        <span className='text-xs tracking-tight font-bold dark:text-white ml-6'>
+          Go Back
+        </span>
       </div>
 
-      <h1 className='text-xl font-bold mt-6'>
+      <h1 className='text-2xl font-bold dark:text-white mt-6'>
         Edit <span className='text-six'>#</span>
         {currentInvoice.id}
       </h1>
@@ -73,10 +75,10 @@ export default function InvoiceEdit({ setInvoice }) {
         <InvoiceForm onSubmit={() => onSubmit()} formRef={formRef} />
       </div>
 
-      <div className='flex justify-end items-center gap-2 bg-white mt-20 -mx-6 py-5 px-6 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)]'>
+      <div className='flex justify-end items-center gap-2 bg-white dark:bg-three mt-20 -mx-6 py-5 px-6 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)]'>
         <Button
-          containerClasses='bg-buttonLight hover:bg-five px-6'
-          textClasses='text-seven'
+          containerClasses='group bg-buttonLight hover:bg-five dark:bg-four px-6'
+          textClasses='text-seven dark:text-five dark:group-hover:text-seven'
           buttonText='Cancel'
           onClick={() => {
             setShowEditInvoiceForm(false);

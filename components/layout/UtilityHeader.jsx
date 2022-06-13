@@ -10,17 +10,22 @@ export default function UtilityHeader({ invoiceCount, setFilters }) {
 
   return (
     <div className='flex justify-between items-center'>
-      <div>
-        <h1 className='text-xl font-bold tracking-tight'>Invoices</h1>
-        <h3 className='text-six text-xs tracking-tight'>
-          {invoiceCount ? invoiceCount : 'No'} Invoices
-        </h3>
+      <div className='flex flex-col gap-1'>
+        <span className='text-xl font-bold tracking-tight dark:text-white'>
+          Invoices
+        </span>
+        <span className='text-six dark:text-white text-xs tracking-tight md:hidden'>
+          {invoiceCount ? invoiceCount : 'No'} invoices
+        </span>
+        <span className='text-six text-xs tracking-tight hidden md:block'>
+          There are {invoiceCount ? invoiceCount : 'No'} invoices
+        </span>
       </div>
       <div className='flex justify-between items-center gap-5 md:gap-10'>
         <FilterButton setFilters={setFilters} />
         <Button
-          containerClasses='bg-one hover:bg-two pr-3.5 pl-1.5 gap-2'
-          textClasses='text-eleven text-sm'
+          containerClasses='bg-one hover:bg-two pr-3.5 pl-1.5 gap-2 h-11'
+          textClasses='text-eleven text-xs'
           buttonText={
             <>
               <span className='md:hidden'>New</span>

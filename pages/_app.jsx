@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { ThemeProvider } from 'next-themes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,11 +19,11 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <InvoiceProvider>
-        <div className='relative min-w-[23.4375rem]'>
+        <ThemeProvider attribute='class'>
           <MainHeader />
           <Component {...pageProps} />
-        </div>
-        <ToastContainer autoClose={3000} />
+          <ToastContainer autoClose={3000} />
+        </ThemeProvider>
       </InvoiceProvider>
     </>
   );

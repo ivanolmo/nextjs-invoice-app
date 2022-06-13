@@ -111,19 +111,19 @@ export default function InvoicePage({ invoiceData }) {
             width={6}
             height={8}
           />
-          <span className='text-xs hover:text-seven tracking-tight font-bold ml-6'>
+          <span className='text-xs hover:text-seven dark:text-white tracking-tight font-bold ml-6'>
             Go Back
           </span>
         </div>
-        <header className='flex justify-between items-center bg-white text-xs tracking-tight mt-8 mx-6 p-6 rounded-md'>
-          <h3 className='text-seven'>Status</h3>
+        <header className='flex justify-between items-center bg-white dark:bg-three text-xs tracking-tight mt-8 mx-6 p-6 rounded-md'>
+          <span className='text-seven dark:text-five '>Status</span>
           <div
             className={classNames(
               status === 'paid'
-                ? 'text-green bg-green/10'
+                ? 'text-green bg-green/10 dark:bg-green/5'
                 : status === 'pending'
-                ? 'text-orange bg-orange/10'
-                : 'text-darkGray bg-darkGray/10',
+                ? 'text-orange bg-orange/10 dark:bg-orange/5'
+                : 'text-darkGray dark:text-five bg-darkGray/10 dark:bg-five/5',
               'p-3 font-bold rounded-md w-[6.5rem] text-center'
             )}
           >
@@ -131,15 +131,17 @@ export default function InvoicePage({ invoiceData }) {
             {formatStatus(status)}
           </div>
         </header>
-        <div className='bg-white mt-4 mx-6 p-6 text-sm tracking-tight rounded-md'>
+        <div className='bg-white dark:bg-three mt-4 mx-6 p-6 text-sm tracking-tight rounded-md'>
           <div className='space-y-1'>
-            <div className='font-bold text-xs'>
+            <div className='font-bold text-xs dark:text-white'>
               <span className='text-seven'>#</span>
               {id}
             </div>
-            <div className='text-seven text-xs'>{description || 'N/A'}</div>
+            <div className='text-seven dark:text-five text-xs'>
+              {description || 'N/A'}
+            </div>
           </div>
-          <div className='text-xs text-seven mt-7 space-y-1'>
+          <div className='text-xs text-seven dark:text-five mt-7 space-y-1'>
             <p>{senderAddress.street || '-'}</p>
             <p>{senderAddress.city || '-'}</p>
             <p>{senderAddress.postCode || '-'}</p>
@@ -148,25 +150,25 @@ export default function InvoicePage({ invoiceData }) {
           <div className='flex gap-10 mt-7'>
             <div className='flex flex-col justify-between'>
               <div className='space-y-2'>
-                <h3 className='text-seven'>Invoice Date</h3>
-                <p className='text-base font-bold'>
+                <span className='text-seven dark:text-five'>Invoice Date</span>
+                <p className='text-base font-bold dark:text-white'>
                   {createdAt ? formatDate(createdAt) : '-'}
                 </p>
               </div>
               <div className='space-y-2'>
-                <h3 className='text-seven'>Payment Due</h3>
-                <p className='text-base font-bold'>
+                <h3 className='text-seven dark:text-five'>Payment Due</h3>
+                <p className='text-base dark:text-white font-bold'>
                   {paymentDue ? formatDate(paymentDue) : 'N/A'}
                 </p>
               </div>
             </div>
             <div className='space-y-2'>
-              <h3 className='text-seven'>Bill To</h3>
+              <h3 className='text-seven dark:text-five'>Bill To</h3>
               <div className='space-y-2'>
-                <p className='text-base font-bold mt-2'>
+                <p className='text-base dark:text-white font-bold mt-2'>
                   {clientName || 'N/A'}
                 </p>
-                <div className='text-xs text-seven space-y-1'>
+                <div className='text-xs text-seven dark:text-five space-y-1'>
                   <p>{clientAddress.street || '-'}</p>
                   <p>{clientAddress.city || '-'}</p>
                   <p>{clientAddress.postCode || '-'}</p>
@@ -176,45 +178,51 @@ export default function InvoicePage({ invoiceData }) {
             </div>
           </div>
           <div className='mt-9 space-y-3'>
-            <h3 className='text-seven text-xs'>Sent To</h3>
-            <p className='text-base font-bold'>{clientEmail || 'N/A'}</p>
+            <span className='text-seven dark:text-five text-xs'>Sent To</span>
+            <p className='text-base dark:text-white font-bold'>
+              {clientEmail || 'N/A'}
+            </p>
           </div>
-          <div className='bg-eleven mt-10 p-6 space-y-6 rounded-t-md'>
+          <div className='bg-eleven dark:bg-four mt-10 p-6 space-y-6 rounded-t-md'>
             {!items.length ? (
               <div className='text-base font-bold'>No Items</div>
             ) : (
               items.map((item) => (
                 <div
                   key={nanoid(6)}
-                  className='flex justify-between items-center'
+                  className='flex justify-between items-center text-xs'
                 >
                   <div>
-                    <h3 className='font-bold'>{item.name || 'N/A'}</h3>
-                    <p className='text-seven font-bold mt-2'>
+                    <h3 className='font-bold dark:text-white'>
+                      {item.name || 'N/A'}
+                    </h3>
+                    <p className='text-seven dark:text-six font-bold mt-2'>
                       {item.quantity} x {formatMoney(item.price)}
                     </p>
                   </div>
                   <div>
-                    <p className='font-bold'>{formatMoney(item.total)}</p>
+                    <p className='font-bold dark:text-white'>
+                      {formatMoney(item.total)}
+                    </p>
                   </div>
                 </div>
               ))
             )}
           </div>
-          <div className='flex justify-between items-center text-white bg-[#373b53] p-6 rounded-b-md'>
-            <h3>Grand Total</h3>
+          <div className='flex justify-between items-center text-xs text-white bg-[#373b53] dark:bg-eight p-6 rounded-b-md'>
+            <span>Grand Total</span>
             <p className='text-xl font-bold leading-relaxed'>
               {formatMoney(total)}
             </p>
           </div>
         </div>
-        <div className='flex justify-center items-center gap-2 bg-white mt-14 py-5 px-6'>
+        <div className='flex justify-center items-center gap-2 bg-white dark:bg-three mt-14 py-5 px-6'>
           <Button
             containerClasses={classNames(
               status === 'paid' ? 'invisible' : '',
-              'bg-buttonLight hover:bg-five px-6'
+              'bg-buttonLight hover:bg-five dark:bg-four dark:hover:bg-twelve px-6'
             )}
-            textClasses='text-seven'
+            textClasses='text-seven dark:text-five'
             buttonText='Edit'
             onClick={() => setShowEditInvoiceForm(true)}
           />
@@ -229,7 +237,7 @@ export default function InvoicePage({ invoiceData }) {
               status === 'draft'
                 ? 'invisible'
                 : status === 'paid'
-                ? 'bg-green px-6 justify-self-end cursor-not-allowed'
+                ? 'bg-green dark:bg-green/80 px-6 justify-self-end cursor-not-allowed'
                 : 'bg-one hover:bg-two px-[1.75rem]'
             }
             textClasses='text-white'

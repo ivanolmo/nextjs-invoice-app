@@ -8,7 +8,7 @@ export default function Input({ label, ...props }) {
     <div className={`mt-6 ${props.classes ? props.classes : ''}`}>
       <label
         htmlFor={props.id || props.name}
-        className='text-seven text-xs tracking-tight'
+        className='text-seven dark:text-six text-xs tracking-tight'
       >
         {label}
       </label>
@@ -17,7 +17,7 @@ export default function Input({ label, ...props }) {
           meta.touched && meta.error
             ? 'border-nine'
             : 'border-five hover:border-one',
-          'text-xs text-black font-bold border p-4 mt-2 w-full rounded-md cursor-pointer'
+          'text-xs text-black dark:text-white font-bold border dark:border-four p-4 mt-2 rounded-md cursor-pointer w-full dark:bg-three'
         )}
         {...field}
         {...props}

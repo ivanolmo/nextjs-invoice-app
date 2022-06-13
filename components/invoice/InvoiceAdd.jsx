@@ -46,9 +46,9 @@ export default function InvoiceAdd() {
   };
 
   return (
-    <div className='absolute top-[4.625rem] bg-white pt-8 px-6 inset-0 h-max'>
+    <div className='absolute top-[4.625rem] bg-white dark:bg-twelve pt-8 px-6 inset-0 h-max'>
       <div
-        className='cursor-pointer'
+        className='cursor-pointer w-fit'
         onClick={() => setShowAddInvoiceForm(false)}
       >
         <Image
@@ -57,25 +57,27 @@ export default function InvoiceAdd() {
           width={6}
           height={8}
         />
-        <span className='text-xs tracking-tight font-bold ml-6'>Go Back</span>
+        <span className='text-xs tracking-tight font-bold dark:text-white ml-6'>
+          Go Back
+        </span>
       </div>
 
-      <h1 className='text-xl font-bold mt-6'>New Invoice</h1>
+      <h1 className='text-xl font-bold dark:text-white mt-6'>New Invoice</h1>
 
       <div className='mt-6'>
         <InvoiceForm onSubmit={() => onSubmit()} formRef={formRef} />
       </div>
 
-      <div className='flex justify-center items-center gap-2 bg-white mt-20 -mx-6 py-5 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)]'>
+      <div className='flex justify-center items-center gap-2 bg-white dark:bg-three mt-20 -mx-6 py-5 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)]'>
         <Button
-          containerClasses='bg-buttonLight hover:bg-five px-4'
-          textClasses='text-seven'
+          containerClasses='bg-buttonLight hover:bg-five dark:bg-four dark:hover:bg-twelve px-4'
+          textClasses='text-seven dark:text-five'
           buttonText='Discard'
           onClick={() => setShowAddInvoiceForm(false)}
         />
         <Button
-          containerClasses='bg-[#373b53] hover:bg-eight px-4'
-          textClasses='text-six'
+          containerClasses='bg-[#373b53] hover:bg-eight dark:hover:bg-[#373b53]/50 px-4'
+          textClasses='text-xs text-six dark:text-five'
           buttonText='Save as Draft'
           onClick={() => handleSubmit('draft')}
         />

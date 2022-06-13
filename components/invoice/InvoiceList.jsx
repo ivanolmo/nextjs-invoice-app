@@ -27,7 +27,7 @@ export default function InvoiceList({ invoices }) {
         setFilters={setFilters}
       />
       <ul className='mt-8'>
-        {!invoices || invoices.length === 0 ? (
+        {!filteredInvoices || filteredInvoices.length === 0 ? (
           <Invoice404 />
         ) : (
           filteredInvoices.map((invoice) => (

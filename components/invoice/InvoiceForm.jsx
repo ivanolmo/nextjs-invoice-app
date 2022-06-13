@@ -4,6 +4,7 @@ import { DatePicker, Select } from 'react-formik-ui';
 
 import Input from '../ui/Input';
 import Button from '../ui/Button';
+import DeleteIcon from '../ui/DeleteIcon';
 import { classNames } from '../../lib/formatUtils';
 import { validationSchema } from '../../lib/validationSchema';
 
@@ -111,7 +112,9 @@ export default function InvoiceForm(props) {
 
               <div
                 className={classNames(
-                  datePickerDisabled ? 'text-seven/50' : 'text-seven',
+                  datePickerDisabled
+                    ? 'text-seven/50 dark:text-six/50'
+                    : 'text-seven',
                   'tracking-tight mt-10 space-y-6'
                 )}
               >
@@ -128,13 +131,13 @@ export default function InvoiceForm(props) {
                         touched.createdAt &&
                         'border-nine',
                       datePickerDisabled
-                        ? 'text-black/50 border-five/50 cursor-not-allowed'
-                        : 'text-black border-five hover:border-one cursor-pointer',
-                      'bg-[url("/assets/icon-calendar.svg")] bg-no-repeat bg-[center_right_1rem] text-black font-bold mt-4 p-4 border rounded-md h-12 w-full'
+                        ? 'text-black/50 border-five/50 dark:text-white/50 dark:bg-three/30 dark:border-four/50 cursor-not-allowed'
+                        : 'dark:bg-three text-black dark:text-white border-five dark:border-four hover:border-one cursor-pointer',
+                      'bg-[url("/assets/icon-calendar.svg")] bg-no-repeat bg-[center_right_1rem] font-bold mt-4 p-4 border rounded-md h-12 w-full'
                     )}
                   />
                 </div>
-                <div className='text-seven'>
+                <div className='text-seven dark:text-six'>
                   <Select
                     label='Payment Terms'
                     name='paymentTerms'
@@ -143,7 +146,7 @@ export default function InvoiceForm(props) {
                       hasErrors && errors.paymentTerms && touched.paymentTerms
                         ? 'border-nine'
                         : 'border-five hover:border-one',
-                      'bg-[url("/assets/icon-arrow-down.svg")] bg-no-repeat bg-[center_right_1rem] bg-white text-black font-bold mt-4 p-4 border rounded-md h-12 w-full appearance-none cursor-pointer'
+                      'bg-[url("/assets/icon-arrow-down.svg")] bg-no-repeat bg-[center_right_1rem] bg-white dark:bg-three text-black dark:text-white font-bold mt-4 p-4 border dark:border-four rounded-md h-12 w-full appearance-none cursor-pointer'
                     )}
                     options={[
                       { label: '', value: null },
@@ -176,59 +179,50 @@ export default function InvoiceForm(props) {
                       {values.items.map((item, index) => (
                         <div
                           key={index}
-                          className='grid grid-cols-4 gap-x-4 items-end'
+                          className='grid grid-cols-10 gap-x-4 items-end'
                         >
                           <Input
                             label='Item Name'
                             name={`items[${index}].name`}
                             type='text'
-                            classes='col-span-4'
+                            classes='col-span-10'
                           />
                           <Input
                             label='Qty'
                             name={`items[${index}].quantity`}
                             type='number'
+                            classes='col-span-2'
                           />
                           <Input
                             label='Price'
                             name={`items[${index}].price`}
                             type='number'
+                            classes='col-span-3'
                           />
-                          <div
-                            className='hidden'
-                            name={`items[${index}].total`}
-                            type='number'
-                          ></div>
-                          <div className='flex flex-col justify-between h-[82px]'>
-                            <div>
-                              <span className='text-seven tracking-tight'>
-                                Total
-                              </span>
-                            </div>
-                            <div className='pb-3'>
-                              <span className='text-six font-bold'>
-                                {(item.quantity * item.price).toFixed(2)}
-                              </span>
+
+                          <div className='col-span-3'>
+                            <label
+                              htmlFor='total'
+                              className='text-xs text-seven dark:text-six tracking-tight'
+                            >
+                              Total
+                            </label>
+                            <div className='text-xs text-black dark:text-six font-bold mt-2 py-4'>
+                              {(item.quantity * item.price).toFixed(2)}
                             </div>
                           </div>
-                          <button
-                            type='button'
+
+                          <div
                             onClick={() => remove(index)}
-                            className='justify-self-end pb-3 pr-2'
+                            className='col-span-2 justify-self-end py-4 pr-2 cursor-pointer'
                           >
-                            {/* TODO hover color */}
-                            <Image
-                              src='/assets/icon-delete.svg'
-                              alt='delete icon'
-                              width={12}
-                              height={16}
-                            />
-                          </button>
+                            <DeleteIcon className='fill-current text-six hover:text-nine' />
+                          </div>
                         </div>
                       ))}
                       <Button
-                        containerClasses='bg-buttonLight hover:bg-five mt-12'
-                        textClasses='text-seven'
+                        containerClasses='bg-buttonLight dark:bg-three hover:bg-five dark:hover:bg-four mt-12'
+                        textClasses='text-seven dark:text-six'
                         buttonText='+ Add New Item'
                         onClick={() =>
                           push({

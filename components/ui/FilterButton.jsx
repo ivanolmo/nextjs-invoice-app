@@ -27,7 +27,7 @@ export default function FilterButton({ setFilters }) {
   return (
     <div className='relative'>
       <div
-        className='flex items-center gap-4 cursor-pointer'
+        className='flex items-center gap-3 cursor-pointer dark:text-white'
         onClick={() => setShowFilters(!showFilters)}
       >
         <span className='text-xs font-bold md:hidden'>Filter</span>
@@ -42,7 +42,7 @@ export default function FilterButton({ setFilters }) {
         />
       </div>
       {showFilters && (
-        <div className='absolute top-10 -left-10 flex flex-col gap-4 bg-white border border-none rounded-lg w-max p-6 z-50 shadow-[0_8px_10px_0px_rgba(124,93,250,0.3)] md:w-48'>
+        <div className='absolute top-10 -left-10 flex flex-col gap-4 bg-white dark:bg-three border border-none rounded-lg w-max p-6 md:w-48 shadow-[0_8px_10px_0px_rgba(124,93,250,0.3)] dark:shadow-[0_8px_10px_0px_rgba(20,22,37,0.9)]'>
           {Object.keys(checkedStatus).map((status, index) => (
             <div
               key={index}
@@ -59,9 +59,11 @@ export default function FilterButton({ setFilters }) {
                   />
                 </div>
               ) : (
-                <div className='bg-five border border-transparent group-hover:border-one w-4 h-4 rounded-sm'></div>
+                <div className='bg-five dark:bg-twelve border border-transparent group-hover:border-one w-4 h-4 rounded-sm'></div>
               )}
-              <span className='text-xs font-bold capitalize'>{status}</span>
+              <span className='text-xs font-bold capitalize dark:text-white'>
+                {status}
+              </span>
             </div>
           ))}
         </div>
