@@ -4,6 +4,7 @@ module.exports = {
     './components/**/*.{js,jsx}',
     './lib/**/*.js',
   ],
+  darkMode: 'class',
   theme: {
     colors: {
       transparent: 'transparent',
