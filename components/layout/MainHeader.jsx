@@ -28,7 +28,7 @@ export default function MainHeader() {
       </Link>
       <div className=' flex items-center leading-zero'>
         <div
-          className='pr-6 cursor-pointer'
+          className='mr-6 cursor-pointer'
           onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
         >
           {resolvedTheme === 'light' ? (
