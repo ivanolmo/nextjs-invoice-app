@@ -1,6 +1,6 @@
 import Button from './Button';
 
-export default function DeletePopup(props) {
+export default function DeleteModal(props) {
   const handleDelete = (id) => {
     props.handleDelete(id);
     props.handleClosePopup();
@@ -9,11 +9,11 @@ export default function DeletePopup(props) {
   return (
     <>
       <div className='absolute inset-0 z-500 bg-gradient'></div>
-      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-three flex flex-col p-8 rounded-lg w-80 z-1000'>
-        <h3 className='text-xl font-bold leading-medium tracking-tight dark:text-white'>
+      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-three flex flex-col p-8 md:p-12 rounded-lg w-80 md:w-[480px] z-1000'>
+        <h3 className='text-xl md:text-2xl font-bold leading-medium md:leading-[1.33] tracking-tight dark:text-white'>
           Confirm Deletion
         </h3>
-        <p className='text-xs text-seven dark:text-six leading-large tracking-tight mt-2'>
+        <p className='text-xs text-seven dark:text-five leading-large tracking-tight mt-2'>
           Are you sure you want to delete invoice #{props.id}? This action
           cannot be undone.
         </p>
