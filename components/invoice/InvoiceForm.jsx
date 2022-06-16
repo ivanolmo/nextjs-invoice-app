@@ -1,11 +1,11 @@
-import { Formik, Form, FieldArray } from 'formik';
+import { FieldArray, Form, Formik } from 'formik';
 import { DatePicker, Select } from 'react-formik-ui';
 
-import Input from '../ui/Input';
 import Button from '../ui/Button';
 import DeleteIcon from '../ui/DeleteIcon';
-import { classNames } from '../../utils';
-import { formValidationSchema } from '../../utils';
+import Input from '../ui/Input';
+import { classNames } from '../../utils/utils';
+import { formValidationSchema } from '../../utils/formValidationSchema';
 
 export default function InvoiceForm(props) {
   const initialValues = {

@@ -6,10 +6,15 @@ import { toast } from 'react-toastify';
 
 import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceEdit from '../../components/invoice/InvoiceEdit';
-import DeleteModal from '../../components/ui/DeleteModal';
 import Button from '../../components/ui/Button';
-import { formatDate, formatMoney, formatStatus, classNames } from '../../utils';
+import DeleteModal from '../../components/ui/DeleteModal';
 import { db } from '../../lib/firebaseAdmin';
+import {
+  classNames,
+  formatDate,
+  formatMoney,
+  formatStatus,
+} from '../../utils/utils';
 
 export default function InvoicePage({ invoiceData }) {
   const [invoice, setInvoice] = useState(invoiceData);

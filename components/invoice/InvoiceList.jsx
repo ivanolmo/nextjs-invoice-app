@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import UtilityHeader from '../layout/UtilityHeader';
 import InvoiceListItem from './InvoiceListItem';
 import Invoice404 from '../layout/Invoice404';
+import UtilityHeader from '../layout/UtilityHeader';
 
 export default function InvoiceList({ invoices }) {
   const [filteredInvoices, setFilteredInvoices] = useState([]);
@@ -21,7 +21,7 @@ export default function InvoiceList({ invoices }) {
   }, [filters, invoices]);
 
   return (
-    <div className='row-start-1 col-start-1 p-6 pb-8'>
+    <div className='row-start-1 col-start-1 p-6 pb-8 md:px-12 md:py-14'>
       <UtilityHeader
         invoiceCount={filteredInvoices.length}
         setFilters={setFilters}

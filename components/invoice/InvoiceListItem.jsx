@@ -1,7 +1,12 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
-import { formatDate, formatMoney, formatStatus, classNames } from '../../utils';
+import {
+  classNames,
+  formatDate,
+  formatMoney,
+  formatStatus,
+} from '../../utils/utils';
 
 export default function InvoiceListItem({ invoice }) {
   const { id, paymentDue, total, clientName, status } = invoice;

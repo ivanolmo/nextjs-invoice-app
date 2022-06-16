@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 import InvoiceContext from '../context/InvoiceContext';
-import InvoiceList from '../components/invoice/InvoiceList';
 import InvoiceAdd from '../components/invoice/InvoiceAdd';
+import InvoiceList from '../components/invoice/InvoiceList';
 import { db } from '../lib/firebaseAdmin';
-import fetcher from '../utils';
+import { fetcher } from '../utils/utils';
 
 export default function Home({ allInvoicesData }) {
   const [invoices, setInvoices] = useState(allInvoicesData);

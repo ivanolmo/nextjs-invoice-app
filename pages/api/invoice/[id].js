@@ -1,5 +1,5 @@
 import { db } from '../../../lib/firebaseAdmin';
-import { addDays } from '../../../utils';
+import { addDays } from '../../../utils/utils';
 
 export default async function handler(req, res) {
   const {
