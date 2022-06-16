@@ -16,7 +16,7 @@ export default function MainHeader() {
     <header className='flex justify-between items-center bg-[#373b53] dark:bg-three'>
       <Link href='/'>
         <a onClick={() => clearAll()}>
-          <div className='bg-one p-6 leading-zero rounded-r-3xl'>
+          <div className='bg-one p-6 md:p-7 leading-zero rounded-r-3xl'>
             <Image
               src='/assets/logo.svg'
               alt='main logo'
@@ -47,13 +47,14 @@ export default function MainHeader() {
             />
           )}
         </div>
-        <div className='px-6 py-5 border-l border-[#494e6e]'>
+        <div className='px-6 py-5 md:py-6 border-l border-[#494e6e]'>
           <div className='rounded-full overflow-hidden'>
             <Image
               src='/assets/image-avatar.jpg'
               alt='user avatar'
               width={32}
               height={32}
+              quality={100}
             />
           </div>
         </div>

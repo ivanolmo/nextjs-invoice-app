@@ -50,47 +50,52 @@ export default function InvoiceEdit({ setInvoice }) {
   }, [currentInvoice]);
 
   return (
-    <div className='absolute top-[4.625rem] bg-white dark:bg-twelve pt-8 px-6 inset-0 h-max'>
-      <div
-        className='cursor-pointer w-fit'
-        onClick={() => setShowEditInvoiceForm(false)}
-      >
-        <Image
-          src='/assets/icon-arrow-left.svg'
-          alt='left arrow'
-          width={6}
-          height={8}
-        />
-        <span className='text-xs tracking-tight font-bold dark:text-white ml-6'>
-          Go Back
-        </span>
-      </div>
+    <>
+      <div className='hidden md:block absolute inset-0 md:top-[82px] bg-gradient'></div>
+      <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-twelve md:p-14 md:pb-8 md:rounded-r-2xl z-50'>
+        <div
+          className='cursor-pointer w-fit md:hidden'
+          onClick={() => setShowEditInvoiceForm(false)}
+        >
+          <Image
+            src='/assets/icon-arrow-left.svg'
+            alt='left arrow'
+            width={6}
+            height={8}
+          />
+          <span className='text-xs dark:text-white hover:text-seven dark:hover:text-six tracking-tight font-bold ml-6'>
+            Go Back
+          </span>
+        </div>
 
-      <h1 className='text-2xl font-bold dark:text-white mt-6'>
-        Edit <span className='text-six'>#</span>
-        {currentInvoice.id}
-      </h1>
+        <div className='mt-6 md:mt-0'>
+          <span className='text-2xl font-bold dark:text-white'>
+            Edit <span className='text-six dark:text-[#777f98]'>#</span>
+            {currentInvoice.id}
+          </span>
+        </div>
 
-      <div className='mt-6'>
-        <InvoiceForm onSubmit={() => onSubmit()} formRef={formRef} />
-      </div>
+        <div className='mt-6'>
+          <InvoiceForm onSubmit={() => onSubmit()} formRef={formRef} />
+        </div>
 
-      <div className='flex justify-end items-center gap-2 bg-white dark:bg-three mt-20 -mx-6 py-5 px-6 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)]'>
-        <Button
-          containerClasses='group bg-buttonLight hover:bg-five dark:bg-four px-6'
-          textClasses='text-seven dark:text-five dark:group-hover:text-seven'
-          buttonText='Cancel'
-          onClick={() => {
-            setShowEditInvoiceForm(false);
-          }}
-        />
-        <Button
-          containerClasses='bg-one hover:bg-two px-6'
-          textClasses='text-white'
-          buttonText='Save Changes'
-          onClick={() => handleSubmit()}
-        />
+        <div className='flex justify-end items-center gap-2 bg-white dark:bg-three md:dark:bg-twelve mt-20 md:mt-12 -mx-6 md:mx-0 py-5 px-6 md:p-0 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)] md:shadow-none'>
+          <Button
+            containerClasses='group bg-buttonLight hover:bg-five dark:bg-four px-6'
+            textClasses='text-seven dark:text-five dark:group-hover:text-seven'
+            buttonText='Cancel'
+            onClick={() => {
+              setShowEditInvoiceForm(false);
+            }}
+          />
+          <Button
+            containerClasses='bg-one hover:bg-two px-6'
+            textClasses='text-white'
+            buttonText='Save Changes'
+            onClick={() => handleSubmit()}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

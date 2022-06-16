@@ -11,14 +11,14 @@ export default function UtilityHeader({ invoiceCount, setFilters }) {
   return (
     <div className='flex justify-between items-center'>
       <div className='flex flex-col gap-1'>
-        <span className='text-xl font-bold tracking-tight dark:text-white'>
+        <span className='text-xl md:text-3xl font-bold tracking-tight dark:text-white'>
           Invoices
         </span>
-        <span className='text-six dark:text-white text-xs tracking-tight md:hidden'>
+        <span className='text-six dark:text-five text-xs tracking-tight md:hidden'>
           {invoiceCount ? invoiceCount : 'No'} invoices
         </span>
-        <span className='text-six text-xs tracking-tight hidden md:block'>
-          There are {invoiceCount ? invoiceCount : 'No'} invoices
+        <span className='text-six dark:text-five text-xs tracking-tight hidden md:block'>
+          There are {invoiceCount ? `${invoiceCount} total` : 'no'} invoices
         </span>
       </div>
       <div className='flex justify-between items-center gap-5 md:gap-10'>

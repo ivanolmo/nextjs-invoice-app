@@ -30,7 +30,7 @@ export default function Home({ allInvoicesData }) {
   mutate();
 
   return (
-    <div className='py-8 px-6'>
+    <div className='grid grid-cols-1'>
       <InvoiceList invoices={invoices} />
 
       {showAddInvoiceForm && <InvoiceAdd />}

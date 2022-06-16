@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import InvoiceContext from '../../store/context';
 import InvoiceEdit from '../../components/invoice/InvoiceEdit';
-import DeletePopup from '../../components/ui/DeletePopup';
+import DeleteModal from '../../components/ui/DeleteModal';
 import Button from '../../components/ui/Button';
 import {
   formatDate,
@@ -23,8 +23,8 @@ export default function InvoicePage({ invoiceData }) {
     setCurrentInvoice,
     showEditInvoiceForm,
     setShowEditInvoiceForm,
-    showDeletePopup,
-    setShowDeletePopup,
+    showDeleteModal,
+    setShowDeleteModal,
   } = useContext(InvoiceContext);
 
   const router = useRouter();
@@ -33,9 +33,9 @@ export default function InvoicePage({ invoiceData }) {
     setCurrentInvoice(invoice);
   }, [invoice, setCurrentInvoice]);
 
-  // TODO add a temp loading state if page is fallback
+  // TODO add loading state if page is fallback
   if (router.isFallback) {
-    return <div className=''>Loading</div>;
+    return <div className=''>Loading...</div>;
   }
 
   const {
@@ -71,7 +71,7 @@ export default function InvoicePage({ invoiceData }) {
   };
 
   // closes delete modal, passed as prop to modal cancel button
-  const handleClosePopup = () => setShowDeletePopup(false);
+  const handleClosePopup = () => setShowDeleteModal(false);
 
   // clears current invoice from state and navigates to / after delete
   // also does same functions on click of 'Go Back' button
@@ -102,121 +102,189 @@ export default function InvoicePage({ invoiceData }) {
   };
 
   return (
-    <>
-      <div className='pt-8'>
-        <div className='ml-6 cursor-pointer' onClick={() => handleClose()}>
+    <div className='grid grid-cols-1'>
+      <div className='row-start-1 col-start-1 pt-8 md:pt-12 px-6 md:px-10'>
+        <div className='cursor-pointer' onClick={() => handleClose()}>
           <Image
             src='/assets/icon-arrow-left.svg'
             alt='left arrow'
             width={6}
             height={8}
           />
-          <span className='text-xs hover:text-seven dark:text-white tracking-tight font-bold ml-6'>
+          <span className='text-xs dark:text-white hover:text-seven dark:hover:text-six tracking-tight font-bold ml-6'>
             Go Back
           </span>
         </div>
-        <header className='flex justify-between items-center bg-white dark:bg-three text-xs tracking-tight mt-8 mx-6 p-6 rounded-md'>
-          <span className='text-seven dark:text-five '>Status</span>
-          <div
-            className={classNames(
-              status === 'paid'
-                ? 'text-green bg-green/10 dark:bg-green/5'
-                : status === 'pending'
-                ? 'text-orange bg-orange/10 dark:bg-orange/5'
-                : 'text-darkGray dark:text-five bg-darkGray/10 dark:bg-five/5',
-              'p-3 font-bold rounded-md w-[6.5rem] text-center'
-            )}
-          >
-            <span className='bg-current inline-block mr-2 w-2 h-2 rounded-full'></span>
-            {formatStatus(status)}
-          </div>
-        </header>
-        <div className='bg-white dark:bg-three mt-4 mx-6 p-6 text-sm tracking-tight rounded-md'>
-          <div className='space-y-1'>
-            <div className='font-bold text-xs dark:text-white'>
-              <span className='text-seven'>#</span>
-              {id}
+        <div className='flex justify-between items-center bg-white dark:bg-three text-xs tracking-tight mt-8 p-6 md:px-8 md:py-0 rounded-md'>
+          <div className='flex justify-between md:justify-start items-center w-full md:w-auto'>
+            <div className='md:mr-4'>
+              <span className='text-seven dark:text-five'>Status</span>
             </div>
-            <div className='text-seven dark:text-five text-xs'>
-              {description || 'N/A'}
+            <div
+              className={classNames(
+                status === 'paid'
+                  ? 'text-green bg-green/10 dark:bg-green/5'
+                  : status === 'pending'
+                  ? 'text-orange bg-orange/10 dark:bg-orange/5'
+                  : 'text-darkGray dark:text-five bg-darkGray/10 dark:bg-five/5',
+                'p-3 font-bold rounded-md w-[6.5rem] text-center'
+              )}
+            >
+              <span className='bg-current inline-block mr-2 w-2 h-2 rounded-full'></span>
+              {formatStatus(status)}
             </div>
           </div>
-          <div className='text-xs text-seven dark:text-five mt-7 space-y-1'>
-            <p>{senderAddress.street || '-'}</p>
-            <p>{senderAddress.city || '-'}</p>
-            <p>{senderAddress.postCode || '-'}</p>
-            <p>{senderAddress.country || '-'}</p>
+          <div className='hidden md:flex md:justify-center md:items-center gap-2 py-5'>
+            <Button
+              containerClasses={classNames(
+                status === 'paid' ? 'invisible' : '',
+                'bg-buttonLight hover:bg-five dark:bg-four dark:hover:bg-twelve px-6'
+              )}
+              textClasses='text-seven dark:text-five'
+              buttonText='Edit'
+              onClick={() => setShowEditInvoiceForm(true)}
+            />
+            <Button
+              containerClasses='bg-nine hover:bg-ten px-6'
+              textClasses='text-white'
+              buttonText='Delete'
+              onClick={() => setShowDeleteModal(true)}
+            />
+            <Button
+              containerClasses={
+                status === 'draft'
+                  ? 'hidden'
+                  : status === 'paid'
+                  ? 'bg-green dark:bg-green/80 px-6 justify-self-end cursor-not-allowed'
+                  : 'bg-one hover:bg-two px-[1.75rem]'
+              }
+              textClasses='text-white'
+              buttonText={status === 'paid' ? 'Invoice Paid' : 'Mark as Paid'}
+              onClick={status === 'paid' ? null : () => handleStatusUpdate()}
+            />
           </div>
-          <div className='flex gap-10 mt-7'>
-            <div className='flex flex-col justify-between'>
-              <div className='space-y-2'>
-                <span className='text-seven dark:text-five'>Invoice Date</span>
-                <p className='text-base font-bold dark:text-white'>
-                  {createdAt ? formatDate(createdAt) : '-'}
-                </p>
+        </div>
+
+        <div className='bg-white dark:bg-three mt-4 md:mt-6 p-6 md:p-8 text-xs tracking-tight rounded-md'>
+          <div className='md:flex md:justify-between'>
+            <div className='flex flex-col gap-1 md:gap-2'>
+              <div>
+                <span className='text-xs md:text-base font-bold text-seven dark:text-six tracking-tighter'>
+                  #
+                </span>
+                <span className='text-xs md:text-base font-bold dark:text-white tracking-tighter'>
+                  {id}
+                </span>
+              </div>
+              <div className='text-seven dark:text-five text-xs'>
+                {description || 'N/A'}
+              </div>
+            </div>
+            <div className='text-xs text-seven dark:text-five mt-7 md:mt-0 space-y-1'>
+              <p>{senderAddress.street || '-'}</p>
+              <p>{senderAddress.city || '-'}</p>
+              <p>{senderAddress.postCode || '-'}</p>
+              <p>{senderAddress.country || '-'}</p>
+            </div>
+          </div>
+          <div className='md:flex md:gap-24 md:justify-start md:mt-5'>
+            <div className='flex gap-10 md:gap-24 mt-7 md:mt-0'>
+              <div className='flex flex-col justify-between'>
+                <div className='space-y-2'>
+                  <span className='text-seven dark:text-five'>
+                    Invoice Date
+                  </span>
+                  <p className='text-base font-bold dark:text-white'>
+                    {createdAt ? formatDate(createdAt) : '-'}
+                  </p>
+                </div>
+                <div className='space-y-2'>
+                  <h3 className='text-seven dark:text-five'>Payment Due</h3>
+                  <p className='text-base dark:text-white font-bold'>
+                    {paymentDue ? formatDate(paymentDue) : 'N/A'}
+                  </p>
+                </div>
               </div>
               <div className='space-y-2'>
-                <h3 className='text-seven dark:text-five'>Payment Due</h3>
-                <p className='text-base dark:text-white font-bold'>
-                  {paymentDue ? formatDate(paymentDue) : 'N/A'}
-                </p>
-              </div>
-            </div>
-            <div className='space-y-2'>
-              <h3 className='text-seven dark:text-five'>Bill To</h3>
-              <div className='space-y-2'>
-                <p className='text-base dark:text-white font-bold mt-2'>
-                  {clientName || 'N/A'}
-                </p>
-                <div className='text-xs text-seven dark:text-five space-y-1'>
-                  <p>{clientAddress.street || '-'}</p>
-                  <p>{clientAddress.city || '-'}</p>
-                  <p>{clientAddress.postCode || '-'}</p>
-                  <p>{clientAddress.country || '-'}</p>
+                <h3 className='text-seven dark:text-five'>Bill To</h3>
+                <div className='space-y-2'>
+                  <p className='text-base dark:text-white font-bold mt-2'>
+                    {clientName || 'N/A'}
+                  </p>
+                  <div className='text-xs text-seven dark:text-five space-y-1'>
+                    <p>{clientAddress.street || '-'}</p>
+                    <p>{clientAddress.city || '-'}</p>
+                    <p>{clientAddress.postCode || '-'}</p>
+                    <p>{clientAddress.country || '-'}</p>
+                  </div>
                 </div>
               </div>
             </div>
+            <div className='mt-9 md:mt-0 space-y-3'>
+              <span className='text-seven dark:text-five text-xs'>Sent To</span>
+              <p className='text-base dark:text-white font-bold'>
+                {clientEmail || 'N/A'}
+              </p>
+            </div>
           </div>
-          <div className='mt-9 space-y-3'>
-            <span className='text-seven dark:text-five text-xs'>Sent To</span>
-            <p className='text-base dark:text-white font-bold'>
-              {clientEmail || 'N/A'}
-            </p>
-          </div>
-          <div className='bg-eleven dark:bg-four mt-10 p-6 space-y-6 rounded-t-md'>
+          <div className='bg-eleven dark:bg-four mt-10 md:mt-12 p-6 md:px-8 md:pt-8 md:pb-10 rounded-t-md md:rounded-t-lg'>
             {!items.length ? (
               <div className='text-base font-bold'>No Items</div>
             ) : (
-              items.map((item) => (
-                <div
-                  key={nanoid(6)}
-                  className='flex justify-between items-center text-xs'
-                >
-                  <div>
-                    <h3 className='font-bold dark:text-white'>
-                      {item.name || 'N/A'}
-                    </h3>
-                    <p className='text-seven dark:text-six font-bold mt-2'>
-                      {item.quantity} x {formatMoney(item.price)}
-                    </p>
-                  </div>
-                  <div>
-                    <p className='font-bold dark:text-white'>
-                      {formatMoney(item.total)}
-                    </p>
-                  </div>
+              <div className='flex flex-col gap-6 md:gap-8'>
+                <div className='hidden md:grid md:grid-cols-[240px_20px_120px_130px] md:gap-4 text-xs text-seven dark:text-five'>
+                  <span>Item Name</span>
+                  <span className='justify-self-center'>QTY</span>
+                  <span className='justify-self-end'>Price</span>
+                  <span className='justify-self-end'>Total</span>
                 </div>
-              ))
+                {items.map((item) => (
+                  <>
+                    <div
+                      key={nanoid(6)}
+                      className='flex justify-between items-center text-xs md:hidden'
+                    >
+                      <div className='flex flex-col gap-2'>
+                        <span className='font-bold dark:text-white max-w-[120px]'>
+                          {item.name || 'N/A'}
+                        </span>
+                        <span className='text-seven dark:text-six font-bold'>
+                          {item.quantity} x {formatMoney(item.price)}
+                        </span>
+                      </div>
+                      <div>
+                        <span className='font-bold dark:text-white'>
+                          {formatMoney(item.total)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className='hidden md:grid md:grid-cols-[240px_20px_120px_130px] md:gap-4 font-bold tracking-tight'>
+                      <span className='dark:text-white'>
+                        {item.name || 'N/A'}
+                      </span>
+                      <span className='justify-self-center text-seven dark:text-five'>
+                        {item.quantity}
+                      </span>
+                      <span className='justify-self-end text-seven dark:text-five'>
+                        {formatMoney(item.price)}
+                      </span>
+                      <span className='justify-self-end dark:text-white'>
+                        {formatMoney(item.total)}
+                      </span>
+                    </div>
+                  </>
+                ))}
+              </div>
             )}
           </div>
-          <div className='flex justify-between items-center text-xs text-white bg-[#373b53] dark:bg-eight p-6 rounded-b-md'>
-            <span>Grand Total</span>
-            <p className='text-xl font-bold leading-relaxed'>
+          <div className='flex justify-between items-center text-white bg-[#373b53] dark:bg-eight p-6 md:px-8 rounded-b-md md:rounded-b-lg'>
+            <span className='text-xs tracking-tight'>Amount Due</span>
+            <span className='text-xl md:text-2xl font-bold tracking-tighter leading-medium md:leading-[1.33]'>
               {formatMoney(total)}
-            </p>
+            </span>
           </div>
         </div>
-        <div className='flex justify-center items-center gap-2 bg-white dark:bg-three mt-14 py-5 px-6'>
+        <div className='flex justify-center items-center gap-2 bg-white dark:bg-three mt-14 -mx-6 py-5 px-6 md:hidden'>
           <Button
             containerClasses={classNames(
               status === 'paid' ? 'invisible' : '',
@@ -230,15 +298,15 @@ export default function InvoicePage({ invoiceData }) {
             containerClasses='bg-nine hover:bg-ten px-6'
             textClasses='text-white'
             buttonText='Delete'
-            onClick={() => setShowDeletePopup(true)}
+            onClick={() => setShowDeleteModal(true)}
           />
           <Button
             containerClasses={
               status === 'draft'
-                ? 'invisible'
+                ? 'hidden'
                 : status === 'paid'
                 ? 'bg-green dark:bg-green/80 px-6 justify-self-end cursor-not-allowed'
-                : 'bg-one hover:bg-two px-[1.75rem]'
+                : 'bg-one hover:bg-two px-8'
             }
             textClasses='text-white'
             buttonText={status === 'paid' ? 'Invoice Paid' : 'Mark as Paid'}
@@ -246,8 +314,8 @@ export default function InvoicePage({ invoiceData }) {
           />
         </div>
 
-        {showDeletePopup && (
-          <DeletePopup
+        {showDeleteModal && (
+          <DeleteModal
             id={id}
             handleDelete={handleDelete}
             handleClosePopup={handleClosePopup}
@@ -256,7 +324,7 @@ export default function InvoicePage({ invoiceData }) {
       </div>
 
       {showEditInvoiceForm && <InvoiceEdit setInvoice={setInvoice} />}
-    </>
+    </div>
   );
 }
 

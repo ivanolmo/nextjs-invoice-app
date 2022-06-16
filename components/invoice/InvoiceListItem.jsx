@@ -13,29 +13,31 @@ export default function InvoiceListItem({ invoice }) {
   return (
     <Link href={`/invoices/${id}`}>
       <a>
-        <li className='grid grid-cols-[auto_1fr] auto-rows-auto gap-y-6 mb-4 p-6 md:py-4 bg-white dark:bg-three rounded-lg text-xs border border-transparent hover:border-one'>
-          <div className='justify-self-start font-bold'>
+        <li className='grid md:inline-grid grid-cols-[auto_1fr] md:grid-cols-[60px_120px_110px_120px_1fr_8px] auto-rows-auto gap-y-6 md:gap-x-5 mb-4 p-6 md:py-4 bg-white dark:bg-three rounded-lg text-xs border border-transparent hover:border-one w-full'>
+          <div className='justify-self-start md:self-center font-bold md:mr-2'>
             <span className='text-seven'>#</span>
             <span className='dark:text-white'>{id}</span>
           </div>
-          <div className='col-start-1 row-start-2 self-start'>
+
+          <div className='col-start-1 md:col-start-2 row-start-2 md:row-start-1 self-start md:self-center'>
             <span className='text-seven dark:text-five'>
               Due {paymentDue ? formatDate(paymentDue) : 'N/A'}
             </span>
           </div>
 
-          <div className='col-start-1 row-start-2 self-end mt-5'>
+          <div className='col-start-1 md:col-start-4 row-start-2 md:row-start-1 self-end md:self-center md:justify-self-end mt-5 md:mt-0 md:mr-5'>
             <span className='text-base font-bold tracking-tight dark:text-white'>
               {formatMoney(total)}
             </span>
           </div>
-          <div className='row-start-1 col-start-3 justify-self-end'>
+
+          <div className='col-start-3 row-start-1 justify-self-end md:justify-self-start md:self-center'>
             <span className='text-seven dark:text-white tracking-tight'>
               {clientName || 'N/A'}
             </span>
           </div>
 
-          <div className='flex items-center col-start-3'>
+          <div className='flex justify-end items-center col-start-3 md:col-start-5'>
             <div
               className={classNames(
                 status === 'paid'
@@ -51,7 +53,7 @@ export default function InvoiceListItem({ invoice }) {
             </div>
           </div>
 
-          <div className='hidden md:block'>
+          <div className='hidden md:block col-start-6 self-center'>
             <Image
               src='/assets/icon-arrow-right.svg'
               alt='right arrow'
