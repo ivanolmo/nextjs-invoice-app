@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 export default function FilterButton({ setFilters }) {
+  // TODO add click outside
   const [checkedStatus, setCheckedStatus] = useState({
     draft: false,
     pending: false,

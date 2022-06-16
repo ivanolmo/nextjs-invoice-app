@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 
-import InvoiceContext from '../../store/context';
+import InvoiceContext from '../../context/InvoiceContext';
 
 export default function MainHeader() {
   const [mounted, setMounted] = useState(false);

@@ -3,7 +3,7 @@ import { ThemeProvider } from 'next-themes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { InvoiceProvider } from '../store/context';
+import { InvoiceProvider } from '../context/InvoiceContext';
 import MainHeader from '../components/layout/MainHeader';
 import '../styles/globals.scss';
 

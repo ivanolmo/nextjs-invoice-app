@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import Button from '../ui/Button';
 import FilterButton from '../ui/FilterButton';
-import InvoiceContext from '../../store/context';
+import InvoiceContext from '../../context/InvoiceContext';
 
 export default function UtilityHeader({ invoiceCount, setFilters }) {
   const { setShowAddInvoiceForm } = useContext(InvoiceContext);

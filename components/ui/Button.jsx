@@ -1,4 +1,4 @@
-import { classNames } from '../../lib/formatUtils';
+import { classNames } from '../../utils';
 
 export default function Button(props) {
   return (

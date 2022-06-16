@@ -1,12 +1,11 @@
-import Image from 'next/image';
 import { Formik, Form, FieldArray } from 'formik';
 import { DatePicker, Select } from 'react-formik-ui';
 
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import DeleteIcon from '../ui/DeleteIcon';
-import { classNames } from '../../lib/formatUtils';
-import { validationSchema } from '../../lib/validationSchema';
+import { classNames } from '../../utils';
+import { formValidationSchema } from '../../utils';
 
 export default function InvoiceForm(props) {
   const initialValues = {
@@ -34,7 +33,7 @@ export default function InvoiceForm(props) {
     <Formik
       initialValues={initialValues}
       innerRef={props.formRef}
-      validationSchema={validationSchema}
+      validationSchema={formValidationSchema}
       enableReinitialize={true}
       onSubmit={async () => {
         props.onSubmit();

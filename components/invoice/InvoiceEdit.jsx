@@ -1,7 +1,7 @@
 import { useEffect, useContext, useRef, useState } from 'react';
 import Image from 'next/image';
 
-import InvoiceContext from '../../store/context';
+import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
 import { toast } from 'react-toastify';

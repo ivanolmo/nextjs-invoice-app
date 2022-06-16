@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const validationSchema = Yup.object({
+export const formValidationSchema = Yup.object({
   senderAddress: Yup.object().shape({
     street: Yup.string().required(),
     city: Yup.string().required(),

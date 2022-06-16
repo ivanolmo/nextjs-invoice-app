@@ -4,16 +4,11 @@ import { useRouter } from 'next/router';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 
-import InvoiceContext from '../../store/context';
+import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceEdit from '../../components/invoice/InvoiceEdit';
 import DeleteModal from '../../components/ui/DeleteModal';
 import Button from '../../components/ui/Button';
-import {
-  formatDate,
-  formatMoney,
-  formatStatus,
-  classNames,
-} from '../../lib/formatUtils';
+import { formatDate, formatMoney, formatStatus, classNames } from '../../utils';
 import { db } from '../../lib/firebaseAdmin';
 
 export default function InvoicePage({ invoiceData }) {
