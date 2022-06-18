@@ -38,3 +38,10 @@ export function generateId() {
 
   return id;
 }
+
+export async function fetcher(url) {
+  const res = await fetch(url);
+  console.log('fetcher fetched');
+
+  return res.json();
+}
