@@ -33,4 +33,122 @@ input[type='number'] {
   background-image: linear-gradient(rgba(0, 0, 0, 0.4) 0 0);
 }
 
-// TODO add date picker and select styling
+.datePicker-wrapper > span,
+.select-wrapper > span {
+  color: #7e88c3;
+}
+
+.dark {
+  .datePicker-wrapper > span,
+  .select-wrapper > span {
+    color: #dfe3fa;
+  }
+}
+
+// react-datepicker styling
+// requires important tag because module comes with default styling
+.react-datepicker {
+  width: 100%;
+  font-family: 'Spartan', sans-serif !important;
+  font-weight: bold !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 8px 10px 0 rgba(124, 93, 250, 0.3) !important;
+
+  &__header {
+    background-color: #ffffff !important;
+    border: none !important;
+    margin-top: 1.75rem !important;
+    padding: 0 !important;
+  }
+
+  &__navigation {
+    margin-top: 1rem !important;
+
+    &-icon--next::before,
+    &-icon--previous::before {
+      border-color: #7c5dfa !important;
+    }
+
+    &-icon--next:hover::before,
+    &-icon--previous:hover::before {
+      scale: 1.2 !important;
+      transition: 0.2s;
+    }
+  }
+
+  &__month-container {
+    padding-bottom: 1rem !important;
+  }
+
+  &__current-month {
+    font-size: 0.75rem !important;
+  }
+
+  &__month {
+    margin-top: 1rem !important;
+  }
+
+  &__day {
+    font-size: 0.75rem !important;
+  }
+
+  &__day--outside-month {
+    opacity: 0.4;
+  }
+
+  &__day-names {
+    display: none;
+  }
+
+  &__day--keyboard-selected,
+  &__day--selected {
+    background-color: transparent !important;
+    color: #7c5dfa !important;
+  }
+
+  &__day:hover {
+    background-color: transparent !important;
+    color: #7c5dfa !important;
+  }
+}
+
+.dark {
+  .react-datepicker {
+    background-color: #252945 !important;
+    box-shadow: 0 8px 10px 0 rgba(20, 22, 37, 0.9) !important;
+
+    &__header {
+      background-color: #252945 !important;
+      border: none !important;
+    }
+
+    &__current-month {
+      color: #dfe3fa !important;
+    }
+
+    &__day {
+      color: #dfe3fa !important;
+
+      &:hover {
+        color: #7c5dfa !important;
+      }
+
+      &--keyboard-selected,
+      &--selected {
+        color: #7c5dfa !important;
+      }
+
+      &--outside-month {
+        opacity: 0.1;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .hide-label label {
+    display: none;
+  }
+}
