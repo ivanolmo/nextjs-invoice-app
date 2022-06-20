@@ -13,22 +13,25 @@ export default function MainHeader() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <header className='flex justify-between items-center bg-[#373b53] dark:bg-three'>
+    <header className='flex lg:flex-col justify-between items-center bg-[#373b53] dark:bg-three lg:rounded-r-3xl'>
       <Link href='/'>
         <a onClick={() => clearAll()}>
-          <div className='bg-one p-6 md:p-7 leading-zero rounded-r-3xl'>
-            <Image
-              src='/assets/logo.svg'
-              alt='main logo'
-              width={28}
-              height={26}
-            />
+          <div className='bg-one p-6 md:p-7 lg:p-8 leading-zero rounded-r-3xl'>
+            <div className='w-7 h-7 lg:w-10 lg:h-10'>
+              <Image
+                src='/assets/logo.svg'
+                alt='main logo'
+                width={28}
+                height={26}
+                layout='responsive'
+              />
+            </div>
           </div>
         </a>
       </Link>
-      <div className=' flex items-center leading-zero'>
+      <div className='flex lg:flex-col lg:gap-7 items-center leading-zero'>
         <div
-          className='mr-6 cursor-pointer'
+          className='mr-6 lg:m-0 cursor-pointer'
           onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
         >
           {resolvedTheme === 'light' ? (
@@ -47,14 +50,14 @@ export default function MainHeader() {
             />
           )}
         </div>
-        <div className='px-6 py-5 md:py-6 border-l border-[#494e6e]'>
-          <div className='rounded-full overflow-hidden'>
+        <div className='px-6 py-5 md:py-6 lg:px-8 lg:py-6 border-l lg:border-l-0 lg:border-t-2 border-[#494e6e]'>
+          <div className='rounded-full overflow-hidden w-8 h-8 lg:w-10 lg:h-10'>
             <Image
               src='/assets/image-avatar.jpg'
               alt='user avatar'
               width={32}
               height={32}
-              quality={100}
+              layout='responsive'
             />
           </div>
         </div>

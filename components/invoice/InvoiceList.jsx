@@ -21,12 +21,12 @@ export default function InvoiceList({ invoices }) {
   }, [filters, invoices]);
 
   return (
-    <div className='row-start-1 col-start-1 p-6 pb-8 md:px-12 md:py-14'>
+    <div className='row-start-1 col-start-1 p-6 pb-8 md:px-0 md:py-14 lg:py-20 md:w-[672px] lg:w-[730px]'>
       <UtilityHeader
         invoiceCount={filteredInvoices.length}
         setFilters={setFilters}
       />
-      <ul className='mt-8 md:mt-14'>
+      <ul className='mt-8 md:mt-14 lg:mt-16'>
         {!filteredInvoices || filteredInvoices.length === 0 ? (
           <Invoice404 />
         ) : (

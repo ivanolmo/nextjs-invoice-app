@@ -30,7 +30,7 @@ export default function Home({ allInvoicesData }) {
   mutate();
 
   return (
-    <div className='grid grid-cols-1'>
+    <div className='grid grid-cols-1 md:justify-items-center w-full lg:h-screen lg:overflow-y-scroll'>
       <InvoiceList invoices={invoices} />
 
       {showAddInvoiceForm && <InvoiceAdd />}

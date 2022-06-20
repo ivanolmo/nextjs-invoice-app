@@ -51,8 +51,8 @@ export default function InvoiceEdit({ setInvoice }) {
 
   return (
     <>
-      <div className='hidden md:block absolute inset-0 md:top-[82px] bg-gradient'></div>
-      <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-twelve md:p-14 md:pb-8 md:rounded-r-2xl z-50'>
+      <div className='hidden md:block absolute inset-0 md:top-[82px] lg:top-0 lg:left-[104px] bg-gradient'></div>
+      <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-twelve p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-50 justify-self-start'>
         <div
           className='cursor-pointer w-fit md:hidden'
           onClick={() => setShowEditInvoiceForm(false)}

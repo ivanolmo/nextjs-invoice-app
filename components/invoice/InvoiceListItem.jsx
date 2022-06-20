@@ -14,7 +14,7 @@ export default function InvoiceListItem({ invoice }) {
   return (
     <Link href={`/invoices/${id}`}>
       <a>
-        <li className='grid md:inline-grid grid-cols-[auto_1fr] md:grid-cols-[60px_120px_110px_120px_1fr_8px] auto-rows-auto gap-y-6 md:gap-x-5 mb-4 p-6 md:py-4 bg-white dark:bg-three rounded-lg text-xs border border-transparent hover:border-one w-full'>
+        <li className='grid md:inline-grid grid-cols-[auto_1fr] md:grid-cols-[60px_120px_110px_120px_1fr_8px] auto-rows-auto gap-y-6 md:gap-x-5 mb-4 p-6 md:py-4 lg:pl-8 lg:pr-6 bg-white dark:bg-three rounded-lg text-xs border border-transparent hover:border-one w-full'>
           <div className='justify-self-start md:self-center font-bold md:mr-2'>
             <span className='text-seven'>#</span>
             <span className='dark:text-white'>{id}</span>

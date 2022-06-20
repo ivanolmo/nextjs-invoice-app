@@ -6,7 +6,7 @@ export default function Button(props) {
       onClick={() => props.onClick?.()}
       className={classNames(
         props.containerClasses,
-        'flex justify-center items-center h-12 rounded-full cursor-pointer'
+        'flex justify-center items-center h-11 md:h-12 rounded-full cursor-pointer'
       )}
       disabled={props.disabled}
     >
@@ -18,7 +18,7 @@ export default function Button(props) {
       <div
         className={classNames(
           props.textClasses,
-          'flex justify-center items-center text-xs font-bold tracking-tight'
+          'flex justify-center items-center text-xs lg:text-sm font-bold tracking-tight'
         )}
       >
         {props.buttonText}

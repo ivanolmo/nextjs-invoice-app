@@ -20,9 +20,11 @@ function MyApp({ Component, pageProps }) {
 
       <InvoiceProvider>
         <ThemeProvider attribute='class'>
-          <MainHeader />
-          <Component {...pageProps} />
-          <ToastContainer autoClose={3000} />
+          <div className='flex flex-col lg:flex-row'>
+            <MainHeader />
+            <Component {...pageProps} />
+            <ToastContainer autoClose={3000} />
+          </div>
         </ThemeProvider>
       </InvoiceProvider>
     </>

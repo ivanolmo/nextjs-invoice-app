@@ -47,8 +47,8 @@ export default function InvoiceAdd() {
 
   return (
     <>
-      <div className='hidden md:block absolute inset-0 md:top-[82px] bg-gradient'></div>
-      <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-twelve p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-50 md:h-fit'>
+      <div className='hidden md:block absolute inset-0 md:top-[84px] lg:top-0 lg:left-[104px] bg-gradient'></div>
+      <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-twelve p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-50 md:justify-self-start'>
         <div
           className='cursor-pointer w-fit md:hidden'
           onClick={() => setShowAddInvoiceForm(false)}
@@ -76,8 +76,8 @@ export default function InvoiceAdd() {
 
         <div className='flex justify-center md:justify-between items-center gap-2 bg-white dark:bg-three md:dark:bg-twelve mt-20 md:mt-12 -mx-6 md:mx-0 py-5 md:p-0 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)] md:shadow-none'>
           <Button
-            containerClasses='bg-buttonLight hover:bg-five dark:bg-four dark:hover:bg-twelve px-4'
-            textClasses='text-seven dark:text-five'
+            containerClasses='bg-buttonLight hover:bg-five dark:bg-eleven dark:hover:bg-four px-4'
+            textClasses='text-seven dark:text-seven dark:hover:text-six'
             buttonText='Discard'
             onClick={() => setShowAddInvoiceForm(false)}
           />

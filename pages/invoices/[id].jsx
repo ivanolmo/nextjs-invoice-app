@@ -102,8 +102,8 @@ export default function InvoicePage({ invoiceData }) {
   };
 
   return (
-    <div className='grid grid-cols-1'>
-      <div className='row-start-1 col-start-1 pt-8 md:pt-12 px-6 md:px-10'>
+    <div className='grid grid-cols-1 md:justify-items-center lg:h-screen lg:overflow-y-auto w-full'>
+      <div className='row-start-1 col-start-1 pt-8 md:pt-12 lg:pt-16 px-6 md:px-0 md:max-w-[688px] lg:max-w-[730px]'>
         <div className='cursor-pointer' onClick={() => handleClose()}>
           <Image
             src='/assets/icon-arrow-left.svg'
@@ -115,7 +115,7 @@ export default function InvoicePage({ invoiceData }) {
             Go Back
           </span>
         </div>
-        <div className='flex justify-between items-center bg-white dark:bg-three text-xs tracking-tight mt-8 p-6 md:px-8 md:py-0 rounded-md'>
+        <div className='flex justify-between items-center bg-white dark:bg-three text-xs tracking-tight mt-8 p-6 md:px-8 md:py-0 rounded-md md:rounded-lg w-full'>
           <div className='flex justify-between md:justify-start items-center w-full md:w-auto'>
             <div className='md:mr-4'>
               <span className='text-seven dark:text-five'>Status</span>
@@ -165,7 +165,7 @@ export default function InvoicePage({ invoiceData }) {
           </div>
         </div>
 
-        <div className='bg-white dark:bg-three mt-4 md:mt-6 p-6 md:p-8 text-xs tracking-tight rounded-md'>
+        <div className='bg-white dark:bg-three mt-4 md:mt-6 p-6 md:p-8 lg:p-12 text-xs tracking-tight rounded-md md:rounded-lg'>
           <div className='md:flex md:justify-between'>
             <div className='flex flex-col gap-1 md:gap-2'>
               <div>

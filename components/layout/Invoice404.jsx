@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function Invoice404() {
   return (
-    <div className='mt-24 md:mt-52 flex flex-col items-center'>
+    <div className='mt-24 md:mt-52 lg:mt-36 flex flex-col items-center'>
       <Image
         src='/assets/illustration-empty.svg'
         alt='no invoices found'
