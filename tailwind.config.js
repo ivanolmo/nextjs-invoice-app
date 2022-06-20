@@ -26,7 +26,7 @@ module.exports = {
       green: '#33d69f',
       orange: '#ff8f00',
       darkGray: '#373b53',
-      buttonLight: '#f9fafe',
+      buttonLight: '#f0f1f4',
       gradient: 'rgba(0, 0, 0, 0.7)',
     },
     lineHeight: {

@@ -84,7 +84,12 @@ export default function InvoiceForm(props) {
               <div>
                 <Input label="Client's Name" name='clientName' type='text' />
 
-                <Input label="Client's Email" name='clientEmail' type='email' />
+                <Input
+                  label="Client's Email"
+                  name='clientEmail'
+                  type='email'
+                  placeholder='e.g. email@example.com'
+                />
 
                 <Input
                   label='Street Address'
@@ -118,38 +123,37 @@ export default function InvoiceForm(props) {
                 )}
               >
                 <div className='md:grid md:grid-cols-2 md:gap-x-6'>
-                  <div>
+                  <div className=''>
                     <DatePicker
+                      placeholder={new Date().toDateString()}
                       label='Invoice Date'
                       name='createdAt'
                       dateFormat='MMM dd yyyy'
                       onBlur={handleBlur}
                       disabled={datePickerDisabled}
+                      showPopperArrow={false}
                       className={classNames(
-                        hasErrors &&
-                          errors.createdAt &&
-                          touched.createdAt &&
-                          'border-nine',
-                        datePickerDisabled
+                        hasErrors && errors.createdAt && touched.createdAt
+                          ? 'border-nine dark:border-nine dark:bg-three'
+                          : datePickerDisabled
                           ? 'text-black/50 border-five/50 dark:text-white/50 dark:bg-three/30 dark:border-four/50 cursor-not-allowed'
-                          : 'dark:bg-three text-black dark:text-white border-five dark:border-four hover:border-one dark:hover:border-one cursor-pointer',
-                        'bg-[url("/assets/icon-calendar.svg")] bg-no-repeat bg-[center_right_1rem] font-bold mt-2.5 p-4 border rounded-md h-12 w-full'
+                          : 'dark:bg-three text-black dark:text-white border-five dark:border-four hover:border-one dark:hover:border-one',
+                        'bg-[url("/assets/icon-calendar.svg")] bg-no-repeat bg-[center_right_1rem] font-bold mt-2.5 p-4 border rounded-md h-12 w-full cursor-pointer'
                       )}
                     />
                   </div>
-                  <div className='text-seven dark:text-six mt-6 md:mt-0'>
+                  <div className='mt-6 md:mt-0'>
                     <Select
                       label='Payment Terms'
                       name='paymentTerms'
                       onBlur={handleBlur}
                       className={classNames(
                         hasErrors && errors.paymentTerms && touched.paymentTerms
-                          ? 'border-nine'
+                          ? 'border-nine dark:border-nine'
                           : 'border-five hover:border-one dark:hover:border-one',
                         'bg-[url("/assets/icon-arrow-down.svg")] bg-no-repeat bg-[center_right_1rem] bg-white dark:bg-three text-black dark:text-white font-bold mt-2.5 p-4 border dark:border-four rounded-md h-12 w-full appearance-none cursor-pointer'
                       )}
                       options={[
-                        { label: '', value: null },
                         { label: 'Net 1 Day', value: 1 },
                         { label: 'Net 7 Days', value: 7 },
                         { label: 'Net 14 Days', value: 14 },
@@ -168,7 +172,7 @@ export default function InvoiceForm(props) {
                 </div>
               </div>
 
-              <div className='mt-16 md:mt-6'>
+              <div className='mt-16 md:mt-6 lg:mt-8'>
                 <span className='text-[#777f98] text-lg font-bold'>
                   Item List
                 </span>
@@ -176,39 +180,54 @@ export default function InvoiceForm(props) {
 
               <FieldArray name='items'>
                 {({ push, remove }) => (
-                  <div className='flex flex-col gap-6'>
+                  <div className='flex flex-col'>
+                    {values.items.length === 0 && (
+                      <div className='my-8 self-center'>
+                        <span className='text-sm font-bold dark:text-white'>
+                          No Items
+                        </span>
+                      </div>
+                    )}
+                    <div className='hidden mt-4 -mb-4 md:grid md:grid-cols-[214px_46px_100px_54px] md:gap-4'>
+                      <span className='text-seven dark:text-five'>
+                        Item Name
+                      </span>
+                      <span className='text-seven dark:text-five'>Qty</span>
+                      <span className='text-seven dark:text-five'>Price</span>
+                      <span className='text-seven dark:text-five'>Total</span>
+                    </div>
                     {values.items.map((item, index) => (
                       <div
                         key={index}
-                        className='grid grid-cols-10 md:grid-cols-[214px_46px_100px_54px_24px] gap-x-4 items-end'
+                        className='grid grid-cols-10 md:grid-cols-[214px_46px_100px_54px_24px] gap-x-4 items-end my-6 md:my-0 md:-mb-4'
                       >
                         <Input
                           label='Item Name'
                           name={`items[${index}].name`}
                           type='text'
-                          classes='col-span-10 md:col-span-1'
+                          classes='col-span-10 md:col-span-1 mt-0 hide-label'
                         />
                         <Input
                           label='Qty'
                           name={`items[${index}].quantity`}
                           type='number'
-                          classes='col-span-2 md:col-span-1'
+                          classes='col-span-2 md:col-span-1 hide-label'
                         />
                         <Input
                           label='Price'
                           name={`items[${index}].price`}
                           type='number'
-                          classes='col-span-3 md:col-span-1'
+                          classes='col-span-3 md:col-span-1 hide-label'
                         />
 
-                        <div className='col-span-3 md:col-span-1 overflow-auto'>
+                        <div className='col-span-3 md:col-span-1 overflow-auto hide-label'>
                           <label
                             htmlFor='total'
                             className='text-xs text-seven dark:text-six tracking-tight'
                           >
                             Total
                           </label>
-                          <div className='mt-2 py-4'>
+                          <div className='mt-3 py-4'>
                             <span className='text-xs text-six dark:text-five font-bold'>
                               {(item.quantity * item.price).toFixed(2)}
                             </span>
@@ -224,10 +243,7 @@ export default function InvoiceForm(props) {
                       </div>
                     ))}
                     <Button
-                      containerClasses={classNames(
-                        values.items.length === 0 ? 'md:mt-4' : 'md:mt-4',
-                        'bg-buttonLight dark:bg-three hover:bg-five dark:hover:bg-four mt-6'
-                      )}
+                      containerClasses='bg-buttonLight dark:bg-three hover:bg-five dark:hover:bg-four mt-10'
                       textClasses='text-seven dark:text-six'
                       buttonText='+ Add New Item'
                       onClick={() =>
@@ -246,7 +262,7 @@ export default function InvoiceForm(props) {
               </FieldArray>
 
               {!isValid && submitCount > 0 && (
-                <div className='text-nine text-[0.625rem] font-bold mt-8 -mb-12 space-y-2 overflow-hidden'>
+                <div className='text-nine text-[0.625rem] font-bold mt-8 -mb-12 md:mb-0 space-y-2 overflow-hidden'>
                   <div>- All fields must be added</div>
                   {values.items.length === 0 && (
                     <div>- An item must be added</div>
