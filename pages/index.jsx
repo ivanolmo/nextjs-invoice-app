@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
+import { collection, getDocs } from 'firebase/firestore';
 
 import InvoiceContext from '../context/InvoiceContext';
 import InvoiceAdd from '../components/invoice/InvoiceAdd';
 import InvoiceList from '../components/invoice/InvoiceList';
-import { db } from '../lib/firebaseAdmin';
+import { db } from '../lib/firebase';
 import { fetcher } from '../utils/utils';
 
 export default function Home({ allInvoicesData }) {
@@ -39,10 +40,7 @@ export default function Home({ allInvoicesData }) {
 }
 
 export async function getStaticProps() {
-  const snapshot = await db
-    .collection('invoices')
-    .orderBy('paymentDue', 'asc')
-    .get();
+  const snapshot = await getDocs(collection(db, 'invoices'));
 
   const invoices = [];
   const undatedInvoices = [];

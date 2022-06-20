@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 
@@ -8,7 +9,7 @@ import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceEdit from '../../components/invoice/InvoiceEdit';
 import Button from '../../components/ui/Button';
 import DeleteModal from '../../components/ui/DeleteModal';
-import { db } from '../../lib/firebaseAdmin';
+import { db } from '../../lib/firebase';
 import {
   classNames,
   formatDate,
@@ -331,9 +332,10 @@ export default function InvoicePage({ invoiceData }) {
 export async function getStaticProps(context) {
   const id = context.params.id;
 
-  const doc = await db.collection('invoices').doc(id).get();
+  const docRef = doc(db, `invoices/${id}`);
+  const docSnap = await getDoc(docRef);
 
-  const invoiceData = doc.data();
+  const invoiceData = docSnap.data();
 
   if (!invoiceData) {
     return {
@@ -350,8 +352,10 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const snapshot = await db.collection('invoices').get();
+  const snapshot = await getDocs(collection(db, 'invoices'));
+
   const invoices = [];
+
   snapshot.forEach((doc) => invoices.push(doc.data()));
 
   return {
