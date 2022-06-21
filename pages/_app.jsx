@@ -7,7 +7,7 @@ import { InvoiceProvider } from '../context/InvoiceContext';
 import MainHeader from '../components/layout/MainHeader';
 import '../styles/globals.scss';
 
-function MyApp({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
     <>
       <Head>
@@ -31,4 +31,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default App;
