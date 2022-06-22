@@ -1,34 +1,32 @@
-import { useContext, useEffect, useState } from 'react';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { useContext } from 'react';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 
 import InvoiceContext from '../context/InvoiceContext';
 import InvoiceAdd from '../components/invoice/InvoiceAdd';
 import InvoiceList from '../components/invoice/InvoiceList';
 import { db } from '../lib/firebase';
+import { useCollectionDataSSR } from '../lib/hooks';
 
-export default function Home({ allInvoicesData }) {
-  const [invoices, setInvoices] = useState(allInvoicesData);
-
+export default function Home({ invoices }) {
   const { showAddInvoiceForm } = useContext(InvoiceContext);
 
-  const [data, loading] = useCollection(
-    query(collection(db, 'invoices'), orderBy('paymentDue', 'asc'))
+  const [data, loading, error] = useCollectionDataSSR(
+    query(collection(db, 'invoices'), orderBy('paymentDue', 'asc')),
+    { startsWith: invoices }
   );
 
-  useEffect(() => {
-    if (data) {
-      const invoiceArr = [];
+  // TODO add better loading/no invoice UI
+  if (loading || error) {
+    return <div>Loading</div>;
+  }
 
-      data.forEach((doc) => invoiceArr.push(doc.data()));
-
-      setInvoices(invoiceArr);
-    }
-  }, [data]);
+  if (!data || !invoices) {
+    return <div>No Invoices</div>;
+  }
 
   return (
     <div className='grid grid-cols-1 md:justify-items-center w-full lg:h-screen lg:overflow-y-scroll'>
-      <InvoiceList invoices={invoices} loading={loading} />
+      <InvoiceList invoices={data ?? invoices} />
 
       {showAddInvoiceForm && <InvoiceAdd />}
     </div>
@@ -40,11 +38,9 @@ export async function getStaticProps() {
     query(collection(db, 'invoices'), orderBy('paymentDue', 'asc'))
   );
 
-  const allInvoicesData = [];
-  snapshot.forEach((doc) => allInvoicesData.push(doc.data()));
+  const invoices = snapshot.docs.map((doc) => doc.data());
 
   return {
-    props: { allInvoicesData },
-    revalidate: 30,
+    props: { invoices },
   };
 }
