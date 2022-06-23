@@ -6,8 +6,8 @@ import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
 
-export default function InvoiceEdit({ setInvoice }) {
-  const { setShowEditInvoiceForm, currentInvoice } = useContext(InvoiceContext);
+export default function InvoiceEdit({ invoice }) {
+  const { setShowEditInvoiceForm } = useContext(InvoiceContext);
 
   const formRef = useRef(null);
 
@@ -15,17 +15,13 @@ export default function InvoiceEdit({ setInvoice }) {
     formRef.current.handleSubmit();
   };
 
-  // handles closing edit form and setting current invoice to updated ...
-  // ... invoice after form submit
-  // setInvoice updates parent InvoicePage component ([id].jsx page)
-  const handleUpdate = (updatedInvoice) => {
+  const handleClose = () => {
     setShowEditInvoiceForm(false);
-    setInvoice(updatedInvoice);
   };
 
   const onSubmit = async () => {
     const res = await toast.promise(
-      fetch(`/api/invoice/${currentInvoice.id}`, {
+      fetch(`/api/invoice/${invoice.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -38,16 +34,14 @@ export default function InvoiceEdit({ setInvoice }) {
         error: 'There was an error updating this invoice',
       }
     );
-    const data = await res.json();
-
-    handleUpdate(data.updatedInvoice);
+    handleClose();
   };
 
   useEffect(() => {
-    if (currentInvoice) {
-      formRef.current.setValues(currentInvoice);
+    if (invoice) {
+      formRef.current.setValues(invoice);
     }
-  }, [currentInvoice]);
+  }, [invoice]);
 
   return (
     <>
@@ -71,7 +65,7 @@ export default function InvoiceEdit({ setInvoice }) {
         <div className='mt-6 md:mt-0'>
           <span className='text-2xl font-bold dark:text-white'>
             Edit <span className='text-six dark:text-[#777f98]'>#</span>
-            {currentInvoice.id}
+            {invoice.id}
           </span>
         </div>
 
