@@ -6,13 +6,11 @@ export const InvoiceProvider = ({ children }) => {
   const [showAddInvoiceForm, setShowAddInvoiceForm] = useState(false);
   const [showEditInvoiceForm, setShowEditInvoiceForm] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [currentInvoice, setCurrentInvoice] = useState(null);
 
   const clearAll = () => {
     setShowAddInvoiceForm(false);
     setShowEditInvoiceForm(false);
     setShowDeleteModal(false);
-    setCurrentInvoice(null);
   };
 
   return (
@@ -24,8 +22,6 @@ export const InvoiceProvider = ({ children }) => {
         setShowEditInvoiceForm,
         showDeleteModal,
         setShowDeleteModal,
-        currentInvoice,
-        setCurrentInvoice,
         clearAll,
       }}
     >
