@@ -54,8 +54,8 @@ export default function InvoiceEdit({ invoice }) {
           <Image
             src='/assets/icon-arrow-left.svg'
             alt='left arrow'
-            width={6}
-            height={8}
+            width='6px'
+            height='8px'
           />
           <span className='text-xs dark:text-white hover:text-seven dark:hover:text-six tracking-tight font-bold ml-6'>
             Go Back

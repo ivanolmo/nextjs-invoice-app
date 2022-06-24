@@ -38,8 +38,8 @@ export default function FilterButton({ setFilters }) {
         <Image
           src='/assets/icon-arrow-down.svg'
           alt='filter icon'
-          width={10}
-          height={6}
+          width='10px'
+          height='6px'
         />
       </div>
       {showFilters && (
@@ -55,8 +55,8 @@ export default function FilterButton({ setFilters }) {
                   <Image
                     src='/assets/icon-check.svg'
                     alt='check'
-                    width={8}
-                    height={8}
+                    width='8px'
+                    height='8px'
                   />
                 </div>
               ) : (

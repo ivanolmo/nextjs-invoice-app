@@ -21,8 +21,8 @@ export default function MainHeader() {
               <Image
                 src='/assets/logo.svg'
                 alt='main logo'
-                width={28}
-                height={26}
+                width='28px'
+                height='26px'
                 layout='responsive'
               />
             </div>
@@ -38,15 +38,15 @@ export default function MainHeader() {
             <Image
               src='/assets/icon-moon.svg'
               alt='theme switcher'
-              width={20}
-              height={20}
+              width='20px'
+              height='20px'
             />
           ) : (
             <Image
               src='/assets/icon-sun.svg'
               alt='theme switcher'
-              width={20}
-              height={20}
+              width='20px'
+              height='20px'
             />
           )}
         </div>
@@ -55,8 +55,8 @@ export default function MainHeader() {
             <Image
               src='/assets/image-avatar.jpg'
               alt='user avatar'
-              width={32}
-              height={32}
+              width='32px'
+              height='32px'
               layout='responsive'
             />
           </div>

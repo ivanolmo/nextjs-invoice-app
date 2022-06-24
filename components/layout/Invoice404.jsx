@@ -6,8 +6,8 @@ export default function Invoice404() {
       <Image
         src='/assets/illustration-empty.svg'
         alt='no invoices found'
-        width={193}
-        height={160}
+        width='193px'
+        height='160px'
       />
       <div className='mt-10'>
         <h2 className='text-xl font-bold tracking-tighter text-center'>

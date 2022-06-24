@@ -91,13 +91,13 @@ export default function InvoicePage({ invoice }) {
 
   return (
     <div className='grid grid-cols-1 md:justify-items-center lg:h-screen lg:overflow-y-auto w-full'>
-      <div className='row-start-1 col-start-1 pt-8 md:pt-12 lg:pt-16 px-6 md:px-0 md:max-w-[688px] lg:max-w-[730px]'>
+      <div className='row-start-1 col-start-1 pt-8 md:pt-12 lg:pt-16 px-6 md:px-0 md:w-[688px] lg:w-[730px]'>
         <div className='cursor-pointer' onClick={() => handleClose()}>
           <Image
             src='/assets/icon-arrow-left.svg'
             alt='left arrow'
-            width={6}
-            height={8}
+            width='6px'
+            height='8px'
           />
           <span className='text-xs dark:text-white hover:text-seven dark:hover:text-six tracking-tight font-bold ml-6'>
             Go Back
@@ -219,18 +219,19 @@ export default function InvoicePage({ invoice }) {
               </p>
             </div>
           </div>
+
           <div className='bg-eleven dark:bg-four mt-10 md:mt-12 p-6 md:px-8 md:pt-8 md:pb-10 rounded-t-md md:rounded-t-lg'>
             {!data?.items.length ? (
               <div className='text-base font-bold'>No Items</div>
             ) : (
-              <div className='flex flex-col gap-6 md:gap-8'>
+              <div className='flex flex-col md:gap-8'>
                 <div className='hidden md:grid md:grid-cols-[240px_20px_120px_130px] md:gap-4 text-xs text-seven dark:text-five'>
                   <span>Item Name</span>
                   <span className='justify-self-center'>QTY</span>
                   <span className='justify-self-end'>Price</span>
                   <span className='justify-self-end'>Total</span>
                 </div>
-                <ul>
+                <ul className='space-y-6 md:space-y-8'>
                   {data?.items.map((item) => (
                     <li key={nanoid(6)}>
                       <div className='flex justify-between items-center text-xs md:hidden'>
