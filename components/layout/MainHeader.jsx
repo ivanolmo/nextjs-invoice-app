@@ -13,7 +13,7 @@ export default function MainHeader() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <header className='flex lg:flex-col justify-between items-center bg-[#373b53] dark:bg-three lg:rounded-r-3xl'>
+    <header className='flex lg:flex-col justify-between items-center bg-[#373b53] dark:bg-three lg:rounded-r-3xl lg:h-screen'>
       <Link href='/'>
         <a onClick={() => clearAll()}>
           <div className='bg-one p-6 md:p-7 lg:p-8 leading-zero rounded-r-3xl'>

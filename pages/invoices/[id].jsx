@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
