@@ -26,15 +26,17 @@ export default function InvoiceList({ invoices }) {
         invoiceCount={filteredInvoices.length}
         setFilters={setFilters}
       />
-      <ul className='mt-8 md:mt-14 lg:mt-16'>
+      <div className='mt-8 md:mt-14 lg:mt-16'>
         {!filteredInvoices || filteredInvoices.length === 0 ? (
           <Invoice404 />
         ) : (
-          filteredInvoices.map((invoice) => (
-            <InvoiceListItem key={invoice.id} invoice={invoice} />
-          ))
+          <ul>
+            {filteredInvoices.map((invoice) => (
+              <InvoiceListItem key={invoice.id} invoice={invoice} />
+            ))}
+          </ul>
         )}
-      </ul>
+      </div>
     </div>
   );
 }
