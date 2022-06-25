@@ -1,9 +1,10 @@
 import { FieldArray, Form, Formik } from 'formik';
-import { DatePicker, Select } from 'react-formik-ui';
+import { DatePicker } from 'react-formik-ui';
 
 import Button from '../ui/Button';
 import DeleteIcon from '../ui/DeleteIcon';
 import Input from '../ui/Input';
+import Select from '../ui/Select';
 import { classNames } from '../../utils/utils';
 import { formValidationSchema } from '../../utils/formValidationSchema';
 
@@ -122,8 +123,15 @@ export default function InvoiceForm(props) {
                   'tracking-tight mt-10 space-y-6'
                 )}
               >
-                <div className='md:grid md:grid-cols-2 md:gap-x-6'>
-                  <div className=''>
+                <div className='grid md:grid-cols-2 gap-y-6 md:gap-x-6'>
+                  <div
+                    // reliably styles react-datepicker label
+                    className={
+                      hasErrors && errors.createdAt && touched.createdAt
+                        ? 'date-error'
+                        : undefined
+                    }
+                  >
                     <DatePicker
                       placeholder={new Date().toDateString()}
                       label='Invoice Date'
@@ -142,24 +150,8 @@ export default function InvoiceForm(props) {
                       )}
                     />
                   </div>
-                  <div className='mt-6 md:mt-0'>
-                    <Select
-                      label='Payment Terms'
-                      name='paymentTerms'
-                      onBlur={handleBlur}
-                      className={classNames(
-                        hasErrors && errors.paymentTerms && touched.paymentTerms
-                          ? 'border-nine dark:border-nine'
-                          : 'border-five hover:border-one dark:hover:border-one',
-                        'bg-[url("/assets/icon-arrow-down.svg")] bg-no-repeat bg-[center_right_1rem] bg-white dark:bg-three text-black dark:text-white font-bold mt-2.5 p-4 border dark:border-four rounded-md h-12 w-full appearance-none cursor-pointer'
-                      )}
-                      options={[
-                        { label: 'Net 1 Day', value: 1 },
-                        { label: 'Net 7 Days', value: 7 },
-                        { label: 'Net 14 Days', value: 14 },
-                        { label: 'Net 30 Days', value: 30 },
-                      ]}
-                    />
+                  <div>
+                    <Select label='Payment Terms' name='paymentTerms' />
                   </div>
                 </div>
                 <div>
