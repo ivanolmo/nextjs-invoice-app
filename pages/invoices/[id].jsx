@@ -92,7 +92,7 @@ export default function InvoicePage({ invoice }) {
   return (
     <div className='grid grid-cols-1 md:justify-items-center lg:h-screen lg:overflow-y-auto w-full'>
       <div className='row-start-1 col-start-1 pt-8 md:pt-12 lg:pt-16 px-6 md:px-0 md:w-[688px] lg:w-[730px]'>
-        <div className='cursor-pointer' onClick={() => handleClose()}>
+        <div className='w-fit cursor-pointer' onClick={() => handleClose()}>
           <Image
             src='/assets/icon-arrow-left.svg'
             alt='left arrow'

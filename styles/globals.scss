@@ -33,20 +33,23 @@ input[type='number'] {
   background-image: linear-gradient(rgba(0, 0, 0, 0.4) 0 0);
 }
 
-.datePicker-wrapper > span,
-.select-wrapper > span {
+// react-datepicker styling
+// requires important tag because module comes with default styling
+.datePicker-wrapper > span {
   color: #7e88c3;
 }
 
 .dark {
-  .datePicker-wrapper > span,
-  .select-wrapper > span {
+  .datePicker-wrapper > span {
     color: #dfe3fa;
   }
 }
 
-// react-datepicker styling
-// requires important tag because module comes with default styling
+.date-error .label,
+.dark .date-error .label {
+  color: #ec5757;
+}
+
 .react-datepicker {
   width: 100%;
   font-family: 'Spartan', sans-serif !important;
