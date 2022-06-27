@@ -132,6 +132,7 @@ export default function InvoiceForm(props) {
                         : undefined
                     }
                   >
+                    {/* TODO possibly move to custom comp */}
                     <DatePicker
                       placeholder={new Date().toDateString()}
                       label='Invoice Date'
@@ -180,18 +181,16 @@ export default function InvoiceForm(props) {
                         </span>
                       </div>
                     )}
-                    <div className='hidden mt-4 -mb-4 md:grid md:grid-cols-[214px_46px_100px_54px] md:gap-4'>
-                      <span className='text-seven dark:text-five'>
-                        Item Name
-                      </span>
-                      <span className='text-seven dark:text-five'>Qty</span>
-                      <span className='text-seven dark:text-five'>Price</span>
-                      <span className='text-seven dark:text-five'>Total</span>
+                    <div className='hidden mt-4 -mb-4 md:grid md:grid-cols-[214px_46px_100px_54px] md:gap-4 text-seven dark:text-five'>
+                      <span>Item Name</span>
+                      <span>Qty</span>
+                      <span>Price</span>
+                      <span>Total</span>
                     </div>
                     {values.items.map((item, index) => (
                       <div
                         key={index}
-                        className='grid grid-cols-10 md:grid-cols-[214px_46px_100px_54px_24px] gap-x-4 items-end my-6 md:my-0 md:-mb-4'
+                        className='grid grid-cols-10 md:grid-cols-[210px_60px_90px_54px_24px] gap-x-4 items-end my-6 md:my-0 md:-mb-4'
                       >
                         <Input
                           label='Item Name'
@@ -235,7 +234,12 @@ export default function InvoiceForm(props) {
                       </div>
                     ))}
                     <Button
-                      containerClasses='bg-buttonLight dark:bg-three hover:bg-five dark:hover:bg-four mt-10'
+                      containerClasses={classNames(
+                        hasErrors && errors.items && values.items.length === 0
+                          ? 'border border-nine animate-pulse'
+                          : undefined,
+                        'bg-buttonLight dark:bg-three hover:bg-five dark:hover:bg-four mt-10'
+                      )}
                       textClasses='text-seven dark:text-six'
                       buttonText='+ Add New Item'
                       onClick={() =>
