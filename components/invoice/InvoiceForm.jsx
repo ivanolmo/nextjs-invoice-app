@@ -235,7 +235,10 @@ export default function InvoiceForm(props) {
                     ))}
                     <Button
                       containerClasses={classNames(
-                        hasErrors && errors.items && values.items.length === 0
+                        hasErrors &&
+                          errors.items &&
+                          submitCount > 0 &&
+                          values.items.length === 0
                           ? 'border border-nine animate-pulse'
                           : undefined,
                         'bg-buttonLight dark:bg-three hover:bg-five dark:hover:bg-four mt-10'
