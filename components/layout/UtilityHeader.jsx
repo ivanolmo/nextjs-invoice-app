@@ -36,8 +36,8 @@ export default function UtilityHeader({ invoiceCount, setFilters }) {
             <Image
               src='/assets/icon-plus.svg'
               alt='add icon'
-              width='10px'
-              height='10px'
+              width='11px'
+              height='11px'
             />
           }
           onClick={() => setShowAddInvoiceForm(true)}

@@ -59,7 +59,7 @@ export default function InvoiceListItem({ invoice }) {
               <Image
                 src='/assets/icon-arrow-right.svg'
                 alt='right arrow'
-                width='6px'
+                width='7px'
                 height='10px'
               />
             </div>

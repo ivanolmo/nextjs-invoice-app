@@ -56,8 +56,8 @@ export default function InvoiceAdd() {
           <Image
             src='/assets/icon-arrow-left.svg'
             alt='left arrow'
-            width='6px'
-            height='8px'
+            width='7px'
+            height='10px'
           />
           <span className='text-xs dark:text-white hover:text-seven dark:hover:text-six tracking-tight font-bold ml-6'>
             Go Back
