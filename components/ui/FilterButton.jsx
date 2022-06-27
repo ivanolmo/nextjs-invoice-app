@@ -65,8 +65,9 @@ export default function FilterButton({ setFilters }) {
         <Image
           src='/assets/icon-arrow-down.svg'
           alt='filter icon'
-          width='10px'
-          height='6px'
+          width='11px'
+          height='7px'
+          className={showFilters ? 'rotate-180' : undefined}
         />
       </div>
       {showFilters && (
@@ -85,7 +86,7 @@ export default function FilterButton({ setFilters }) {
                   <Image
                     src='/assets/icon-check.svg'
                     alt='check'
-                    width='8px'
+                    width='10px'
                     height='8px'
                   />
                 </div>

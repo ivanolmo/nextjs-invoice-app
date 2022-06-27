@@ -74,18 +74,19 @@ export default function Select({ label, ...props }) {
           'bg-white dark:bg-three text-black dark:text-white font-bold mt-2.5 border rounded-md h-12 w-full cursor-pointer'
         )}
       >
-        <div className='flex justify-between mt-4 mx-5'>
-          <span>
+        <div className='flex justify-between items-center mt-4 mx-5'>
+          <div>
             {value ? `Net ${value} Day${value > 1 ? 's' : ''}` : undefined}
-          </span>
-          <span>
+          </div>
+          <div>
             <Image
               src='/assets/icon-arrow-down.svg'
               alt='arrow down'
               width='11px'
               height='7px'
+              className={showOptions ? 'rotate-180' : undefined}
             />
-          </span>
+          </div>
         </div>
         {showOptions && (
           <div
