@@ -30,7 +30,7 @@ export default function InvoicePage({ invoice }) {
 
   // use custom hook to keep invoice data updated
   const [data, loading, error] = useDocumentDataSSR(
-    doc(db, 'invoices', invoice.id),
+    doc(db, 'invoices', router.query.id),
     {
       startsWith: invoice,
     }

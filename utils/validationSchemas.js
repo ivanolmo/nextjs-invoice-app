@@ -1,4 +1,7 @@
 import * as Yup from 'yup';
+import YupPassword from 'yup-password';
+
+YupPassword(Yup);
 
 export const formValidationSchema = Yup.object({
   senderAddress: Yup.object().shape({
@@ -28,4 +31,22 @@ export const formValidationSchema = Yup.object({
       })
     )
     .min(1, 'At least one item is required'),
+});
+
+export const signUpValidationSchema = Yup.object({
+  name: Yup.string().required(),
+  email: Yup.string().email().required(),
+  password: Yup.string()
+    .password()
+    .required()
+    .min(6)
+    .max(20)
+    .minNumbers(0)
+    .minUppercase(0)
+    .minSymbols(0),
+});
+
+export const signInValidationSchema = Yup.object({
+  email: Yup.string().email().required(),
+  password: Yup.string().required().min(6),
 });
