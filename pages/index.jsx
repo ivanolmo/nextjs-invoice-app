@@ -15,18 +15,11 @@ export default function Home({ invoices }) {
     { startsWith: invoices }
   );
 
-  // TODO add better loading/no invoice UI
-  if (loading || error) {
-    return <div>Loading</div>;
-  }
-
-  if (!data || !invoices) {
-    return <div>No Invoices</div>;
-  }
+  if (error) throw new Error();
 
   return (
     <div className='grid grid-cols-1 md:justify-items-center w-full lg:h-screen lg:overflow-y-scroll'>
-      <InvoiceList invoices={data ?? invoices} />
+      <InvoiceList invoices={data ?? invoices} loading={loading} />
 
       {showAddInvoiceForm && <InvoiceAdd />}
     </div>

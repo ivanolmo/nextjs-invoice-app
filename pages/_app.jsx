@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { InvoiceProvider } from '../context/InvoiceContext';
 import MainHeader from '../components/layout/MainHeader';
+import ErrorBoundary from './ErrorBoundary';
 import '../styles/globals.scss';
 
 function App({ Component, pageProps }) {
@@ -28,7 +29,9 @@ function App({ Component, pageProps }) {
         <ThemeProvider attribute='class'>
           <div className='flex flex-col lg:flex-row'>
             <MainHeader />
-            <Component {...pageProps} />
+            <ErrorBoundary>
+              <Component {...pageProps} />
+            </ErrorBoundary>
             <ToastContainer autoClose={3000} />
           </div>
         </ThemeProvider>
