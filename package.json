@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/spartan": "^4.5.8",
     "date-fns": "^2.28.0",
     "firebase": "^9.8.1",
     "firebase-admin": "^11.0.0",
