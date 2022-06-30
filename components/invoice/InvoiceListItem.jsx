@@ -55,12 +55,13 @@ export default function InvoiceListItem({ invoice }) {
               </div>
             </div>
 
-            <div className='hidden md:block col-start-6 self-center'>
+            <div className='hidden md:block col-start-6 self-center w-2 h-3'>
               <Image
                 src='/assets/icon-arrow-right.svg'
                 alt='right arrow'
                 width='7px'
                 height='10px'
+                layout='responsive'
               />
             </div>
           </div>

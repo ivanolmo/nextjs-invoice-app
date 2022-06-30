@@ -4,6 +4,7 @@ import Image from 'next/image';
 import InvoiceContext from '../../context/InvoiceContext';
 import Button from '../ui/Button';
 import FilterButton from '../ui/FilterButton';
+import AddIcon from '../ui/AddIcon';
 
 export default function UtilityHeader({ invoiceCount, setFilters }) {
   const { setShowAddInvoiceForm } = useContext(InvoiceContext);
@@ -24,7 +25,7 @@ export default function UtilityHeader({ invoiceCount, setFilters }) {
       <div className='flex justify-between items-center gap-5 md:gap-10'>
         <FilterButton setFilters={setFilters} />
         <Button
-          containerClasses='bg-one hover:bg-two pr-3.5 lg:pr-4 pl-1.5 lg:pl-2 gap-2 lg:gap-4'
+          containerClasses='group bg-one hover:bg-two pr-3.5 lg:pr-4 pl-1.5 lg:pl-2 gap-2 lg:gap-4'
           textClasses='text-eleven'
           buttonText={
             <>
@@ -33,12 +34,9 @@ export default function UtilityHeader({ invoiceCount, setFilters }) {
             </>
           }
           icon={
-            <Image
-              src='/assets/icon-plus.svg'
-              alt='add icon'
-              width='11px'
-              height='11px'
-            />
+            <div className='bg-[white] p-[11px] flex rounded-full'>
+              <AddIcon className='fill-current text-one group-hover:text-two' />
+            </div>
           }
           onClick={() => setShowAddInvoiceForm(true)}
         />

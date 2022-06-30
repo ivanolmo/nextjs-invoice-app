@@ -62,13 +62,16 @@ export default function FilterButton({ setFilters }) {
         <span className='text-xs lg:text-sm font-bold hidden md:block'>
           Filter By Status
         </span>
-        <Image
-          src='/assets/icon-arrow-down.svg'
-          alt='filter icon'
-          width='11px'
-          height='7px'
-          className={showFilters ? 'rotate-180' : undefined}
-        />
+        <div className='w-3 h-2'>
+          <Image
+            src='/assets/icon-arrow-down.svg'
+            alt='filter icon'
+            width='11px'
+            height='7px'
+            layout='responsive'
+            className={showFilters ? 'rotate-180' : undefined}
+          />
+        </div>
       </div>
       {showFilters && (
         <div

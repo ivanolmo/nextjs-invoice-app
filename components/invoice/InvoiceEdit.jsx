@@ -48,16 +48,19 @@ export default function InvoiceEdit({ invoice }) {
       <div className='hidden md:block absolute inset-0 md:top-[82px] lg:top-0 lg:left-[104px] bg-gradient'></div>
       <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-twelve p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-50 justify-self-start'>
         <div
-          className='cursor-pointer w-fit md:hidden'
+          className='group flex items-center cursor-pointer w-fit md:hidden'
           onClick={() => setShowEditInvoiceForm(false)}
         >
-          <Image
-            src='/assets/icon-arrow-left.svg'
-            alt='left arrow'
-            width='7px'
-            height='10px'
-          />
-          <span className='text-xs dark:text-white hover:text-seven dark:hover:text-six tracking-tight font-bold ml-6'>
+          <div className='w-2 h-3'>
+            <Image
+              src='/assets/icon-arrow-left.svg'
+              alt='left arrow'
+              width='7px'
+              height='10px'
+              layout='responsive'
+            />
+          </div>
+          <span className='text-xs dark:text-white group-hover:text-seven dark:group-hover:text-six tracking-tight font-bold ml-6'>
             Go Back
           </span>
         </div>

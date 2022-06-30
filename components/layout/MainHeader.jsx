@@ -31,7 +31,7 @@ export default function MainHeader() {
       </Link>
       <div className='flex lg:flex-col lg:gap-7 items-center leading-zero'>
         <div
-          className='mr-6 lg:m-0 cursor-pointer'
+          className='mr-6 lg:m-0 cursor-pointer w-5 h-5'
           onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
         >
           {resolvedTheme === 'light' ? (
@@ -40,6 +40,7 @@ export default function MainHeader() {
               alt='theme switcher'
               width='20px'
               height='20px'
+              layout='responsive'
             />
           ) : (
             <Image
@@ -47,6 +48,7 @@ export default function MainHeader() {
               alt='theme switcher'
               width='20px'
               height='20px'
+              layout='responsive'
             />
           )}
         </div>

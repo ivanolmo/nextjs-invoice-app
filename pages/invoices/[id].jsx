@@ -92,14 +92,20 @@ export default function InvoicePage({ invoice }) {
   return (
     <div className='grid grid-cols-1 md:justify-items-center lg:h-screen lg:overflow-y-auto w-full'>
       <div className='row-start-1 col-start-1 pt-8 md:pt-12 lg:pt-16 px-6 md:px-0 md:w-[688px] lg:w-[730px]'>
-        <div className='w-fit cursor-pointer' onClick={() => handleClose()}>
-          <Image
-            src='/assets/icon-arrow-left.svg'
-            alt='left arrow'
-            width='7px'
-            height='10px'
-          />
-          <span className='text-xs dark:text-white hover:text-seven dark:hover:text-six tracking-tight font-bold ml-6'>
+        <div
+          className='group flex items-center w-fit cursor-pointer'
+          onClick={() => handleClose()}
+        >
+          <div className='w-2 h-3'>
+            <Image
+              src='/assets/icon-arrow-left.svg'
+              alt='left arrow'
+              width='7px'
+              height='10px'
+              layout='responsive'
+            />
+          </div>
+          <span className='text-xs dark:text-white group-hover:text-seven dark:group-hover:text-six tracking-tight font-bold ml-6'>
             Go Back
           </span>
         </div>
