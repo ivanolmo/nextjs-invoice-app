@@ -5,12 +5,12 @@ import InvoiceContext from '../context/InvoiceContext';
 import InvoiceAdd from '../components/invoice/InvoiceAdd';
 import InvoiceList from '../components/invoice/InvoiceList';
 import { db } from '../lib/firebase';
-import { useCollectionDataSSR } from '../lib/hooks';
+import { useCollectionData } from '../lib/hooks';
 
 export default function Home({ invoices }) {
   const { showAddInvoiceForm } = useContext(InvoiceContext);
 
-  const [data, loading, error] = useCollectionDataSSR(
+  const [data, loading, error] = useCollectionData(
     query(collection(db, 'invoices'), orderBy('paymentDue', 'asc')),
     { startsWith: invoices }
   );
@@ -26,12 +26,21 @@ export default function Home({ invoices }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const snapshot = await getDocs(
     query(collection(db, 'invoices'), orderBy('paymentDue', 'asc'))
   );
 
-  const invoices = snapshot.docs.map((doc) => doc.data());
+  if (!snapshot.docs) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const invoices = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 
   return {
     props: { invoices },

@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-import { nanoid } from 'nanoid';
+import { doc, getDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
 import InvoiceContext from '../../context/InvoiceContext';
@@ -20,8 +19,6 @@ import {
 } from '../../utils/utils';
 
 export default function InvoicePage({ invoice }) {
-  const router = useRouter();
-
   const {
     showEditInvoiceForm,
     setShowEditInvoiceForm,
@@ -29,18 +26,17 @@ export default function InvoicePage({ invoice }) {
     setShowDeleteModal,
   } = useContext(InvoiceContext);
 
-  // use custom hook to keep invoice data updated
+  const router = useRouter();
+
   const [data, loading, error] = useDocumentDataSSR(
     doc(db, 'invoices', router.query.id),
-    {
-      startsWith: invoice,
-    }
+    { startsWith: invoice }
   );
 
   if (error) throw new Error();
 
   // closes delete modal, passed as prop to modal cancel button
-  const handleClosePopup = () => setShowDeleteModal(false);
+  const handleCloseModal = () => setShowDeleteModal(false);
 
   // navigates to home after delete or click of 'Go Back' button
   const handleClose = () => {
@@ -48,9 +44,9 @@ export default function InvoicePage({ invoice }) {
   };
 
   // handles invoice delete
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     const res = await toast.promise(
-      fetch(`/api/invoice/${id}`, {
+      fetch(`/api/invoice/${data?.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -58,9 +54,10 @@ export default function InvoicePage({ invoice }) {
       }),
       {
         pending: 'Invoice is being deleted...',
-        success: 'Invoice has been successfully deleted',
+        success: `Invoice #${data?.invoiceId} has been successfully deleted`,
         error: 'There was an error deleting this invoice',
       },
+      handleCloseModal(),
       handleClose()
     );
   };
@@ -126,7 +123,7 @@ export default function InvoicePage({ invoice }) {
                   )}
                 >
                   <span className='bg-current inline-block mr-2 w-2 h-2 rounded-full'></span>
-                  {formatStatus(data?.status)}
+                  {formatStatus(data?.status) || '-'}
                 </div>
               </div>
               <div className='hidden md:flex md:justify-center md:items-center gap-2 py-5'>
@@ -172,7 +169,7 @@ export default function InvoicePage({ invoice }) {
                       #
                     </span>
                     <span className='text-xs md:text-base font-bold dark:text-white tracking-tighter'>
-                      {data?.id}
+                      {data?.invoiceId}
                     </span>
                   </div>
                   <div className='text-indigo-400 dark:text-indigo-100 text-xs'>
@@ -248,7 +245,7 @@ export default function InvoicePage({ invoice }) {
                     </div>
                     <ul className='space-y-6 md:space-y-8'>
                       {data?.items.map((item) => (
-                        <li key={nanoid(6)}>
+                        <li key={item.id}>
                           <div className='flex justify-between items-center text-xs md:hidden'>
                             <div className='flex flex-col gap-2'>
                               <span className='font-bold dark:text-white max-w-[120px]'>
@@ -331,8 +328,9 @@ export default function InvoicePage({ invoice }) {
         {showDeleteModal && (
           <DeleteModal
             id={data?.id}
+            invoiceId={data?.invoiceId}
             handleDelete={handleDelete}
-            handleClosePopup={handleClosePopup}
+            handleCloseModal={handleCloseModal}
           />
         )}
       </div>
@@ -342,9 +340,8 @@ export default function InvoicePage({ invoice }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const id = context.params.id;
-
   const snapshot = await getDoc(doc(db, 'invoices', id));
 
   const invoice = snapshot.data();
@@ -355,21 +352,9 @@ export async function getStaticProps(context) {
     };
   }
 
-  return {
-    props: {
-      invoice,
-    },
-    revalidate: 10,
-  };
-}
-
-export async function getStaticPaths() {
-  const snapshot = await getDocs(collection(db, 'invoices'));
-
-  const paths = snapshot.docs.map((doc) => ({ params: { id: doc.id } }));
+  invoice.id = snapshot.id;
 
   return {
-    paths,
-    fallback: 'blocking',
+    props: { invoice },
   };
 }
