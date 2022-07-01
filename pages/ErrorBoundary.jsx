@@ -27,7 +27,7 @@ export default class ErrorBoundary extends React.Component {
             <button
               type='button'
               onClick={() => this.setState({ hasError: false })}
-              className='bg-one text-white text-xl px-6 py-4 rounded-md'
+              className='bg-violet-500 text-white text-xl px-6 py-4 rounded-md'
             >
               Try again?
             </button>

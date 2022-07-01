@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 module.exports = {
   content: [
     './pages/**/*.{js,jsx}',
@@ -9,24 +11,40 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      one: '#7c5dfa',
-      two: '#9277ff',
-      three: '#1e2139',
-      four: '#252945',
-      five: '#dfe3fa',
-      six: '#888eb0',
-      seven: '#7e88c3',
-      eight: '#0c0e16',
-      nine: '#ec5757',
-      ten: '#ff9797',
-      eleven: '#f8f8fb',
-      twelve: '#141625',
-      white: '#ffffff',
-      black: '#000000',
-      green: '#33d69f',
-      orange: '#ff8f00',
-      darkGray: '#373b53',
-      buttonLight: '#f0f1f4',
+      white: colors.white,
+      black: colors.black,
+      emerald: {
+        400: '#33d69f',
+      },
+      gray: {
+        200: '#f0f1f4',
+        800: '#141625',
+        900: '#0c0e16',
+      },
+      indigo: {
+        100: '#dfe3fa',
+        400: '#7e88c3',
+      },
+      orange: {
+        500: '#ff8f00',
+      },
+      red: {
+        300: '#ff9797',
+        500: '#ec5757',
+      },
+      slate: {
+        400: '#888eb0',
+        500: '#777f98',
+        600: '#494e6e',
+        700: '#373b53',
+        800: '#252945',
+        900: '#1e2139',
+      },
+      violet: {
+        50: '#f8f8fb',
+        400: '#9277ff',
+        500: '#7c5dfa',
+      },
       gradient: 'rgba(0, 0, 0, 0.7)',
     },
     lineHeight: {

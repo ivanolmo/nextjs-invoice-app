@@ -15,14 +15,14 @@ export default function InvoiceListItem({ invoice }) {
     <li>
       <Link href={`/invoices/${id}`}>
         <a>
-          <div className='grid md:inline-grid grid-cols-[auto_1fr] md:grid-cols-[60px_120px_110px_120px_1fr_8px] auto-rows-auto gap-y-6 md:gap-x-5 mb-4 p-6 md:py-4 lg:pl-8 lg:pr-6 bg-white dark:bg-three rounded-lg text-xs border border-transparent hover:border-one w-full'>
+          <div className='grid md:inline-grid grid-cols-[auto_1fr] md:grid-cols-[60px_120px_110px_120px_1fr_8px] auto-rows-auto gap-y-6 md:gap-x-5 mb-4 p-6 md:py-4 lg:pl-8 lg:pr-6 bg-white dark:bg-slate-900 rounded-lg text-xs border border-transparent hover:border-violet-500 w-full'>
             <div className='justify-self-start md:self-center font-bold md:mr-2'>
-              <span className='text-seven'>#</span>
+              <span className='text-indigo-400'>#</span>
               <span className='dark:text-white'>{id}</span>
             </div>
 
             <div className='col-start-1 md:col-start-2 row-start-2 md:row-start-1 self-start md:self-center'>
-              <span className='text-seven dark:text-five'>
+              <span className='text-indigo-400 dark:text-indigo-100'>
                 Due {paymentDue ? formatDate(paymentDue) : 'N/A'}
               </span>
             </div>
@@ -34,7 +34,7 @@ export default function InvoiceListItem({ invoice }) {
             </div>
 
             <div className='col-start-3 row-start-1 justify-self-end md:justify-self-start md:self-center'>
-              <span className='text-seven dark:text-white tracking-tight'>
+              <span className='text-indigo-400 dark:text-white tracking-tight'>
                 {clientName || 'N/A'}
               </span>
             </div>
@@ -43,10 +43,10 @@ export default function InvoiceListItem({ invoice }) {
               <div
                 className={classNames(
                   status === 'paid'
-                    ? 'text-green bg-green/10 dark:bg-green/5'
+                    ? 'text-emerald-400 bg-emerald-400/10 dark:bg-emerald-400/5'
                     : status === 'pending'
-                    ? 'text-orange bg-orange/10 dark:bg-orange/5'
-                    : 'text-darkGray dark:text-five bg-darkGray/10 dark:bg-five/5',
+                    ? 'text-orange-500 bg-orange-500/10 dark:bg-orange-500/5'
+                    : 'text-slate-700 dark:text-indigo-100 bg-slate-700/10 dark:bg-indigo-100/5',
                   'flex justify-center items-center gap-2 py-3 text-xs font-bold rounded-md w-[6.5rem] h-10'
                 )}
               >

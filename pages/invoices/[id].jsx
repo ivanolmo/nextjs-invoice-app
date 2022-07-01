@@ -98,7 +98,7 @@ export default function InvoicePage({ invoice }) {
               layout='responsive'
             />
           </div>
-          <span className='text-xs dark:text-white group-hover:text-seven dark:group-hover:text-six tracking-tight font-bold ml-6'>
+          <span className='text-xs dark:text-white group-hover:text-indigo-400 dark:group-hover:text-slate-400 tracking-tight font-bold ml-6'>
             Go Back
           </span>
         </div>
@@ -108,18 +108,20 @@ export default function InvoicePage({ invoice }) {
           </div>
         ) : (
           <>
-            <div className='flex justify-between items-center bg-white dark:bg-three text-xs tracking-tight mt-8 p-6 md:px-8 md:py-0 rounded-md md:rounded-lg w-full'>
+            <div className='flex justify-between items-center bg-white dark:bg-slate-900 text-xs tracking-tight mt-8 p-6 md:px-8 md:py-0 rounded-md md:rounded-lg w-full'>
               <div className='flex justify-between md:justify-start items-center w-full md:w-auto'>
                 <div className='md:mr-4'>
-                  <span className='text-seven dark:text-five'>Status</span>
+                  <span className='text-indigo-400 dark:text-indigo-100'>
+                    Status
+                  </span>
                 </div>
                 <div
                   className={classNames(
                     data?.status === 'paid'
-                      ? 'text-green bg-green/10 dark:bg-green/5'
+                      ? 'text-emerald-400 bg-emerald-400/10 dark:bg-emerald-400/5'
                       : data?.status === 'pending'
-                      ? 'text-orange bg-orange/10 dark:bg-orange/5'
-                      : 'text-darkGray dark:text-five bg-darkGray/10 dark:bg-five/5',
+                      ? 'text-orange-500 bg-orange-500/10 dark:bg-orange-500/5'
+                      : 'text-slate-700 dark:text-indigo-100 bg-slate-700/10 dark:bg-indigo-100/5',
                     'p-3 font-bold rounded-md w-[6.5rem] text-center'
                   )}
                 >
@@ -131,14 +133,14 @@ export default function InvoicePage({ invoice }) {
                 <Button
                   containerClasses={classNames(
                     data?.status === 'paid' ? 'invisible' : '',
-                    'bg-buttonLight hover:bg-five dark:bg-four dark:hover:bg-twelve px-6'
+                    'bg-gray-200 hover:bg-indigo-100 dark:bg-slate-800 dark:hover:bg-gray-800 px-6'
                   )}
-                  textClasses='text-seven dark:text-five'
+                  textClasses='text-indigo-400 dark:text-indigo-100'
                   buttonText='Edit'
                   onClick={() => setShowEditInvoiceForm(true)}
                 />
                 <Button
-                  containerClasses='bg-nine hover:bg-ten px-6'
+                  containerClasses='bg-red-500 hover:bg-red-300 px-6'
                   textClasses='text-white'
                   buttonText='Delete'
                   onClick={() => setShowDeleteModal(true)}
@@ -148,8 +150,8 @@ export default function InvoicePage({ invoice }) {
                     data?.status === 'draft'
                       ? 'hidden'
                       : data?.status === 'paid'
-                      ? 'bg-green dark:bg-green/80 px-6 justify-self-end cursor-not-allowed'
-                      : 'bg-one hover:bg-two px-[1.75rem]'
+                      ? 'bg-emerald-400 dark:bg-emerald-400/80 px-6 justify-self-end cursor-not-allowed'
+                      : 'bg-violet-500 hover:bg-violet-400 px-[1.75rem]'
                   }
                   textClasses='text-white'
                   buttonText={
@@ -162,22 +164,22 @@ export default function InvoicePage({ invoice }) {
               </div>
             </div>
 
-            <div className='bg-white dark:bg-three mt-4 md:mt-6 p-6 md:p-8 lg:p-12 text-xs tracking-tight rounded-md md:rounded-lg'>
+            <div className='bg-white dark:bg-slate-900 mt-4 md:mt-6 p-6 md:p-8 lg:p-12 text-xs tracking-tight rounded-md md:rounded-lg'>
               <div className='md:flex md:justify-between'>
                 <div className='flex flex-col gap-1 md:gap-2'>
                   <div>
-                    <span className='text-xs md:text-base font-bold text-seven dark:text-six tracking-tighter'>
+                    <span className='text-xs md:text-base font-bold text-indigo-400 dark:text-slate-400 tracking-tighter'>
                       #
                     </span>
                     <span className='text-xs md:text-base font-bold dark:text-white tracking-tighter'>
                       {data?.id}
                     </span>
                   </div>
-                  <div className='text-seven dark:text-five text-xs'>
+                  <div className='text-indigo-400 dark:text-indigo-100 text-xs'>
                     {data?.description || 'N/A'}
                   </div>
                 </div>
-                <div className='text-xs text-seven dark:text-five mt-7 md:mt-0 space-y-1'>
+                <div className='text-xs text-indigo-400 dark:text-indigo-100 mt-7 md:mt-0 space-y-1'>
                   <p>{data?.senderAddress.street || '-'}</p>
                   <p>{data?.senderAddress.city || '-'}</p>
                   <p>{data?.senderAddress.postCode || '-'}</p>
@@ -188,7 +190,7 @@ export default function InvoicePage({ invoice }) {
                 <div className='flex gap-10 md:gap-24 mt-7 md:mt-0'>
                   <div className='flex flex-col justify-between'>
                     <div className='space-y-2'>
-                      <span className='text-seven dark:text-five'>
+                      <span className='text-indigo-400 dark:text-indigo-100'>
                         Invoice Date
                       </span>
                       <p className='text-base font-bold dark:text-white'>
@@ -196,7 +198,9 @@ export default function InvoicePage({ invoice }) {
                       </p>
                     </div>
                     <div className='space-y-2'>
-                      <h3 className='text-seven dark:text-five'>Payment Due</h3>
+                      <h3 className='text-indigo-400 dark:text-indigo-100'>
+                        Payment Due
+                      </h3>
                       <p className='text-base dark:text-white font-bold'>
                         {data?.paymentDue
                           ? formatDate(data?.paymentDue)
@@ -205,12 +209,14 @@ export default function InvoicePage({ invoice }) {
                     </div>
                   </div>
                   <div className='space-y-2'>
-                    <h3 className='text-seven dark:text-five'>Bill To</h3>
+                    <h3 className='text-indigo-400 dark:text-indigo-100'>
+                      Bill To
+                    </h3>
                     <div className='space-y-2'>
                       <p className='text-base dark:text-white font-bold mt-2'>
                         {data?.clientName || 'N/A'}
                       </p>
-                      <div className='text-xs text-seven dark:text-five space-y-1'>
+                      <div className='text-xs text-indigo-400 dark:text-indigo-100 space-y-1'>
                         <p>{data?.clientAddress.street || '-'}</p>
                         <p>{data?.clientAddress.city || '-'}</p>
                         <p>{data?.clientAddress.postCode || '-'}</p>
@@ -220,7 +226,7 @@ export default function InvoicePage({ invoice }) {
                   </div>
                 </div>
                 <div className='mt-9 md:mt-0 space-y-3'>
-                  <span className='text-seven dark:text-five text-xs'>
+                  <span className='text-indigo-400 dark:text-indigo-100 text-xs'>
                     Sent To
                   </span>
                   <p className='text-base dark:text-white font-bold'>
@@ -229,12 +235,12 @@ export default function InvoicePage({ invoice }) {
                 </div>
               </div>
 
-              <div className='bg-eleven dark:bg-four mt-10 md:mt-12 p-6 md:px-8 md:pt-8 md:pb-10 rounded-t-md md:rounded-t-lg'>
+              <div className='bg-violet-50 dark:bg-slate-800 mt-10 md:mt-12 p-6 md:px-8 md:pt-8 md:pb-10 rounded-t-md md:rounded-t-lg'>
                 {!data?.items.length ? (
                   <div className='text-base font-bold'>No Items</div>
                 ) : (
                   <div className='flex flex-col md:gap-8'>
-                    <div className='hidden md:grid md:grid-cols-[240px_20px_120px_130px] md:gap-4 text-xs text-seven dark:text-five'>
+                    <div className='hidden md:grid md:grid-cols-[240px_20px_120px_130px] md:gap-4 text-xs text-indigo-400 dark:text-indigo-100'>
                       <span>Item Name</span>
                       <span className='justify-self-center'>QTY</span>
                       <span className='justify-self-end'>Price</span>
@@ -248,7 +254,7 @@ export default function InvoicePage({ invoice }) {
                               <span className='font-bold dark:text-white max-w-[120px]'>
                                 {item.name || 'N/A'}
                               </span>
-                              <span className='text-seven dark:text-six font-bold'>
+                              <span className='text-indigo-400 dark:text-slate-400 font-bold'>
                                 {item.quantity} x {formatMoney(item.price)}
                               </span>
                             </div>
@@ -262,10 +268,10 @@ export default function InvoicePage({ invoice }) {
                             <span className='dark:text-white'>
                               {item.name || 'N/A'}
                             </span>
-                            <span className='justify-self-center text-seven dark:text-five'>
+                            <span className='justify-self-center text-indigo-400 dark:text-indigo-100'>
                               {item.quantity}
                             </span>
-                            <span className='justify-self-end text-seven dark:text-five'>
+                            <span className='justify-self-end text-indigo-400 dark:text-indigo-100'>
                               {formatMoney(item.price)}
                             </span>
                             <span className='justify-self-end dark:text-white'>
@@ -278,7 +284,7 @@ export default function InvoicePage({ invoice }) {
                   </div>
                 )}
               </div>
-              <div className='flex justify-between items-center text-white bg-[#373b53] dark:bg-eight p-6 md:px-8 rounded-b-md md:rounded-b-lg'>
+              <div className='flex justify-between items-center text-white bg-slate-700 dark:bg-gray-900 p-6 md:px-8 rounded-b-md md:rounded-b-lg'>
                 <span className='text-xs tracking-tight'>Amount Due</span>
                 <span className='text-xl md:text-2xl font-bold tracking-tighter leading-medium md:leading-[1.33]'>
                   {formatMoney(data?.total)}
@@ -288,18 +294,18 @@ export default function InvoicePage({ invoice }) {
           </>
         )}
         {loading ? null : (
-          <div className='flex justify-center items-center gap-2 bg-white dark:bg-three mt-14 -mx-6 py-5 px-6 md:hidden'>
+          <div className='flex justify-center items-center gap-2 bg-white dark:bg-slate-900 mt-14 -mx-6 py-5 px-6 md:hidden'>
             <Button
               containerClasses={classNames(
                 data?.status === 'paid' ? 'invisible' : '',
-                'bg-buttonLight hover:bg-five dark:bg-four dark:hover:bg-twelve px-6'
+                'bg-gray-200 hover:bg-indigo-100 dark:bg-slate-800 dark:hover:bg-gray-800 px-6'
               )}
-              textClasses='text-seven dark:text-five'
+              textClasses='text-indigo-400 dark:text-indigo-100'
               buttonText='Edit'
               onClick={() => setShowEditInvoiceForm(true)}
             />
             <Button
-              containerClasses='bg-nine hover:bg-ten px-6'
+              containerClasses='bg-red-500 hover:bg-red-300 px-6'
               textClasses='text-white'
               buttonText='Delete'
               onClick={() => setShowDeleteModal(true)}
@@ -309,8 +315,8 @@ export default function InvoicePage({ invoice }) {
                 data?.status === 'draft'
                   ? 'hidden'
                   : data?.status === 'paid'
-                  ? 'bg-green dark:bg-green/80 px-6 justify-self-end cursor-not-allowed'
-                  : 'bg-one hover:bg-two px-8'
+                  ? 'bg-emerald-400 dark:bg-emerald-400/80 px-6 justify-self-end cursor-not-allowed'
+                  : 'bg-violet-500 hover:bg-violet-400 px-8'
               }
               textClasses='text-white'
               buttonText={
