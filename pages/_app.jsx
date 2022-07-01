@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { InvoiceProvider } from '../context/InvoiceContext';
 import MainHeader from '../components/layout/MainHeader';
-import ErrorBoundary from './ErrorBoundary';
+import ErrorBoundary from '../components/layout/ErrorBoundary';
 import '../styles/globals.scss';
 
 function App({ Component, pageProps }) {
