@@ -16,6 +16,7 @@ export function formatMoney(m) {
 }
 
 export function formatStatus(s) {
+  if (!s) return;
   return s[0].toUpperCase() + s.slice(1);
 }
 
@@ -37,11 +38,4 @@ export function generateId() {
   }
 
   return id;
-}
-
-export async function fetcher(url) {
-  const res = await fetch(url);
-  console.log('fetcher fetched');
-
-  return res.json();
 }
