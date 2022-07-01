@@ -56,24 +56,29 @@ export default function FilterButton({ setFilters }) {
       <div
         ref={buttonRef}
         onClick={handleToggle}
-        className='flex items-center gap-3 lg:gap-4 cursor-pointer dark:text-white'
+        className='group flex items-center gap-3 lg:gap-4 cursor-pointer dark:text-white'
       >
-        <span className='text-xs font-bold md:hidden'>Filter</span>
-        <span className='text-xs lg:text-sm font-bold hidden md:block'>
+        <span className='group-hover:text-indigo-400 dark:group-hover:text-slate-400 text-xs font-bold md:hidden'>
+          Filter
+        </span>
+        <span className='group-hover:text-indigo-400 dark:group-hover:text-slate-400 text-xs lg:text-sm font-bold hidden md:block'>
           Filter By Status
         </span>
-        <Image
-          src='/assets/icon-arrow-down.svg'
-          alt='filter icon'
-          width='11px'
-          height='7px'
-          className={showFilters ? 'rotate-180' : undefined}
-        />
+        <div className='w-3 h-2'>
+          <Image
+            src='/assets/icon-arrow-down.svg'
+            alt='filter icon'
+            width='11px'
+            height='7px'
+            layout='responsive'
+            className={showFilters ? 'rotate-180' : undefined}
+          />
+        </div>
       </div>
       {showFilters && (
         <div
           ref={filterRef}
-          className='absolute top-10 -left-10 lg:-left-7 flex flex-col gap-4 bg-white dark:bg-three border border-none rounded-lg w-max p-6 md:w-48 shadow-[0_8px_10px_0px_rgba(124,93,250,0.3)] dark:shadow-[0_8px_10px_0px_rgba(20,22,37,0.9)]'
+          className='absolute top-10 -left-10 lg:-left-7 flex flex-col gap-4 bg-white dark:bg-slate-900 border border-none rounded-lg w-max p-6 md:w-48 shadow-[0_8px_10px_0px_rgba(124,93,250,0.3)] dark:shadow-[0_8px_10px_0px_rgba(20,22,37,0.9)]'
         >
           {Object.keys(checkedStatus).map((status, index) => (
             <div
@@ -82,7 +87,7 @@ export default function FilterButton({ setFilters }) {
               onClick={() => handleCheck(status)}
             >
               {checkedStatus[status] ? (
-                <div className='bg-one flex justify-center items-center w-4 h-4 rounded-sm'>
+                <div className='bg-violet-500 flex justify-center items-center w-4 h-4 rounded-sm'>
                   <Image
                     src='/assets/icon-check.svg'
                     alt='check'
@@ -91,7 +96,7 @@ export default function FilterButton({ setFilters }) {
                   />
                 </div>
               ) : (
-                <div className='bg-five dark:bg-twelve border border-transparent group-hover:border-one w-4 h-4 rounded-sm'></div>
+                <div className='bg-indigo-100 dark:bg-gray-800 border border-transparent group-hover:border-violet-500 w-4 h-4 rounded-sm'></div>
               )}
               <span className='text-xs font-bold capitalize dark:text-white'>
                 {status}

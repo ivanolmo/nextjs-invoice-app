@@ -52,7 +52,7 @@ export default function InvoiceForm(props) {
           <div className='text-xs'>
             <Form>
               <div>
-                <span className='text-one font-bold'>Bill From</span>
+                <span className='text-violet-500 font-bold'>Bill From</span>
               </div>
 
               <Input
@@ -79,7 +79,7 @@ export default function InvoiceForm(props) {
               </div>
 
               <div className='mt-10'>
-                <span className='text-one font-bold'>Bill To</span>
+                <span className='text-violet-500 font-bold'>Bill To</span>
               </div>
 
               <div>
@@ -118,8 +118,8 @@ export default function InvoiceForm(props) {
               <div
                 className={classNames(
                   datePickerDisabled
-                    ? 'text-seven/50 dark:text-six/50'
-                    : 'text-seven',
+                    ? 'text-indigo-400/50 dark:text-slate-400/50'
+                    : 'text-indigo-400',
                   'tracking-tight mt-10 space-y-6'
                 )}
               >
@@ -143,10 +143,10 @@ export default function InvoiceForm(props) {
                       showPopperArrow={false}
                       className={classNames(
                         hasErrors && errors.createdAt && touched.createdAt
-                          ? 'border-nine dark:border-nine dark:bg-three'
+                          ? 'border-red-500 dark:border-red-500 dark:bg-slate-900'
                           : datePickerDisabled
-                          ? 'text-black/50 border-five/50 dark:text-white/50 dark:bg-three/30 dark:border-four/50 cursor-not-allowed'
-                          : 'dark:bg-three text-black dark:text-white border-five dark:border-four hover:border-one dark:hover:border-one',
+                          ? 'text-black/50 border-indigo-100/50 dark:text-white/50 dark:bg-slate-900/30 dark:border-slate-800/50 cursor-not-allowed'
+                          : 'dark:bg-slate-900 text-black dark:text-white border-indigo-100 dark:border-slate-800 hover:border-violet-500 dark:hover:border-violet-500',
                         'bg-[url("/assets/icon-calendar.svg")] bg-no-repeat bg-[center_right_1rem] font-bold mt-2.5 p-4 border rounded-md h-12 w-full cursor-pointer'
                       )}
                     />
@@ -166,7 +166,7 @@ export default function InvoiceForm(props) {
               </div>
 
               <div className='mt-16 md:mt-6 lg:mt-8'>
-                <span className='text-[#777f98] text-lg font-bold'>
+                <span className='text-slate-500 text-lg font-bold'>
                   Item List
                 </span>
               </div>
@@ -181,7 +181,7 @@ export default function InvoiceForm(props) {
                         </span>
                       </div>
                     )}
-                    <div className='hidden mt-4 -mb-4 md:grid md:grid-cols-[214px_46px_100px_54px] md:gap-4 text-seven dark:text-five'>
+                    <div className='hidden mt-4 -mb-4 md:grid md:grid-cols-[214px_46px_100px_54px] md:gap-4 text-indigo-400 dark:text-indigo-100'>
                       <span>Item Name</span>
                       <span>Qty</span>
                       <span>Price</span>
@@ -214,12 +214,12 @@ export default function InvoiceForm(props) {
                         <div className='col-span-3 md:col-span-1 overflow-auto hide-label'>
                           <label
                             htmlFor='total'
-                            className='text-xs text-seven dark:text-six tracking-tight'
+                            className='text-xs text-indigo-400 dark:text-slate-400 tracking-tight'
                           >
                             Total
                           </label>
                           <div className='mt-3 py-4'>
-                            <span className='text-xs text-six dark:text-five font-bold'>
+                            <span className='text-xs text-slate-400 dark:text-indigo-100 font-bold'>
                               {(item.quantity * item.price).toFixed(2)}
                             </span>
                           </div>
@@ -229,7 +229,7 @@ export default function InvoiceForm(props) {
                           onClick={() => remove(index)}
                           className='col-span-2 md:col-span-1 justify-self-end py-4 pr-2 md:pr-0 cursor-pointer'
                         >
-                          <DeleteIcon className='fill-current text-six hover:text-nine' />
+                          <DeleteIcon className='fill-current text-slate-400 hover:text-red-500' />
                         </div>
                       </div>
                     ))}
@@ -239,11 +239,11 @@ export default function InvoiceForm(props) {
                           errors.items &&
                           submitCount > 0 &&
                           values.items.length === 0
-                          ? 'border border-nine animate-pulse'
+                          ? 'border border-red-500 animate-pulse'
                           : undefined,
-                        'bg-buttonLight dark:bg-three hover:bg-five dark:hover:bg-four mt-10'
+                        'bg-gray-200 dark:bg-slate-900 hover:bg-indigo-100 dark:hover:bg-slate-800 mt-10'
                       )}
-                      textClasses='text-seven dark:text-six'
+                      textClasses='text-indigo-400 dark:text-slate-400'
                       buttonText='+ Add New Item'
                       onClick={() =>
                         push({
@@ -261,7 +261,7 @@ export default function InvoiceForm(props) {
               </FieldArray>
 
               {!isValid && submitCount > 0 && (
-                <div className='text-nine text-[0.625rem] font-bold mt-8 -mb-12 md:mb-0 space-y-2 overflow-hidden'>
+                <div className='text-red-500 text-[0.625rem] font-bold mt-8 -mb-12 md:mb-0 space-y-2 overflow-hidden'>
                   <div>- All fields must be added</div>
                   {values.items.length === 0 && (
                     <div>- An item must be added</div>

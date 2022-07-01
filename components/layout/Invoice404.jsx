@@ -16,7 +16,7 @@ export default function Invoice404() {
         <h2 className='text-xl font-bold tracking-tighter text-center'>
           There is nothing here
         </h2>
-        <p className='text-xs text-six tracking-tight text-center mt-5 w-56'>
+        <p className='text-xs text-slate-400 tracking-tight text-center mt-5 w-56'>
           Create an invoice by clicking the{' '}
           <span className='font-bold md:hidden'>New</span>
           <span className='font-bold hidden md:inline'>New Invoice</span> button

@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import InvoiceListItem from './InvoiceListItem';
 import Invoice404 from '../layout/Invoice404';
 import UtilityHeader from '../layout/UtilityHeader';
+import LoadingSpinner from '../ui/LoadingSpinner';
 
-export default function InvoiceList({ invoices }) {
+export default function InvoiceList({ invoices, loading }) {
   const [filteredInvoices, setFilteredInvoices] = useState([]);
   const [filters, setFilters] = useState([]);
 
@@ -29,6 +30,10 @@ export default function InvoiceList({ invoices }) {
       <div className='mt-8 md:mt-14 lg:mt-16'>
         {!filteredInvoices || filteredInvoices.length === 0 ? (
           <Invoice404 />
+        ) : loading ? (
+          <div className='flex justify-center items-center mt-60'>
+            <LoadingSpinner />
+          </div>
         ) : (
           <ul>
             {filteredInvoices.map((invoice) => (

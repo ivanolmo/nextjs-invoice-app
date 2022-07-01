@@ -48,18 +48,21 @@ export default function InvoiceAdd() {
   return (
     <>
       <div className='hidden md:block absolute inset-0 md:top-[84px] lg:top-0 lg:left-[104px] bg-gradient'></div>
-      <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-twelve p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-50 md:justify-self-start'>
+      <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-gray-800 p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-50 md:justify-self-start'>
         <div
-          className='cursor-pointer w-fit md:hidden'
+          className='group flex items-center cursor-pointer w-fit md:hidden'
           onClick={() => setShowAddInvoiceForm(false)}
         >
-          <Image
-            src='/assets/icon-arrow-left.svg'
-            alt='left arrow'
-            width='7px'
-            height='10px'
-          />
-          <span className='text-xs dark:text-white hover:text-seven dark:hover:text-six tracking-tight font-bold ml-6'>
+          <div className='w-2 h-3'>
+            <Image
+              src='/assets/icon-arrow-left.svg'
+              alt='left arrow'
+              width='7px'
+              height='10px'
+              layout='responsive'
+            />
+          </div>
+          <span className='text-xs dark:text-white group-hover:text-indigo-400 dark:group-hover:text-slate-400 tracking-tight font-bold ml-6'>
             Go Back
           </span>
         </div>
@@ -74,22 +77,22 @@ export default function InvoiceAdd() {
           <InvoiceForm onSubmit={() => onSubmit()} formRef={formRef} />
         </div>
 
-        <div className='flex justify-center md:justify-between items-center gap-2 bg-white dark:bg-three md:dark:bg-twelve mt-20 md:mt-12 -mx-6 md:mx-0 py-5 md:p-0 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)] md:shadow-none'>
+        <div className='flex justify-center md:justify-between items-center gap-2 bg-white dark:bg-slate-900 md:dark:bg-gray-800 mt-20 md:mt-12 -mx-6 md:mx-0 py-5 md:p-0 shadow-[0_-30px_30px_12px_rgba(0,0,0,0.1)] md:shadow-none'>
           <Button
-            containerClasses='bg-buttonLight hover:bg-five dark:bg-eleven dark:hover:bg-four px-4'
-            textClasses='text-seven dark:text-seven dark:hover:text-six'
+            containerClasses='bg-gray-200 hover:bg-indigo-100 dark:bg-violet-50 dark:hover:bg-slate-800 px-4'
+            textClasses='text-indigo-400 dark:text-indigo-400 dark:hover:text-slate-400'
             buttonText='Discard'
             onClick={() => setShowAddInvoiceForm(false)}
           />
           <div className='flex gap-2'>
             <Button
-              containerClasses='bg-[#373b53] hover:bg-eight dark:hover:bg-[#373b53]/50 px-4'
-              textClasses='text-xs text-six dark:text-five'
+              containerClasses='bg-slate-700 hover:bg-gray-900 dark:hover:bg-slate-700/50 px-4'
+              textClasses='text-xs text-slate-400 dark:text-indigo-100'
               buttonText='Save as Draft'
               onClick={() => handleSubmit('draft')}
             />
             <Button
-              containerClasses='bg-one hover:bg-two px-4'
+              containerClasses='bg-violet-500 hover:bg-violet-400 px-4'
               textClasses='text-white'
               buttonText='Save & Send'
               onClick={() => handleSubmit('pending')}

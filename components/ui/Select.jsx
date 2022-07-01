@@ -55,8 +55,8 @@ export default function Select({ label, ...props }) {
         htmlFor={props.id || props.name}
         className={classNames(
           meta.touched && meta.error
-            ? 'text-nine'
-            : 'text-seven dark:text-five',
+            ? 'text-red-500'
+            : 'text-indigo-400 dark:text-indigo-100',
           'text-xs tracking-tight'
         )}
       >
@@ -69,9 +69,9 @@ export default function Select({ label, ...props }) {
         onClick={handleToggle}
         className={classNames(
           meta.touched && meta.error
-            ? 'border-nine dark:border-nine'
-            : 'border-five dark:border-four hover:border-one dark:hover:border-one',
-          'bg-white dark:bg-three text-black dark:text-white font-bold mt-2.5 border rounded-md h-12 w-full cursor-pointer'
+            ? 'border-red-500 dark:border-red-500'
+            : 'border-indigo-100 dark:border-slate-800 hover:border-violet-500 dark:hover:border-violet-500',
+          'bg-white dark:bg-slate-900 text-black dark:text-white font-bold mt-2.5 border rounded-md h-12 w-full cursor-pointer'
         )}
       >
         <div className='flex justify-between items-center mt-4 mx-5'>
@@ -91,7 +91,7 @@ export default function Select({ label, ...props }) {
         {showOptions && (
           <div
             ref={optionsRef}
-            className='absolute top-[84px] flex flex-col bg-white dark:bg-four divide-y divide-five dark:divide-three w-full rounded-lg shadow-[0_8px_10px_0px_rgba(124,93,250,0.3)] dark:shadow-[0_8px_10px_0px_rgba(20,22,37,0.9)]'
+            className='absolute top-[84px] flex flex-col bg-white dark:bg-slate-800 divide-y divide-indigo-100 dark:divide-slate-900 w-full rounded-lg shadow-[0_8px_10px_0px_rgba(124,93,250,0.3)] dark:shadow-[0_8px_10px_0px_rgba(20,22,37,0.9)]'
           >
             {options.map((option) => (
               <div
@@ -99,9 +99,9 @@ export default function Select({ label, ...props }) {
                 onClick={() => handleClick(option.value)}
                 className={classNames(
                   value === option.value
-                    ? 'text-one'
+                    ? 'text-violet-500'
                     : 'text-black dark:text-white',
-                  'hover:text-one dark:hover:text-one py-4 px-6'
+                  'hover:text-violet-500 dark:hover:text-violet-500 py-4 px-6'
                 )}
               >
                 {option.label}
