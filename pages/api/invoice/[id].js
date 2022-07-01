@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 import { db } from '../../../lib/firebaseAdmin';
 import { addDays } from '../../../utils/utils';
 
@@ -9,24 +11,6 @@ export default async function handler(req, res) {
   } = req;
 
   switch (method) {
-    // get invoice by id
-    case 'GET':
-      try {
-        const doc = await db.collection('invoices').doc(id).get();
-
-        const invoice = doc.data();
-
-        if (invoice) {
-          res.status(200).json({ invoice });
-        } else {
-          res.status(404).json({ message: 'Invoice not found' });
-        }
-      } catch (error) {
-        res.status(500).json({ message: 'Invoice lookup failure' });
-      }
-
-      break;
-
     // delete invoice with the specified id
     case 'DELETE':
       try {
@@ -65,6 +49,7 @@ export default async function handler(req, res) {
 
         for (let item of items) {
           item.total = item.quantity * item.price;
+          item.id = nanoid(6);
         }
 
         const updatedInvoice = {
@@ -88,7 +73,7 @@ export default async function handler(req, res) {
       break;
 
     default:
-      res.setHeader('Allow', ['GET', 'PATCH', 'PUT', 'DELETE']);
+      res.setHeader('Allow', ['PATCH', 'PUT', 'DELETE']);
       res.status(405).end(`Method ${method} not allowed`);
       break;
   }
