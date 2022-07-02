@@ -10,6 +10,7 @@ export default function InvoiceList({ invoices, loading }) {
   const [filters, setFilters] = useState([]);
 
   useEffect(() => {
+    if (!invoices) return;
     const filtered = invoices.filter((invoice) => {
       if (filters && filters.length > 0) {
         return filters.includes(invoice.status);
@@ -28,12 +29,12 @@ export default function InvoiceList({ invoices, loading }) {
         setFilters={setFilters}
       />
       <div className='mt-8 md:mt-14 lg:mt-16'>
-        {!filteredInvoices || filteredInvoices.length === 0 ? (
-          <Invoice404 />
-        ) : loading ? (
+        {loading ? (
           <div className='flex justify-center items-center mt-60'>
             <LoadingSpinner />
           </div>
+        ) : !filteredInvoices || filteredInvoices.length === 0 ? (
+          <Invoice404 />
         ) : (
           <ul>
             {filteredInvoices.map((invoice) => (

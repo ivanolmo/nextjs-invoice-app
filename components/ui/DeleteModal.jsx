@@ -1,11 +1,6 @@
 import Button from './Button';
 
 export default function DeleteModal(props) {
-  const handleDelete = (id) => {
-    props.handleDelete(id);
-    props.handleClosePopup();
-  };
-
   return (
     <>
       <div className='absolute inset-0 z-500 bg-gradient'></div>
@@ -14,21 +9,21 @@ export default function DeleteModal(props) {
           Confirm Deletion
         </h3>
         <p className='text-xs text-indigo-400 dark:text-indigo-100 leading-large tracking-tight mt-2'>
-          Are you sure you want to delete invoice #{props.id}? This action
-          cannot be undone.
+          Are you sure you want to delete invoice #{props.invoiceId}? This
+          action cannot be undone.
         </p>
         <div className='flex justify-end gap-2 mt-6'>
           <Button
             containerClasses='bg-gray-200 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-gray-800 px-6'
             textClasses='text-indigo-400 dark:text-indigo-100'
             buttonText='Cancel'
-            onClick={() => props.handleClosePopup()}
+            onClick={() => props.handleCloseModal()}
           />
           <Button
             containerClasses='bg-red-500 hover:bg-red-300 px-6'
             textClasses='text-white'
             buttonText='Delete'
-            onClick={() => handleDelete(props.id)}
+            onClick={() => props.handleDelete()}
           />
         </div>
       </div>

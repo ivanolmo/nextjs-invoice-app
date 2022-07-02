@@ -7,8 +7,9 @@ import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
 
 export default function InvoiceAdd() {
-  const formRef = useRef(null);
   const { setShowAddInvoiceForm } = useContext(InvoiceContext);
+
+  const formRef = useRef(null);
 
   const handleSubmit = (status) => {
     if (status === 'draft') {

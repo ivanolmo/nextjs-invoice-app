@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 import { db } from '../../../lib/firebaseAdmin';
 import { addDays, generateId } from '../../../utils/utils';
 
@@ -5,41 +7,6 @@ export default async function handler(req, res) {
   const { body, method } = req;
 
   switch (method) {
-    // get all invoices
-    case 'GET':
-      try {
-        const snapshot = await db
-          .collection('invoices')
-          .orderBy('paymentDue', 'asc')
-          .get();
-
-        const invoices = [];
-        const undatedInvoices = [];
-
-        // check for invoices with no date and move them to end
-        // firebase treats null as first as far as ordering
-        snapshot.forEach((doc) => {
-          if (!doc.data().paymentDue) {
-            undatedInvoices.push({
-              id: doc.id,
-              ...doc.data(),
-            });
-          } else {
-            invoices.push({
-              id: doc.id,
-              ...doc.data(),
-            });
-          }
-        });
-
-        const allInvoicesData = invoices.concat(undatedInvoices);
-
-        res.status(200).json({ allInvoicesData });
-      } catch (error) {
-        res.status(500).json({ message: 'Invoices lookup failure' });
-      }
-      break;
-
     // create new invoice and post to invoices list
     case 'POST':
       try {
@@ -61,18 +28,19 @@ export default async function handler(req, res) {
 
         for (let item of items) {
           item.total = item.quantity * item.price;
+          item.id = nanoid(6);
         }
 
         const newInvoice = {
           ...body,
-          id: generateId(),
+          invoiceId: generateId(),
           createdAt: formattedCreatedAt,
           paymentDue,
           paymentTerms: +paymentTerms,
           total,
         };
 
-        await db.collection('invoices').doc(newInvoice.id).set(newInvoice);
+        await db.collection('invoices').add(newInvoice);
 
         res.status(201).json({ message: 'Invoice creation success' });
       } catch (error) {
@@ -81,7 +49,7 @@ export default async function handler(req, res) {
       break;
 
     default:
-      res.setHeader('Allow', ['GET', 'POST']);
+      res.setHeader('Allow', ['POST']);
       res.status(405).end(`Method ${method} not allowed`);
       break;
   }

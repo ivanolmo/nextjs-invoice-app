@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import Image from 'next/image';
 
 import InvoiceContext from '../../context/InvoiceContext';
 import Button from '../ui/Button';

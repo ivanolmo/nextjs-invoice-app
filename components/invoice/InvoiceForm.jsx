@@ -6,7 +6,7 @@ import DeleteIcon from '../ui/DeleteIcon';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
 import { classNames } from '../../utils/utils';
-import { formValidationSchema } from '../../utils/formValidationSchema';
+import { formValidationSchema } from '../../utils/validationSchemas';
 
 export default function InvoiceForm(props) {
   const initialValues = {
