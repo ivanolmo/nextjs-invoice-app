@@ -2,7 +2,7 @@ import { useField } from 'formik';
 
 import { classNames } from '../../utils/utils';
 
-export default function Input({ label, ...props }) {
+export default function Input({ label, showError, ...props }) {
   const [field, meta] = useField(props);
 
   return (
@@ -13,10 +13,11 @@ export default function Input({ label, ...props }) {
           meta.touched && meta.error
             ? 'text-red-500'
             : 'text-indigo-400 dark:text-indigo-100',
-          'text-xs tracking-tight'
+          'flex justify-between text-xs tracking-tight'
         )}
       >
-        {label}
+        <span>{label}</span>
+        <span>{showError && meta.error}</span>
       </label>
       <input
         className={classNames(
