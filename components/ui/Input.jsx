@@ -6,7 +6,9 @@ export default function Input({ label, showError, ...props }) {
   const [field, meta] = useField(props);
 
   return (
-    <div className={`mt-6 ${props.classes ? props.classes : undefined}`}>
+    <div
+      className={`mt-6 relative ${props.classes ? props.classes : undefined}`}
+    >
       <label
         htmlFor={props.id || props.name}
         className={classNames(
@@ -29,6 +31,11 @@ export default function Input({ label, showError, ...props }) {
         {...field}
         {...props}
       />
+      {props.icon && (
+        <div className='absolute right-4 top-1/2 cursor-pointer'>
+          {props.icon}
+        </div>
+      )}
     </div>
   );
 }
