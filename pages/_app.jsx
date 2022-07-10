@@ -5,6 +5,7 @@ import '@fontsource/spartan/500.css';
 import '@fontsource/spartan/700.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { AuthProvider } from '../context/AuthContext';
 import { InvoiceProvider } from '../context/InvoiceContext';
 import MainHeader from '../components/layout/MainHeader';
 import ErrorBoundary from '../components/layout/ErrorBoundary';
@@ -14,7 +15,7 @@ function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Next.js Invoice App</title>
+        <title>Invoices powered by Next.js</title>
         <meta
           name='viewport'
           content='minimum-scale=1, initial-scale=1, width=device-width'
@@ -25,17 +26,19 @@ function App({ Component, pageProps }) {
         />
       </Head>
 
-      <InvoiceProvider>
-        <ThemeProvider attribute='class'>
-          <div className='flex flex-col lg:flex-row'>
-            <MainHeader />
-            <ErrorBoundary>
-              <Component {...pageProps} />
-            </ErrorBoundary>
-            <ToastContainer autoClose={3000} />
-          </div>
-        </ThemeProvider>
-      </InvoiceProvider>
+      <AuthProvider>
+        <InvoiceProvider>
+          <ThemeProvider attribute='class'>
+            <div className='grid lg:grid-cols-[104px_1fr]'>
+              <MainHeader />
+              <ErrorBoundary>
+                <Component {...pageProps} />
+              </ErrorBoundary>
+              <ToastContainer autoClose={5000} />
+            </div>
+          </ThemeProvider>
+        </InvoiceProvider>
+      </AuthProvider>
     </>
   );
 }
