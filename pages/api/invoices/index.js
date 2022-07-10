@@ -1,15 +1,21 @@
 import { nanoid } from 'nanoid';
 
-import { db } from '../../../lib/firebaseAdmin';
+import { auth, db } from '../../../lib/firebaseAdmin';
 import { addDays, generateId } from '../../../utils/utils';
 
 export default async function handler(req, res) {
-  const { body, method } = req;
+  const {
+    body,
+    headers: { token },
+    method,
+  } = req;
 
   switch (method) {
     // create new invoice and post to invoices list
     case 'POST':
       try {
+        const { uid } = await auth.verifyIdToken(token);
+
         const { createdAt, paymentTerms, items } = body;
 
         const formattedCreatedAt =
@@ -40,11 +46,15 @@ export default async function handler(req, res) {
           total,
         };
 
-        await db.collection('invoices').add(newInvoice);
+        await db
+          .collection('users')
+          .doc(uid)
+          .collection('invoices')
+          .add(newInvoice);
 
         res.status(201).json({ message: 'Invoice creation success' });
       } catch (error) {
-        res.status(500).json({ message: 'Invoice creation failure' });
+        res.status(500).json({ error });
       }
       break;
 
