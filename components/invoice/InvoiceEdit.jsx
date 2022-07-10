@@ -34,8 +34,8 @@ export default function InvoiceEdit({ invoice }) {
           body: JSON.stringify({ ...formRef.current.values }),
         }),
         {
-          pending: 'Invoice is being updated...',
-          success: 'Invoice has been successfully updated!',
+          pending: `Invoice #${invoice.invoiceId} is being updated...`,
+          success: `Invoice #${invoice.invoiceId} has been successfully updated!`,
           error: 'There was an error updating this invoice',
         }
       );
@@ -54,7 +54,7 @@ export default function InvoiceEdit({ invoice }) {
   return (
     <>
       <div className='hidden md:block absolute inset-0 md:top-[82px] lg:top-0 lg:left-[104px] bg-gradient'></div>
-      <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-gray-800 p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-50 justify-self-start'>
+      <div className='row-start-1 col-start-1 md:w-[616px] md:h-min bg-white dark:bg-gray-800 p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-50 justify-self-start'>
         <div
           className='group flex items-center cursor-pointer w-fit md:hidden'
           onClick={() => setShowEditInvoiceForm(false)}

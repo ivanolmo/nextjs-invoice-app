@@ -82,8 +82,8 @@ export default function InvoicePage() {
           },
         }),
         {
-          pending: 'Invoice status is being updated...',
-          success: 'Invoice status has been successfully updated',
+          pending: `Invoice #${data?.invoiceId} status is being updated...`,
+          success: `Invoice #${data?.invoiceId} status has been successfully updated`,
           error: 'There was an error updating the status',
         }
       );
@@ -95,7 +95,7 @@ export default function InvoicePage() {
   return !user ? (
     <></>
   ) : (
-    <div className='grid md:justify-items-center lg:h-screen w-full'>
+    <div className='grid md:justify-items-center lg:h-screen w-full overflow-y-auto'>
       <div className='row-start-1 col-start-1 pt-8 md:pt-12 lg:pt-16 px-6 md:px-0 md:w-[688px] lg:w-[730px]'>
         <div
           className='group flex items-center w-fit cursor-pointer'

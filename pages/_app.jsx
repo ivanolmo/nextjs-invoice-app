@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { ThemeProvider } from 'next-themes';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '@fontsource/spartan/500.css';
 import '@fontsource/spartan/700.css';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { AuthProvider } from '../context/AuthContext';
 import { InvoiceProvider } from '../context/InvoiceContext';
-import MainHeader from '../components/layout/MainHeader';
 import ErrorBoundary from '../components/layout/ErrorBoundary';
+import MainHeader from '../components/layout/MainHeader';
 import '../styles/globals.scss';
 
 function App({ Component, pageProps }) {
