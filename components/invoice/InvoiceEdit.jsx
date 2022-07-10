@@ -2,11 +2,14 @@ import { useContext, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 
+import { useAuth } from '../../context/AuthContext';
 import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
 
 export default function InvoiceEdit({ invoice }) {
+  const { user } = useAuth();
+
   const { setShowEditInvoiceForm } = useContext(InvoiceContext);
 
   const formRef = useRef(null);
@@ -20,21 +23,26 @@ export default function InvoiceEdit({ invoice }) {
   };
 
   const onSubmit = async () => {
-    const res = await toast.promise(
-      fetch(`/api/invoice/${invoice.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...formRef.current.values }),
-      }),
-      {
-        pending: 'Invoice is being updated...',
-        success: 'Invoice has been successfully updated!',
-        error: 'There was an error updating this invoice',
-      }
-    );
-    handleClose();
+    try {
+      await toast.promise(
+        fetch(`/api/invoice/${invoice.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            token: user.token,
+          },
+          body: JSON.stringify({ ...formRef.current.values }),
+        }),
+        {
+          pending: 'Invoice is being updated...',
+          success: 'Invoice has been successfully updated!',
+          error: 'There was an error updating this invoice',
+        }
+      );
+      handleClose();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -68,7 +76,7 @@ export default function InvoiceEdit({ invoice }) {
         <div className='mt-6 md:mt-0'>
           <span className='text-2xl font-bold dark:text-white'>
             Edit <span className='text-slate-400 dark:text-slate-500'>#</span>
-            {invoice.id}
+            {invoice.invoiceId}
           </span>
         </div>
 
