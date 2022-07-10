@@ -5,7 +5,6 @@ const InvoiceContext = createContext();
 export const InvoiceProvider = ({ children }) => {
   const [showAddInvoiceForm, setShowAddInvoiceForm] = useState(false);
   const [showEditInvoiceForm, setShowEditInvoiceForm] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const clearAll = () => {
     setShowAddInvoiceForm(false);
@@ -20,8 +19,6 @@ export const InvoiceProvider = ({ children }) => {
         setShowAddInvoiceForm,
         showEditInvoiceForm,
         setShowEditInvoiceForm,
-        showDeleteModal,
-        setShowDeleteModal,
         clearAll,
       }}
     >
