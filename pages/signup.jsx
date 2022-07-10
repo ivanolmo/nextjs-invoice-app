@@ -8,18 +8,21 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
-import { signInValidationSchema } from '../utils/validationSchemas';
+import { registerValidationSchema } from '../utils/validationSchemas';
 
-export default function SignIn() {
+export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
-  const { user, signInEmailPassword, signInWithGoogle, signInWithGithub } =
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { user, registerEmailPassword, signInWithGoogle, signInWithGithub } =
     useAuth();
 
   const router = useRouter();
 
   const initialValues = {
+    name: '',
     email: '',
     password: '',
+    confirmPassword: '',
   };
 
   useEffect(() => {
@@ -28,14 +31,16 @@ export default function SignIn() {
     }
   }, [router, user]);
 
-  const onSubmit = async ({ email, password }, resetForm) => {
+  const onSubmit = async ({ name, email, password }, resetForm) => {
     try {
-      await signInEmailPassword(email, password);
+      const response = await registerEmailPassword(name, email, password);
+
+      if (!response) throw new Error();
 
       router.push('/invoices');
     } catch (error) {
       resetForm();
-      toast.error('Please check your credentials and try again!');
+      toast.error('Email already exists! Please sign in.');
     }
   };
 
@@ -44,7 +49,7 @@ export default function SignIn() {
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
-        validationSchema={signInValidationSchema}
+        validationSchema={registerValidationSchema}
         onSubmit={async (values, { resetForm }) => {
           onSubmit(values, resetForm);
         }}
@@ -53,9 +58,16 @@ export default function SignIn() {
           return (
             <div className='w-full max-w-3xl'>
               <div className='my-6'>
-                <span className='text-xl font-bold'>Sign In</span>
+                <span className='text-xl font-bold'>Sign Up</span>
               </div>
               <Form className='grid grid-cols-1 md:grid-cols-2 md:gap-x-8'>
+                <Input
+                  label='Name'
+                  name='name'
+                  type='text'
+                  placeholder='Optional'
+                  classes='md:col-span-1'
+                />
                 <Input
                   label='Email'
                   name='email'
@@ -84,12 +96,37 @@ export default function SignIn() {
                     </div>
                   }
                 />
+                <Input
+                  label='Confirm Password'
+                  name='confirmPassword'
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  showError={errors.confirmPassword && touched.confirmPassword}
+                  classes='md:col-span-1'
+                  icon={
+                    <div
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                    >
+                      <Image
+                        src={
+                          showConfirmPassword
+                            ? '/assets/eye.svg'
+                            : '/assets/closed-eye.svg'
+                        }
+                        alt='toggle show password'
+                        width='24px'
+                        height='24px'
+                      />
+                    </div>
+                  }
+                />
                 <button
                   type='submit'
                   disabled={isSubmitting}
                   className='md:col-span-2 bg-violet-500 hover:bg-violet-400 text-white font-bold mt-12 px-6 py-4 rounded-full w-full'
                 >
-                  Sign In
+                  Sign Up
                 </button>
               </Form>
             </div>
@@ -109,8 +146,8 @@ export default function SignIn() {
           <Button
             onClick={() => signInWithGoogle()}
             containerClasses='col-span-2 md:col-span-1 bg-violet-500 hover:bg-violet-400 gap-6'
+            buttonText='Sign up with Google'
             textClasses='text-white'
-            buttonText='Sign in with Google'
             icon={
               <Image
                 src='/assets/google.svg'
@@ -123,8 +160,8 @@ export default function SignIn() {
           <Button
             onClick={() => signInWithGithub()}
             containerClasses='col-span-2 md:col-span-1 bg-violet-500 hover:bg-violet-400 gap-6'
+            buttonText='Sign up with Github'
             textClasses='text-white'
-            buttonText='Sign in with Github'
             icon={
               <Image
                 src='/assets/github.svg'
@@ -136,10 +173,10 @@ export default function SignIn() {
           />
           <div className='col-span-2 place-self-center mt-6'>
             <span>
-              Don&apos;t have an account?{' '}
-              <Link href='/signup'>
+              Already have an account?{' '}
+              <Link href='/signin'>
                 <a className='text-blue-900 dark:text-blue-400 border-b border-blue-900 dark:border-blue-400'>
-                  Sign Up
+                  Sign In
                 </a>
               </Link>
             </span>
