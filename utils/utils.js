@@ -15,7 +15,7 @@ export function formatMoney(m) {
   return new Intl.NumberFormat('en-US', options).format(m);
 }
 
-export function formatStatus(s) {
+export function formatCapitalize(s) {
   if (!s) return;
   return s[0].toUpperCase() + s.slice(1);
 }
