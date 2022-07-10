@@ -13,6 +13,10 @@ module.exports = {
       current: 'currentColor',
       white: colors.white,
       black: colors.black,
+      blue: {
+        400: '#3b82f6',
+        900: '#1e3a8a',
+      },
       emerald: {
         400: '#33d69f',
       },
