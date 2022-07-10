@@ -246,8 +246,6 @@ const initialData = [
 ];
 
 exports.onUserCreate = functions.auth.user().onCreate((user) => {
-  console.log("inside onUserCreate");
-  console.log(user);
   initialData.forEach((doc) => {
     return admin
         .firestore()
