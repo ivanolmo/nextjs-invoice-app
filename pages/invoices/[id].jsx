@@ -1,9 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { doc, getDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
+import { useAuth } from '../../context/AuthContext';
 import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceEdit from '../../components/invoice/InvoiceEdit';
 import Button from '../../components/ui/Button';
@@ -15,22 +16,27 @@ import {
   classNames,
   formatDate,
   formatMoney,
-  formatStatus,
+  formatCapitalize,
 } from '../../utils/utils';
 
-export default function InvoicePage({ invoice }) {
-  const {
-    showEditInvoiceForm,
-    setShowEditInvoiceForm,
-    showDeleteModal,
-    setShowDeleteModal,
-  } = useContext(InvoiceContext);
+export default function InvoicePage() {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const { user } = useAuth();
 
   const router = useRouter();
 
+  useEffect(() => {
+    if (!user) {
+      router.push('/signin');
+    }
+  }, [user, router]);
+
+  const { showEditInvoiceForm, setShowEditInvoiceForm } =
+    useContext(InvoiceContext);
+
   const [data, loading, error] = useDocumentDataSSR(
-    doc(db, 'invoices', router.query.id),
-    { startsWith: invoice }
+    user ? doc(db, 'users', user.uid, 'invoices', router.query.id) : null
   );
 
   if (error) throw new Error();
@@ -40,47 +46,56 @@ export default function InvoicePage({ invoice }) {
 
   // navigates to home after delete or click of 'Go Back' button
   const handleClose = () => {
-    router.push('/');
+    router.push('/invoices');
   };
 
   // handles invoice delete
   const handleDelete = async () => {
-    const res = await toast.promise(
-      fetch(`/api/invoice/${data?.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
+    try {
+      await toast.promise(
+        fetch(`/api/invoice/${data?.id}`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json', token: user.token },
+        }),
+        {
+          pending: `Invoice #${data?.invoiceId} is being deleted...`,
+          success: `Invoice #${data?.invoiceId} has been successfully deleted`,
+          error: 'There was an error deleting this invoice',
         },
-      }),
-      {
-        pending: 'Invoice is being deleted...',
-        success: `Invoice #${data?.invoiceId} has been successfully deleted`,
-        error: 'There was an error deleting this invoice',
-      },
-      handleCloseModal(),
-      handleClose()
-    );
+        handleCloseModal(),
+        handleClose()
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // handles invoice status update pending -> paid
   const handleStatusUpdate = async () => {
-    const res = await toast.promise(
-      fetch(`/api/invoice/${data?.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }),
-      {
-        pending: 'Invoice status is being updated...',
-        success: 'Invoice status has been successfully updated',
-        error: 'There was an error updating the status',
-      }
-    );
+    try {
+      await toast.promise(
+        fetch(`/api/invoice/${data?.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            token: user.token,
+          },
+        }),
+        {
+          pending: 'Invoice status is being updated...',
+          success: 'Invoice status has been successfully updated',
+          error: 'There was an error updating the status',
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  return (
-    <div className='grid grid-cols-1 md:justify-items-center lg:h-screen lg:overflow-y-auto w-full'>
+  return !user ? (
+    <></>
+  ) : (
+    <div className='grid md:justify-items-center lg:h-screen w-full'>
       <div className='row-start-1 col-start-1 pt-8 md:pt-12 lg:pt-16 px-6 md:px-0 md:w-[688px] lg:w-[730px]'>
         <div
           className='group flex items-center w-fit cursor-pointer'
@@ -100,7 +115,7 @@ export default function InvoicePage({ invoice }) {
           </span>
         </div>
         {loading || router.isFallback ? (
-          <div className='flex justify-center items-center mt-60'>
+          <div className='flex justify-center items-center h-screen'>
             <LoadingSpinner />
           </div>
         ) : (
@@ -123,7 +138,7 @@ export default function InvoicePage({ invoice }) {
                   )}
                 >
                   <span className='bg-current inline-block mr-2 w-2 h-2 rounded-full'></span>
-                  {formatStatus(data?.status) || '-'}
+                  {formatCapitalize(data?.status) || '-'}
                 </div>
               </div>
               <div className='hidden md:flex md:justify-center md:items-center gap-2 py-5'>
@@ -335,26 +350,26 @@ export default function InvoicePage({ invoice }) {
         )}
       </div>
 
-      {showEditInvoiceForm && <InvoiceEdit invoice={data ?? invoice} />}
+      {showEditInvoiceForm && <InvoiceEdit invoice={data} />}
     </div>
   );
 }
 
-export async function getServerSideProps(context) {
-  const id = context.params.id;
-  const snapshot = await getDoc(doc(db, 'invoices', id));
+// export async function getServerSideProps(context) {
+//   const id = context.params.id;
+//   const snapshot = await getDoc(doc(db, 'invoices', id));
 
-  const invoice = snapshot.data();
+//   const invoice = snapshot.data();
 
-  if (!invoice) {
-    return {
-      notFound: true,
-    };
-  }
+//   if (!invoice) {
+//     return {
+//       notFound: true,
+//     };
+//   }
 
-  invoice.id = snapshot.id;
+//   invoice.id = snapshot.id;
 
-  return {
-    props: { invoice },
-  };
-}
+//   return {
+//     props: { invoice },
+//   };
+// }
