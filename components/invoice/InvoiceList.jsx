@@ -27,6 +27,7 @@ export default function InvoiceList({ invoices, loading }) {
       <UtilityHeader
         invoiceCount={filteredInvoices.length}
         setFilters={setFilters}
+        loading={loading}
       />
       <div className='mt-8 md:mt-14 lg:mt-16'>
         {loading ? (

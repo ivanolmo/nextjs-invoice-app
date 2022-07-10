@@ -1,11 +1,12 @@
 import { useContext } from 'react';
 
 import InvoiceContext from '../../context/InvoiceContext';
+import AddIcon from '../ui/AddIcon';
 import Button from '../ui/Button';
 import FilterButton from '../ui/FilterButton';
-import AddIcon from '../ui/AddIcon';
+import LoadingSpinner from '../ui/LoadingSpinner';
 
-export default function UtilityHeader({ invoiceCount, setFilters }) {
+export default function UtilityHeader({ invoiceCount, loading, setFilters }) {
   const { setShowAddInvoiceForm } = useContext(InvoiceContext);
 
   return (
@@ -14,12 +15,18 @@ export default function UtilityHeader({ invoiceCount, setFilters }) {
         <span className='text-xl md:text-3xl lg:text-4xl font-bold tracking-tight dark:text-white'>
           Invoices
         </span>
-        <span className='text-slate-400 dark:text-indigo-100 text-xs tracking-tight md:hidden'>
-          {invoiceCount ? invoiceCount : 'No'} invoices
-        </span>
-        <span className='text-slate-400 dark:text-indigo-100 text-xs lg:text-sm tracking-tight hidden md:block'>
-          There are {invoiceCount ? `${invoiceCount} total` : 'no'} invoices
-        </span>
+        {loading ? (
+          <LoadingSpinner size={12} />
+        ) : (
+          <>
+            <span className='text-slate-400 dark:text-indigo-100 text-xs tracking-tight md:hidden'>
+              {invoiceCount ? invoiceCount : 'No'} invoices
+            </span>
+            <span className='text-slate-400 dark:text-indigo-100 text-xs lg:text-sm tracking-tight hidden md:block'>
+              There are {invoiceCount ? `${invoiceCount} total` : 'no'} invoices
+            </span>
+          </>
+        )}
       </div>
       <div className='flex justify-between items-center gap-5 md:gap-10'>
         <FilterButton setFilters={setFilters} />

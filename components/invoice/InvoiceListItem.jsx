@@ -5,7 +5,7 @@ import {
   classNames,
   formatDate,
   formatMoney,
-  formatStatus,
+  formatCapitalize,
 } from '../../utils/utils';
 
 export default function InvoiceListItem({ invoice }) {
@@ -51,7 +51,7 @@ export default function InvoiceListItem({ invoice }) {
                 )}
               >
                 <span className='bg-current inline-block w-2 h-2 rounded-full'></span>
-                <span>{formatStatus(status)}</span>
+                <span>{formatCapitalize(status)}</span>
               </div>
             </div>
 
