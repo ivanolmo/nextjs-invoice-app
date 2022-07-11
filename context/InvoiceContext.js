@@ -9,7 +9,6 @@ export const InvoiceProvider = ({ children }) => {
   const clearAll = () => {
     setShowAddInvoiceForm(false);
     setShowEditInvoiceForm(false);
-    setShowDeleteModal(false);
   };
 
   return (
