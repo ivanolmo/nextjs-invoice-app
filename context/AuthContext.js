@@ -13,8 +13,8 @@ import {
 } from 'firebase/auth';
 
 import { auth } from '../lib/firebase';
-import { handleCreateUser, handleDeleteUser } from '../lib/db';
-import { formatCapitalize } from '../utils/utils';
+import { createFirestoreUser, deleteFirestoreUser } from '../lib/db';
+import { formatCapitalize } from '../utils';
 
 const AuthContext = createContext({});
 
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
         });
       }
 
-      await handleCreateUser(response.user, response.providerId);
+      await createFirestoreUser(response.user, response.providerId);
 
       return response;
     } catch (error) {
@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await signInWithPopup(auth, new GoogleAuthProvider());
 
-      await handleCreateUser(response.user, response.providerId);
+      await createFirestoreUser(response.user, response.providerId);
 
       router.push('/invoices');
     } catch (error) {
@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }) => {
 
       const email = response.user.providerData[0].email;
 
-      await handleCreateUser(response.user, response.providerId, email);
+      await createFirestoreUser(response.user, response.providerId, email);
 
       router.push('/invoices');
     } catch (error) {
@@ -109,8 +109,8 @@ export const AuthProvider = ({ children }) => {
 
   const deleteAuthUser = async () => {
     try {
+      await deleteFirestoreUser(auth.currentUser.uid);
       await deleteUser(auth.currentUser);
-      await handleDeleteUser(auth.currentUser.uid);
     } catch (error) {
       console.log(error);
     }
