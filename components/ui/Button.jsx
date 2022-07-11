@@ -2,7 +2,8 @@ import { classNames } from '../../utils/utils';
 
 export default function Button(props) {
   return (
-    <div
+    <button
+      type={props.type || 'button'}
       onClick={() => props.onClick?.()}
       className={classNames(
         props.containerClasses,
@@ -19,6 +20,6 @@ export default function Button(props) {
       >
         {props.buttonText}
       </div>
-    </div>
+    </button>
   );
 }
