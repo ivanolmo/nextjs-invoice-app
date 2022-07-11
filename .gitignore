@@ -49,3 +49,5 @@ dbClient.js
 firebaseClient.js
 firebase.config.js
 FormItemList.jsx
+
+functions/node_modules
