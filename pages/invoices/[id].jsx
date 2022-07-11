@@ -50,46 +50,50 @@ export default function InvoicePage() {
   };
 
   // handles invoice delete
-  const handleDelete = async () => {
-    try {
-      await toast.promise(
-        fetch(`/api/invoice/${data?.id}`, {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json', token: user.token },
-        }),
-        {
-          pending: `Invoice #${data?.invoiceId} is being deleted...`,
-          success: `Invoice #${data?.invoiceId} has been successfully deleted`,
-          error: 'There was an error deleting this invoice',
-        },
-        handleCloseModal(),
-        handleClose()
-      );
-    } catch (error) {
-      console.log(error);
-    }
+  const handleDelete = () => {
+    fetch(`/api/invoice/${data?.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        token: user.token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject('There was an error deleting this invoice');
+        }
+
+        toast.success(
+          `Invoice #${data?.invoiceId} status has been successfully updated`
+        );
+
+        handleCloseModal();
+        handleClose();
+      })
+      .catch((error) => toast.error(error));
   };
 
   // handles invoice status update pending -> paid
-  const handleStatusUpdate = async () => {
-    try {
-      await toast.promise(
-        fetch(`/api/invoice/${data?.id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            token: user.token,
-          },
-        }),
-        {
-          pending: `Invoice #${data?.invoiceId} status is being updated...`,
-          success: `Invoice #${data?.invoiceId} status has been successfully updated`,
-          error: 'There was an error updating the status',
+  const handleStatusUpdate = () => {
+    fetch(`/api/invoice/${data?.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        token: user.token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject(
+            'There was an error updating the status of this invoice'
+          );
         }
-      );
-    } catch (error) {
-      console.log(error);
-    }
+
+        toast.success(
+          `Invoice #${data?.invoiceId} status has been successfully updated`
+        );
+      })
+      .catch((error) => toast.error(error));
   };
 
   return !user ? (

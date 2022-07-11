@@ -14,6 +14,9 @@ export default function InvoiceAdd() {
 
   const formRef = useRef(null);
 
+  // this handles form submission based on a user saving a complete...
+  // ...invoice or a draft invoice. a complete invoice goes through...
+  // ...Formik/Yup form validation, and a draft invoice does not
   const handleSubmit = (status) => {
     if (status === 'draft') {
       onSubmit('draft', formRef.current.values);
@@ -25,39 +28,35 @@ export default function InvoiceAdd() {
   };
 
   // default status is pending unless 'draft' is provided as arg
-  const onSubmit = async (status = 'pending') => {
-    try {
-      await toast.promise(
-        fetch('/api/invoices/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            token: user.token,
-          },
-          body: JSON.stringify({ status, ...formRef.current.values }),
-        }),
-        status === 'pending'
-          ? {
-              pending: 'Invoice is being created...',
-              success: 'Invoice has been successfully created!',
-              error: 'There was an error creating this invoice',
-            }
-          : {
-              pending: 'Invoice is being saved...',
-              success: 'Invoice has been successfully saved!',
-              error: 'There was an error saving this invoice',
-            }
-      );
-      setShowAddInvoiceForm(false);
-    } catch (error) {
-      console.log(error);
-    }
+  const onSubmit = (status = 'pending') => {
+    fetch('/api/invoices/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        token: user.token,
+      },
+      body: JSON.stringify({ status, ...formRef.current.values }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject('There was an error creating this invoice');
+        }
+
+        toast.success(
+          `Invoice has been successfully ${
+            status === 'pending' ? 'created' : 'saved'
+          }!`
+        );
+
+        setShowAddInvoiceForm(false);
+      })
+      .catch((error) => toast.error(error));
   };
 
   return (
     <>
       <div className='hidden md:block absolute inset-0 md:top-[84px] lg:top-0 lg:left-[104px] bg-gradient'></div>
-      <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-gray-800 p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-50 md:justify-self-start'>
+      <div className='row-start-1 col-start-1 md:w-[616px] md:h-min bg-white dark:bg-gray-800 p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-40 md:justify-self-start'>
         <div
           className='group flex items-center cursor-pointer w-fit md:hidden'
           onClick={() => setShowAddInvoiceForm(false)}
