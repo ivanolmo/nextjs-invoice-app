@@ -91,7 +91,7 @@ export default function Select({ label, ...props }) {
         {showOptions && (
           <div
             ref={optionsRef}
-            className='absolute top-[84px] flex flex-col bg-white dark:bg-slate-800 divide-y divide-indigo-100 dark:divide-slate-900 w-full rounded-lg shadow-[0_8px_10px_0px_rgba(124,93,250,0.3)] dark:shadow-[0_8px_10px_0px_rgba(20,22,37,0.9)]'
+            className='absolute top-[84px] flex flex-col bg-white dark:bg-slate-800 divide-y divide-indigo-100 dark:divide-slate-900 w-full rounded-lg shadow-[0_8px_10px_0px_rgba(124,93,250,0.3)] dark:shadow-[0_8px_10px_0px_rgba(20,22,37,0.9)] z-50'
           >
             {options.map((option) => (
               <div

@@ -4,8 +4,8 @@ export default function DeleteUserModal(props) {
   // TODO handle reauth for firebase error requires-recent-signin
   return (
     <>
-      <div className='absolute inset-0 z-500 bg-gradient'></div>
-      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-900 flex flex-col p-8 md:p-12 rounded-lg w-80 md:w-[480px] z-1000'>
+      <div className='absolute inset-0 bg-gradient'></div>
+      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-900 flex flex-col p-8 md:p-12 rounded-lg w-80 md:w-[480px]'>
         <h3 className='text-xl md:text-2xl font-bold leading-medium md:leading-[1.33] tracking-tight dark:text-white'>
           Confirm Account Deletion
         </h3>
