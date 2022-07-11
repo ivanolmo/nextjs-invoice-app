@@ -68,7 +68,7 @@ export default function InvoiceEdit({ invoice }) {
         <div className='mt-6 md:mt-0'>
           <span className='text-2xl font-bold dark:text-white'>
             Edit <span className='text-slate-400 dark:text-slate-500'>#</span>
-            {invoice.id}
+            {invoice.invoiceId}
           </span>
         </div>
 

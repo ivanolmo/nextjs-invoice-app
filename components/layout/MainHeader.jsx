@@ -16,7 +16,8 @@ export default function MainHeader() {
     <header className='flex lg:flex-col justify-between items-center bg-slate-700 dark:bg-slate-900 lg:rounded-r-3xl lg:h-screen'>
       <Link href='/'>
         <a onClick={() => clearAll()}>
-          <div className='bg-violet-500 p-6 md:p-7 lg:p-8 leading-zero rounded-r-3xl'>
+          <div className='relative bg-violet-500 p-6 md:p-7 lg:p-8 leading-zero rounded-r-3xl'>
+            <div className='absolute top-1/2 bottom-0 left-0 right-0 bg-violet-400 rounded-tl-3xl rounded-br-3xl'></div>
             <div className='w-7 h-7 lg:w-10 lg:h-10'>
               <Image
                 src='/assets/logo.svg'
