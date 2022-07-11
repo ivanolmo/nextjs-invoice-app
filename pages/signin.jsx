@@ -84,13 +84,13 @@ export default function SignIn() {
                     </div>
                   }
                 />
-                <button
+                <Button
                   type='submit'
                   disabled={isSubmitting}
-                  className='md:col-span-2 bg-violet-500 hover:bg-violet-400 text-white font-bold mt-12 px-6 py-4 rounded-full w-full'
-                >
-                  Sign In
-                </button>
+                  containerClasses='md:col-span-2 bg-violet-500 hover:bg-violet-400 mt-10'
+                  textClasses='text-white'
+                  buttonText='Sign In'
+                />
               </Form>
             </div>
           );
