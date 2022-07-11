@@ -6,7 +6,7 @@ import {
   formatDate,
   formatMoney,
   formatCapitalize,
-} from '../../utils/utils';
+} from '../../utils';
 
 export default function InvoiceListItem({ invoice }) {
   const { id, invoiceId, paymentDue, total, clientName, status } = invoice;

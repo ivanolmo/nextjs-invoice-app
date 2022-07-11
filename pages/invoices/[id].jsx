@@ -17,7 +17,7 @@ import {
   formatDate,
   formatMoney,
   formatCapitalize,
-} from '../../utils/utils';
+} from '../../utils';
 
 export default function InvoicePage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);

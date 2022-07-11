@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
 import Image from 'next/image';
 
-import { classNames } from '../../utils/utils';
+import { classNames } from '../../utils';
 
 export default function Select({ label, ...props }) {
   const [showOptions, setShowOptions] = useState(false);

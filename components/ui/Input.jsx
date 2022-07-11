@@ -1,6 +1,6 @@
 import { useField } from 'formik';
 
-import { classNames } from '../../utils/utils';
+import { classNames } from '../../utils';
 
 export default function Input({ label, showError, ...props }) {
   const [field, meta] = useField(props);

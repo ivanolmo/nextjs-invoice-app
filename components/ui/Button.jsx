@@ -1,4 +1,4 @@
-import { classNames } from '../../utils/utils';
+import { classNames } from '../../utils';
 
 export default function Button(props) {
   return (

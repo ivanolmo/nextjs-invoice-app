@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import { auth, db } from '../../../lib/firebaseAdmin';
-import { addDays, generateId } from '../../../utils/utils';
+import { addDays, generateId } from '../../../utils';
 
 export default async function handler(req, res) {
   const {

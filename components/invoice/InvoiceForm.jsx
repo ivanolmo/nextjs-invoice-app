@@ -5,7 +5,7 @@ import Button from '../ui/Button';
 import DeleteIcon from '../ui/DeleteIcon';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
-import { classNames } from '../../utils/utils';
+import { classNames } from '../../utils';
 import { formValidationSchema } from '../../utils/validationSchemas';
 
 export default function InvoiceForm(props) {

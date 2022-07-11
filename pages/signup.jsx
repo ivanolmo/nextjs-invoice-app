@@ -40,7 +40,9 @@ export default function SignUp() {
       router.push('/invoices');
     } catch (error) {
       resetForm();
-      toast.error('Email already exists! Please sign in.');
+      toast.error(
+        'That email address is in use. Please sign in or create a new account!'
+      );
     }
   };
 
