@@ -31,7 +31,7 @@ export default function InvoiceList({ invoices, loading }) {
       />
       <div className='mt-8 md:mt-14 lg:mt-16'>
         {loading ? (
-          <div className='flex justify-center items-center mt-60'>
+          <div className='flex items-center justify-center mt-60'>
             <LoadingSpinner />
           </div>
         ) : !filteredInvoices || filteredInvoices.length === 0 ? (

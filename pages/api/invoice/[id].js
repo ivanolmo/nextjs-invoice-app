@@ -23,9 +23,9 @@ export default async function handler(req, res) {
           .collection('invoices')
           .doc(id)
           .delete();
-        res.status(200).json({ message: 'Invoice delete successful' });
+        res.status(200).json({ message: 'Success' });
       } catch (error) {
-        res.status(500).json({ error });
+        res.status(401).json({ message: 'Unauthorized' });
       }
       break;
 
@@ -42,9 +42,9 @@ export default async function handler(req, res) {
           .update({
             status: 'paid',
           });
-        res.status(200).json({ message: 'Status update successful' });
+        res.status(200).json({ message: 'Success' });
       } catch (error) {
-        res.status(500).json({ error });
+        res.status(401).json({ message: 'Unauthorized' });
       }
       break;
 
@@ -85,9 +85,9 @@ export default async function handler(req, res) {
           .doc(updatedInvoice.id)
           .set(updatedInvoice);
 
-        res.status(200).json({ message: 'Invoice update successful' });
+        res.status(200).json({ message: 'Success' });
       } catch (error) {
-        res.status(500).json({ error });
+        res.status(401).json({ message: 'Unauthorized' });
       }
       break;
 

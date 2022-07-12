@@ -10,11 +10,11 @@ import { db } from '../lib/firebase';
 import { useCollectionData } from '../lib/hooks';
 
 export default function Home() {
-  const { user } = useAuth();
-
   const { showAddInvoiceForm } = useContext(InvoiceContext);
 
   const router = useRouter();
+
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user) {
@@ -36,7 +36,7 @@ export default function Home() {
   return !user ? (
     <></>
   ) : (
-    <div className='grid grid-cols-1 md:justify-items-center w-full lg:h-screen lg:overflow-y-scroll'>
+    <div className='grid w-full grid-cols-1 md:justify-items-center lg:h-screen lg:overflow-y-scroll'>
       <InvoiceList invoices={data} loading={loading} />
 
       {showAddInvoiceForm && <InvoiceAdd />}

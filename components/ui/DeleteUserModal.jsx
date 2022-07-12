@@ -9,7 +9,7 @@ export default function DeleteUserModal(props) {
         <h3 className='text-xl md:text-2xl font-bold leading-medium md:leading-[1.33] tracking-tight dark:text-white'>
           Confirm Account Deletion
         </h3>
-        <p className='text-xs text-indigo-400 dark:text-indigo-100 leading-large tracking-tight mt-2'>
+        <p className='mt-2 text-xs tracking-tight text-indigo-400 dark:text-indigo-100 leading-large'>
           Are you sure you want to delete your account? Your invoices will be
           deleted, and you&apos;ll have to register for a new account. This
           action cannot be undone!

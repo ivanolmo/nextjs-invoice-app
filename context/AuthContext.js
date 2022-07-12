@@ -1,15 +1,15 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-  onAuthStateChanged,
   createUserWithEmailAndPassword,
+  deleteUser,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
-  GoogleAuthProvider,
-  GithubAuthProvider,
   signOut,
   updateProfile,
-  deleteUser,
 } from 'firebase/auth';
 
 import { auth } from '../lib/firebase';
@@ -23,7 +23,6 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
-
   const router = useRouter();
 
   // listen for auth state changes
@@ -119,14 +118,14 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        user,
-        userLoading,
+        deleteAuthUser,
+        logOut,
         registerEmailPassword,
         signInEmailPassword,
-        signInWithGoogle,
         signInWithGithub,
-        logOut,
-        deleteAuthUser,
+        signInWithGoogle,
+        user,
+        userLoading,
       }}
     >
       {userLoading ? null : children}

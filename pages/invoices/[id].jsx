@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
 import { useAuth } from '../../context/AuthContext';
@@ -14,26 +14,25 @@ import { db } from '../../lib/firebase';
 import { useDocumentDataSSR } from '../../lib/hooks';
 import {
   classNames,
+  formatCapitalize,
   formatDate,
   formatMoney,
-  formatCapitalize,
 } from '../../utils';
 
 export default function InvoicePage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-  const { user } = useAuth();
+  const { showEditInvoiceForm, setShowEditInvoiceForm } =
+    useContext(InvoiceContext);
 
   const router = useRouter();
+
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user) {
       router.push('/signin');
     }
   }, [user, router]);
-
-  const { showEditInvoiceForm, setShowEditInvoiceForm } =
-    useContext(InvoiceContext);
 
   const [data, loading, error] = useDocumentDataSSR(
     user ? doc(db, 'users', user.uid, 'invoices', router.query.id) : null
@@ -42,7 +41,7 @@ export default function InvoicePage() {
   if (error) throw new Error();
 
   // closes delete modal, passed as prop to modal cancel button
-  const handleCloseModal = () => setShowDeleteModal(false);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
 
   // navigates to home after delete or click of 'Go Back' button
   const handleClose = () => {
@@ -67,7 +66,7 @@ export default function InvoicePage() {
           `Invoice #${data?.invoiceId} status has been successfully updated`
         );
 
-        handleCloseModal();
+        handleCloseDeleteModal();
         handleClose();
       })
       .catch((error) => toast.error(error));
@@ -99,10 +98,10 @@ export default function InvoicePage() {
   return !user ? (
     <></>
   ) : (
-    <div className='grid md:justify-items-center lg:h-screen w-full overflow-y-auto'>
+    <div className='grid w-full overflow-y-auto md:justify-items-center lg:h-screen'>
       <div className='row-start-1 col-start-1 pt-8 md:pt-12 lg:pt-16 px-6 md:px-0 md:w-[688px] lg:w-[730px]'>
         <div
-          className='group flex items-center w-fit cursor-pointer'
+          className='flex items-center cursor-pointer group w-fit'
           onClick={() => handleClose()}
         >
           <div className='w-2 h-3'>
@@ -114,18 +113,18 @@ export default function InvoicePage() {
               layout='responsive'
             />
           </div>
-          <span className='text-xs dark:text-white group-hover:text-indigo-400 dark:group-hover:text-slate-400 tracking-tight font-bold ml-6'>
+          <span className='ml-6 text-xs font-bold tracking-tight dark:text-white group-hover:text-indigo-400 dark:group-hover:text-slate-400'>
             Go Back
           </span>
         </div>
-        {loading || router.isFallback ? (
-          <div className='flex justify-center items-center h-screen'>
+        {loading ? (
+          <div className='flex items-center justify-center h-screen'>
             <LoadingSpinner />
           </div>
         ) : (
           <>
-            <div className='flex justify-between items-center bg-white dark:bg-slate-900 text-xs tracking-tight mt-8 p-6 md:px-8 md:py-0 rounded-md md:rounded-lg w-full'>
-              <div className='flex justify-between md:justify-start items-center w-full md:w-auto'>
+            <div className='flex items-center justify-between w-full p-6 mt-8 text-xs tracking-tight bg-white rounded-md dark:bg-slate-900 md:px-8 md:py-0 md:rounded-lg'>
+              <div className='flex items-center justify-between w-full md:justify-start md:w-auto'>
                 <div className='md:mr-4'>
                   <span className='text-indigo-400 dark:text-indigo-100'>
                     Status
@@ -141,11 +140,11 @@ export default function InvoicePage() {
                     'p-3 font-bold rounded-md w-[6.5rem] text-center'
                   )}
                 >
-                  <span className='bg-current inline-block mr-2 w-2 h-2 rounded-full'></span>
+                  <span className='inline-block w-2 h-2 mr-2 bg-current rounded-full'></span>
                   {formatCapitalize(data?.status) || '-'}
                 </div>
               </div>
-              <div className='hidden md:flex md:justify-center md:items-center gap-2 py-5'>
+              <div className='hidden gap-2 py-5 md:flex md:justify-center md:items-center'>
                 <Button
                   containerClasses={classNames(
                     data?.status === 'paid' ? 'invisible' : '',
@@ -180,22 +179,22 @@ export default function InvoicePage() {
               </div>
             </div>
 
-            <div className='bg-white dark:bg-slate-900 mt-4 md:mt-6 p-6 md:p-8 lg:p-12 text-xs tracking-tight rounded-md md:rounded-lg'>
+            <div className='p-6 mt-4 text-xs tracking-tight bg-white rounded-md dark:bg-slate-900 md:mt-6 md:p-8 lg:p-12 md:rounded-lg'>
               <div className='md:flex md:justify-between'>
                 <div className='flex flex-col gap-1 md:gap-2'>
                   <div>
-                    <span className='text-xs md:text-base font-bold text-indigo-400 dark:text-slate-400 tracking-tighter'>
+                    <span className='text-xs font-bold tracking-tighter text-indigo-400 md:text-base dark:text-slate-400'>
                       #
                     </span>
-                    <span className='text-xs md:text-base font-bold dark:text-white tracking-tighter'>
+                    <span className='text-xs font-bold tracking-tighter md:text-base dark:text-white'>
                       {data?.invoiceId}
                     </span>
                   </div>
-                  <div className='text-indigo-400 dark:text-indigo-100 text-xs'>
+                  <div className='text-xs text-indigo-400 dark:text-indigo-100'>
                     {data?.description || 'N/A'}
                   </div>
                 </div>
-                <div className='text-xs text-indigo-400 dark:text-indigo-100 mt-7 md:mt-0 space-y-1'>
+                <div className='space-y-1 text-xs text-indigo-400 dark:text-indigo-100 mt-7 md:mt-0'>
                   <p>{data?.senderAddress.street || '-'}</p>
                   <p>{data?.senderAddress.city || '-'}</p>
                   <p>{data?.senderAddress.postCode || '-'}</p>
@@ -217,7 +216,7 @@ export default function InvoicePage() {
                       <h3 className='text-indigo-400 dark:text-indigo-100'>
                         Payment Due
                       </h3>
-                      <p className='text-base dark:text-white font-bold'>
+                      <p className='text-base font-bold dark:text-white'>
                         {data?.paymentDue
                           ? formatDate(data?.paymentDue)
                           : 'N/A'}
@@ -229,10 +228,10 @@ export default function InvoicePage() {
                       Bill To
                     </h3>
                     <div className='space-y-2'>
-                      <p className='text-base dark:text-white font-bold mt-2'>
+                      <p className='mt-2 text-base font-bold dark:text-white'>
                         {data?.clientName || 'N/A'}
                       </p>
-                      <div className='text-xs text-indigo-400 dark:text-indigo-100 space-y-1'>
+                      <div className='space-y-1 text-xs text-indigo-400 dark:text-indigo-100'>
                         <p>{data?.clientAddress.street || '-'}</p>
                         <p>{data?.clientAddress.city || '-'}</p>
                         <p>{data?.clientAddress.postCode || '-'}</p>
@@ -241,17 +240,17 @@ export default function InvoicePage() {
                     </div>
                   </div>
                 </div>
-                <div className='mt-9 md:mt-0 space-y-3'>
-                  <span className='text-indigo-400 dark:text-indigo-100 text-xs'>
+                <div className='space-y-3 mt-9 md:mt-0'>
+                  <span className='text-xs text-indigo-400 dark:text-indigo-100'>
                     Sent To
                   </span>
-                  <p className='text-base dark:text-white font-bold'>
+                  <p className='text-base font-bold dark:text-white'>
                     {data?.clientEmail || 'N/A'}
                   </p>
                 </div>
               </div>
 
-              <div className='bg-violet-50 dark:bg-slate-800 mt-10 md:mt-12 p-6 md:px-8 md:pt-8 md:pb-10 rounded-t-md md:rounded-t-lg'>
+              <div className='p-6 mt-10 bg-violet-50 dark:bg-slate-800 md:mt-12 md:px-8 md:pt-8 md:pb-10 rounded-t-md md:rounded-t-lg'>
                 {!data?.items.length ? (
                   <div className='text-base font-bold'>No Items</div>
                 ) : (
@@ -265,12 +264,12 @@ export default function InvoicePage() {
                     <ul className='space-y-6 md:space-y-8'>
                       {data?.items.map((item) => (
                         <li key={item.id}>
-                          <div className='flex justify-between items-center text-xs md:hidden'>
+                          <div className='flex items-center justify-between text-xs md:hidden'>
                             <div className='flex flex-col gap-2'>
                               <span className='font-bold dark:text-white max-w-[120px]'>
                                 {item.name || 'N/A'}
                               </span>
-                              <span className='text-indigo-400 dark:text-slate-400 font-bold'>
+                              <span className='font-bold text-indigo-400 dark:text-slate-400'>
                                 {item.quantity} x {formatMoney(item.price)}
                               </span>
                             </div>
@@ -284,10 +283,10 @@ export default function InvoicePage() {
                             <span className='dark:text-white'>
                               {item.name || 'N/A'}
                             </span>
-                            <span className='justify-self-center text-indigo-400 dark:text-indigo-100'>
+                            <span className='text-indigo-400 justify-self-center dark:text-indigo-100'>
                               {item.quantity}
                             </span>
-                            <span className='justify-self-end text-indigo-400 dark:text-indigo-100'>
+                            <span className='text-indigo-400 justify-self-end dark:text-indigo-100'>
                               {formatMoney(item.price)}
                             </span>
                             <span className='justify-self-end dark:text-white'>
@@ -300,7 +299,7 @@ export default function InvoicePage() {
                   </div>
                 )}
               </div>
-              <div className='flex justify-between items-center text-white bg-slate-700 dark:bg-gray-900 p-6 md:px-8 rounded-b-md md:rounded-b-lg'>
+              <div className='flex items-center justify-between p-6 text-white bg-slate-700 dark:bg-gray-900 md:px-8 rounded-b-md md:rounded-b-lg'>
                 <span className='text-xs tracking-tight'>Amount Due</span>
                 <span className='text-xl md:text-2xl font-bold tracking-tighter leading-medium md:leading-[1.33]'>
                   {formatMoney(data?.total)}
@@ -310,7 +309,7 @@ export default function InvoicePage() {
           </>
         )}
         {loading ? null : (
-          <div className='flex justify-center items-center gap-2 bg-white dark:bg-slate-900 mt-14 -mx-6 py-5 px-6 md:hidden'>
+          <div className='flex items-center justify-center gap-2 px-6 py-5 -mx-6 bg-white dark:bg-slate-900 mt-14 md:hidden'>
             <Button
               containerClasses={classNames(
                 data?.status === 'paid' ? 'invisible' : '',
@@ -349,7 +348,7 @@ export default function InvoicePage() {
             id={data?.id}
             invoiceId={data?.invoiceId}
             handleDelete={handleDelete}
-            handleCloseModal={handleCloseModal}
+            handleCloseDeleteModal={handleCloseDeleteModal}
           />
         )}
       </div>

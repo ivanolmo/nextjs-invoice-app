@@ -14,11 +14,11 @@ export const InvoiceProvider = ({ children }) => {
   return (
     <InvoiceContext.Provider
       value={{
+        clearAll,
         showAddInvoiceForm,
         setShowAddInvoiceForm,
         showEditInvoiceForm,
         setShowEditInvoiceForm,
-        clearAll,
       }}
     >
       {children}

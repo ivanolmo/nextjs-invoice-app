@@ -8,7 +8,7 @@ export default function DeleteModal(props) {
         <h3 className='text-xl md:text-2xl font-bold leading-medium md:leading-[1.33] tracking-tight dark:text-white'>
           Confirm Deletion
         </h3>
-        <p className='text-xs text-indigo-400 dark:text-indigo-100 leading-large tracking-tight mt-2'>
+        <p className='mt-2 text-xs tracking-tight text-indigo-400 dark:text-indigo-100 leading-large'>
           Are you sure you want to delete invoice #{props.invoiceId}? This
           action cannot be undone.
         </p>
@@ -17,7 +17,7 @@ export default function DeleteModal(props) {
             containerClasses='bg-gray-200 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-gray-800 px-6'
             textClasses='text-indigo-400 dark:text-indigo-100'
             buttonText='Cancel'
-            onClick={() => props.handleCloseModal()}
+            onClick={() => props.handleCloseDeleteModal()}
           />
           <Button
             containerClasses='bg-red-500 hover:bg-red-300 px-6'

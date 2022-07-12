@@ -52,7 +52,7 @@ export default function InvoiceForm(props) {
           <div className='text-xs'>
             <Form>
               <div>
-                <span className='text-violet-500 font-bold'>Bill From</span>
+                <span className='font-bold text-violet-500'>Bill From</span>
               </div>
 
               <Input
@@ -79,7 +79,7 @@ export default function InvoiceForm(props) {
               </div>
 
               <div className='mt-10'>
-                <span className='text-violet-500 font-bold'>Bill To</span>
+                <span className='font-bold text-violet-500'>Bill To</span>
               </div>
 
               <div>
@@ -166,7 +166,7 @@ export default function InvoiceForm(props) {
               </div>
 
               <div className='mt-16 md:mt-6 lg:mt-8'>
-                <span className='text-slate-500 text-lg font-bold'>
+                <span className='text-lg font-bold text-slate-500'>
                   Item List
                 </span>
               </div>
@@ -175,7 +175,7 @@ export default function InvoiceForm(props) {
                 {({ push, remove }) => (
                   <div className='flex flex-col'>
                     {values.items.length === 0 && (
-                      <div className='my-8 self-center'>
+                      <div className='self-center my-8'>
                         <span className='text-sm font-bold dark:text-white'>
                           No Items
                         </span>
@@ -211,15 +211,15 @@ export default function InvoiceForm(props) {
                           classes='col-span-3 md:col-span-1 hide-label'
                         />
 
-                        <div className='col-span-3 md:col-span-1 overflow-auto hide-label'>
+                        <div className='col-span-3 overflow-auto md:col-span-1 hide-label'>
                           <label
                             htmlFor='total'
-                            className='text-xs text-indigo-400 dark:text-slate-400 tracking-tight'
+                            className='text-xs tracking-tight text-indigo-400 dark:text-slate-400'
                           >
                             Total
                           </label>
-                          <div className='mt-3 py-4'>
-                            <span className='text-xs text-slate-400 dark:text-indigo-100 font-bold'>
+                          <div className='py-4 mt-3'>
+                            <span className='text-xs font-bold text-slate-400 dark:text-indigo-100'>
                               {(item.quantity * item.price).toFixed(2)}
                             </span>
                           </div>
@@ -227,7 +227,7 @@ export default function InvoiceForm(props) {
 
                         <div
                           onClick={() => remove(index)}
-                          className='col-span-2 md:col-span-1 justify-self-end py-4 pr-2 md:pr-0 cursor-pointer'
+                          className='col-span-2 py-4 pr-2 cursor-pointer md:col-span-1 justify-self-end md:pr-0'
                         >
                           <DeleteIcon className='fill-current text-slate-400 hover:text-red-500' />
                         </div>

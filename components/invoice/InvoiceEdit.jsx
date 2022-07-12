@@ -8,11 +8,10 @@ import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
 
 export default function InvoiceEdit({ invoice }) {
-  const { user } = useAuth();
-
   const { setShowEditInvoiceForm } = useContext(InvoiceContext);
-
   const formRef = useRef(null);
+
+  const { user } = useAuth();
 
   const handleClose = () => {
     setShowEditInvoiceForm(false);
@@ -60,7 +59,7 @@ export default function InvoiceEdit({ invoice }) {
       <div className='hidden md:block absolute inset-0 md:top-[82px] lg:top-0 lg:left-[104px] bg-gradient'></div>
       <div className='row-start-1 col-start-1 md:w-[616px] md:h-min bg-white dark:bg-gray-800 p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-40 justify-self-start'>
         <div
-          className='group flex items-center cursor-pointer w-fit md:hidden'
+          className='flex items-center cursor-pointer group w-fit md:hidden'
           onClick={() => setShowEditInvoiceForm(false)}
         >
           <div className='w-2 h-3'>
@@ -72,7 +71,7 @@ export default function InvoiceEdit({ invoice }) {
               layout='responsive'
             />
           </div>
-          <span className='text-xs dark:text-white group-hover:text-indigo-400 dark:group-hover:text-slate-400 tracking-tight font-bold ml-6'>
+          <span className='ml-6 text-xs font-bold tracking-tight dark:text-white group-hover:text-indigo-400 dark:group-hover:text-slate-400'>
             Go Back
           </span>
         </div>

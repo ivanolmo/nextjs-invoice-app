@@ -12,10 +12,11 @@ import { signInValidationSchema } from '../utils/validationSchemas';
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
-  const { user, signInEmailPassword, signInWithGoogle, signInWithGithub } =
-    useAuth();
 
   const router = useRouter();
+
+  const { user, signInEmailPassword, signInWithGoogle, signInWithGithub } =
+    useAuth();
 
   const initialValues = {
     email: '',
@@ -40,7 +41,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className='grid grid-cols-1 auto-rows-min gap-y-8 md:gap-y-12 justify-items-center lg:content-center p-6 md:p-8 w-full'>
+    <div className='grid w-full grid-cols-1 p-6 auto-rows-min gap-y-8 md:gap-y-12 justify-items-center lg:content-center md:p-8'>
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
@@ -99,12 +100,12 @@ export default function SignIn() {
 
       <div className='w-full max-w-3xl'>
         <div className='grid grid-cols-2 gap-6'>
-          <div className='col-span-2 flex justify-center gap-4 place-self-center w-full'>
-            <div className='my-auto border-t border-indigo-400 dark:border-indigo-100 flex-auto'></div>
+          <div className='flex justify-center w-full col-span-2 gap-4 place-self-center'>
+            <div className='flex-auto my-auto border-t border-indigo-400 dark:border-indigo-100'></div>
             <div>
               <span className='text-indigo-400 dark:text-indigo-100'>or</span>
             </div>
-            <div className='my-auto border-t border-indigo-400 dark:border-indigo-100 flex-auto'></div>
+            <div className='flex-auto my-auto border-t border-indigo-400 dark:border-indigo-100'></div>
           </div>
           <Button
             onClick={() => signInWithGoogle()}
@@ -134,11 +135,11 @@ export default function SignIn() {
               />
             }
           />
-          <div className='col-span-2 place-self-center mt-6'>
+          <div className='col-span-2 mt-6 place-self-center'>
             <span>
               Don&apos;t have an account?{' '}
               <Link href='/signup'>
-                <a className='text-blue-900 dark:text-blue-400 border-b border-blue-900 dark:border-blue-400'>
+                <a className='text-blue-900 border-b border-blue-900 dark:text-blue-400 dark:border-blue-400'>
                   Sign Up
                 </a>
               </Link>

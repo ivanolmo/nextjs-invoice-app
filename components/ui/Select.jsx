@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { useField } from 'formik';
 import Image from 'next/image';
+import { useField } from 'formik';
 
 import { classNames } from '../../utils';
 
 export default function Select({ label, ...props }) {
   const [showOptions, setShowOptions] = useState(false);
-
   const optionsRef = useRef();
   const fieldRef = useRef();
-
   const [{ value }, meta, { setTouched, setValue }] = useField(props);
 
   const options = [
@@ -74,7 +72,7 @@ export default function Select({ label, ...props }) {
           'bg-white dark:bg-slate-900 text-black dark:text-white font-bold mt-2.5 border rounded-md h-12 w-full cursor-pointer'
         )}
       >
-        <div className='flex justify-between items-center mt-4 mx-5'>
+        <div className='flex items-center justify-between mx-5 mt-4'>
           <div>
             {value ? `Net ${value} Day${value > 1 ? 's' : ''}` : undefined}
           </div>

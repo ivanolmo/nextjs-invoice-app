@@ -32,7 +32,7 @@ export default function Input({ label, showError, ...props }) {
         {...props}
       />
       {props.icon && (
-        <div className='absolute right-4 top-1/2 cursor-pointer'>
+        <div className='absolute cursor-pointer right-4 top-1/2'>
           {props.icon}
         </div>
       )}

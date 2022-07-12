@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/ui/Button';
@@ -11,9 +12,9 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const [showDeleteUserModal, setShowDeleteUserModal] = useState(false);
 
-  const { user, logOut, deleteAuthUser } = useAuth();
-
   const router = useRouter();
+
+  const { user, logOut, deleteAuthUser } = useAuth();
 
   useEffect(() => {
     if (!user) {
@@ -33,21 +34,23 @@ export default function Profile() {
       await deleteAuthUser();
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      toast.error(
+        'There was an error deleting your profile, please try again!'
+      );
     }
   };
 
   return !user ? (
     <></>
   ) : loading ? (
-    <div className='h-screen flex justify-center items-center'>
+    <div className='flex items-center justify-center h-screen'>
       <LoadingSpinner size={100} />
     </div>
   ) : (
-    <div className='grid md:justify-items-center lg:h-screen w-full'>
+    <div className='grid w-full md:justify-items-center lg:h-screen'>
       <div className='pt-8 md:pt-12 lg:pt-16 px-6 md:px-0 md:w-[688px] lg:w-[730px]'>
         <div
-          className='group flex items-center w-fit cursor-pointer'
+          className='flex items-center cursor-pointer group w-fit'
           onClick={() => handleClose()}
         >
           <div className='w-2 h-3'>
@@ -59,15 +62,15 @@ export default function Profile() {
               layout='responsive'
             />
           </div>
-          <span className='text-xs dark:text-white group-hover:text-indigo-400 dark:group-hover:text-slate-400 tracking-tight font-bold ml-6'>
+          <span className='ml-6 text-xs font-bold tracking-tight dark:text-white group-hover:text-indigo-400 dark:group-hover:text-slate-400'>
             Go Back
           </span>
         </div>
-        <div className='flex flex-col gap-6 bg-white dark:bg-slate-900 text-xs tracking-tight mt-8 p-6 md:p-8 rounded-md md:rounded-lg w-full'>
+        <div className='flex flex-col w-full gap-6 p-6 mt-8 text-xs tracking-tight bg-white rounded-md dark:bg-slate-900 md:p-8 md:rounded-lg'>
           <div>
             <span className='text-xl font-bold'>User Profile</span>
           </div>
-          <div className='flex flex-col gap-6 w-full'>
+          <div className='flex flex-col w-full gap-6'>
             <div className='flex justify-between'>
               <span className='font-bold'>Name:</span>
               <span>{user?.displayName ?? 'N/A'}</span>
@@ -81,7 +84,7 @@ export default function Profile() {
               <span>{user?.providerId ?? 'N/A'}</span>
             </div>
           </div>
-          <div className='grid grid-cols-2 gap-6 mt-6 w-full'>
+          <div className='grid w-full grid-cols-2 gap-6 mt-6'>
             <Button
               onClick={() => {
                 logOut();

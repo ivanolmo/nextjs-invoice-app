@@ -52,9 +52,9 @@ export default async function handler(req, res) {
           .collection('invoices')
           .add(newInvoice);
 
-        res.status(201).json({ message: 'Invoice creation success' });
+        res.status(201).json({ message: 'Success' });
       } catch (error) {
-        res.status(500).json({ error });
+        res.status(401).json({ message: 'Unauthorized' });
       }
       break;
 
