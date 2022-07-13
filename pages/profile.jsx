@@ -28,6 +28,7 @@ export default function Profile() {
       setLoading(true);
       await deleteAuthUser();
       setLoading(false);
+      router.push('/');
     } catch (error) {
       toast.error(
         'There was an error deleting your profile, please try again!'

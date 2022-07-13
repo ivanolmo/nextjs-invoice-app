@@ -5,7 +5,7 @@ import InvoiceContext from '../context/InvoiceContext';
 import InvoiceAdd from '../components/invoice/InvoiceAdd';
 import InvoiceList from '../components/invoice/InvoiceList';
 import AuthCheck from '../components/layout/AuthCheck';
-import { useCollectionData } from '../lib/hooks';
+import { useCollectionData } from '../hooks/useCollectionData';
 
 export default function Home() {
   const { showAddInvoiceForm } = useContext(InvoiceContext);

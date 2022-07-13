@@ -10,7 +10,7 @@ import AuthCheck from '../../components/layout/AuthCheck';
 import Button from '../../components/ui/Button';
 import DeleteModal from '../../components/ui/DeleteModal';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
-import { useDocumentData } from '../../lib/hooks';
+import { useDocumentData } from '../../hooks/useDocumentData';
 import {
   classNames,
   formatCapitalize,
