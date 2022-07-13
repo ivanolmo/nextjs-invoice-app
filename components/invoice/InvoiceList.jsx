@@ -5,13 +5,13 @@ import Invoice404 from '../layout/Invoice404';
 import UtilityHeader from '../layout/UtilityHeader';
 import LoadingSpinner from '../ui/LoadingSpinner';
 
-export default function InvoiceList({ invoices, loading }) {
+export default function InvoiceList({ data, loading }) {
   const [filteredInvoices, setFilteredInvoices] = useState([]);
   const [filters, setFilters] = useState([]);
 
   useEffect(() => {
-    if (!invoices) return;
-    const filtered = invoices.filter((invoice) => {
+    if (!data) return;
+    const filtered = data.invoices.filter((invoice) => {
       if (filters && filters.length > 0) {
         return filters.includes(invoice.status);
       } else {
@@ -20,7 +20,7 @@ export default function InvoiceList({ invoices, loading }) {
     });
 
     setFilteredInvoices(filtered);
-  }, [filters, invoices]);
+  }, [data, filters]);
 
   return (
     <div className='row-start-1 col-start-1 p-6 pb-8 md:px-0 md:py-14 lg:py-20 md:w-[672px] lg:w-[730px]'>
