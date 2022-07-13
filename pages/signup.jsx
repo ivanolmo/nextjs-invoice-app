@@ -42,7 +42,7 @@ export default function SignUp() {
     } catch (error) {
       resetForm();
       toast.error(
-        'That email address is in use. Please sign in or create a new account!'
+        'There was an error signing in with that email address or it may already be in use, please try again!'
       );
     }
   };

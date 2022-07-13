@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import {
   createUserWithEmailAndPassword,
   deleteUser,
@@ -15,6 +14,7 @@ import {
 import { auth } from '../lib/firebase';
 import { createFirestoreUser, deleteFirestoreUser } from '../lib/db';
 import { formatCapitalize } from '../utils';
+import { toast } from 'react-toastify';
 
 const AuthContext = createContext({});
 
@@ -23,7 +23,6 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
-  const router = useRouter();
 
   // listen for auth state changes
   useEffect(() => {
@@ -67,7 +66,9 @@ export const AuthProvider = ({ children }) => {
 
       return response;
     } catch (error) {
-      console.log(error);
+      toast.error(
+        'There was an error creating your account, please try again!'
+      );
     }
   };
 
@@ -80,10 +81,10 @@ export const AuthProvider = ({ children }) => {
       const response = await signInWithPopup(auth, new GoogleAuthProvider());
 
       await createFirestoreUser(response.user, response.providerId);
-
-      router.push('/invoices');
     } catch (error) {
-      console.log(error);
+      toast.error(
+        'There was an error signing in with Google, please try again!'
+      );
     }
   };
 
@@ -94,10 +95,10 @@ export const AuthProvider = ({ children }) => {
       const email = response.user.providerData[0].email;
 
       await createFirestoreUser(response.user, response.providerId, email);
-
-      router.push('/invoices');
     } catch (error) {
-      console.log(error);
+      toast.error(
+        'There was an error signing in with Github, please try again!'
+      );
     }
   };
 
