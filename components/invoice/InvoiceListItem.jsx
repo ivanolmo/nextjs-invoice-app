@@ -13,7 +13,7 @@ export default function InvoiceListItem({ invoice }) {
 
   return (
     <li>
-      <Link href={`/invoices/${id}`}>
+      <Link href={`/invoice/${id}`}>
         <a>
           <div className='grid md:inline-grid grid-cols-[auto_1fr] md:grid-cols-[60px_120px_110px_120px_1fr_8px] auto-rows-auto gap-y-6 md:gap-x-5 mb-4 p-6 md:py-4 lg:pl-8 lg:pr-6 bg-white dark:bg-slate-900 rounded-lg text-xs border border-transparent hover:border-violet-500 w-full'>
             <div className='font-bold justify-self-start md:self-center md:mr-2'>

@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 
-import { useAuth } from '../context/AuthContext';
-import InvoiceContext from '../context/InvoiceContext';
-import InvoiceAdd from '../components/invoice/InvoiceAdd';
-import InvoiceList from '../components/invoice/InvoiceList';
-import AuthCheck from '../components/layout/AuthCheck';
-import { useCollectionData } from '../hooks/useCollectionData';
+import { useAuth } from '../../context/AuthContext';
+import InvoiceContext from '../../context/InvoiceContext';
+import InvoiceAdd from '../../components/invoice/InvoiceAdd';
+import InvoiceList from '../../components/invoice/InvoiceList';
+import AuthCheck from '../../components/layout/AuthCheck';
+import { useCollectionData } from '../../hooks/useCollectionData';
 
 export default function Invoices() {
   const { showAddInvoiceForm } = useContext(InvoiceContext);
