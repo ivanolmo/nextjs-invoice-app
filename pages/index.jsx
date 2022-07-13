@@ -1,23 +1,33 @@
+import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { useAuth } from '../context/AuthContext';
 import LoginIcon from '../components/ui/LoginIcon';
 import SignUpIcon from '../components/ui/SignUpIcon';
 
 export default function Invoices() {
+  const router = useRouter();
+
   const { user } = useAuth();
 
+  useEffect(() => {
+    if (user) {
+      router.push('/invoices');
+    }
+  }, [router, user]);
+
   return (
-    <div className='px-6 py-12 md:p-20 lg:p-0 mx-auto lg:my-auto max-w-xl md:max-w-3xl lg:max-w-4xl'>
-      <div className='bg-white dark:bg-slate-900 grid lg:grid-cols-2 gap-8 md:gap-12 p-6 text-base rounded-lg'>
+    <div className='max-w-xl px-6 py-12 mx-auto md:p-20 lg:p-0 lg:my-auto md:max-w-3xl lg:max-w-4xl'>
+      <div className='grid gap-8 p-6 text-base bg-white rounded-lg dark:bg-slate-900 lg:grid-cols-2 md:gap-12'>
         <div className='space-y-4'>
           <h2 className='font-bold'>About this app</h2>
           <p>
             This full stack web application is a{' '}
             <a
               href='https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl'
-              className='text-blue-900 dark:text-blue-400 border-b border-blue-900 dark:border-blue-400'
+              className='text-blue-900 border-b border-blue-900 dark:text-blue-400 dark:border-blue-400'
             >
               challenge on Frontendmentor.io
             </a>
@@ -55,7 +65,7 @@ export default function Invoices() {
             <li>
               <a href='https://reactjs.org/'>
                 <div className='flex justify-between items-center bg-gray-200 dark:bg-gray-800 px-4 py-2.5 border rounded-lg dark:border-0'>
-                  <span className='text-blue-900 dark:text-blue-400 border-b border-blue-900 dark:border-blue-400'>
+                  <span className='text-blue-900 border-b border-blue-900 dark:text-blue-400 dark:border-blue-400'>
                     React
                   </span>
                   <Image
@@ -70,7 +80,7 @@ export default function Invoices() {
             <li>
               <a href='https://nextjs.org'>
                 <div className='flex justify-between items-center bg-gray-200 dark:bg-gray-800 px-4 py-2.5 border rounded-lg dark:border-0'>
-                  <span className='text-blue-900 dark:text-blue-400 border-b border-blue-900 dark:border-blue-400'>
+                  <span className='text-blue-900 border-b border-blue-900 dark:text-blue-400 dark:border-blue-400'>
                     Next.js
                   </span>
                   <Image
@@ -85,7 +95,7 @@ export default function Invoices() {
             <li>
               <a href='https://tailwindcss.com/'>
                 <div className='flex justify-between items-center bg-gray-200 dark:bg-gray-800 px-4 py-2.5 border rounded-lg dark:border-0'>
-                  <span className='text-blue-900 dark:text-blue-400 border-b border-blue-900 dark:border-blue-400'>
+                  <span className='text-blue-900 border-b border-blue-900 dark:text-blue-400 dark:border-blue-400'>
                     Tailwind CSS
                   </span>
                   <Image
@@ -100,7 +110,7 @@ export default function Invoices() {
             <li>
               <a href='https://firebase.google.com/'>
                 <div className='flex justify-between items-center bg-gray-200 dark:bg-gray-800 px-4 py-2.5 border rounded-lg dark:border-0'>
-                  <span className='text-blue-900 dark:text-blue-400 border-b border-blue-900 dark:border-blue-400'>
+                  <span className='text-blue-900 border-b border-blue-900 dark:text-blue-400 dark:border-blue-400'>
                     Firebase (Auth, Firestore, and Functions)
                   </span>
                   <Image
@@ -124,7 +134,7 @@ export default function Invoices() {
               <div>
                 <Link href='/signup'>
                   <a>
-                    <div className='flex justify-center items-center gap-2 md:gap-4 bg-violet-500 hover:bg-violet-400 px-6 py-4 rounded-full'>
+                    <div className='flex items-center justify-center gap-2 px-6 py-4 rounded-full md:gap-4 bg-violet-500 hover:bg-violet-400'>
                       <span className='font-bold text-white'>Sign Up</span>
                       <SignUpIcon className='w-6 h-6 fill-current text-emerald-400' />
                     </div>
@@ -134,7 +144,7 @@ export default function Invoices() {
               <div>
                 <Link href='/signin'>
                   <a>
-                    <div className='flex justify-center items-center gap-2 md:gap-4 bg-violet-500 hover:bg-violet-400 px-6 py-4 rounded-full'>
+                    <div className='flex items-center justify-center gap-2 px-6 py-4 rounded-full md:gap-4 bg-violet-500 hover:bg-violet-400'>
                       <span className='font-bold text-white'>Sign In</span>
                       <LoginIcon className='w-6 h-6 fill-current text-emerald-400' />
                     </div>

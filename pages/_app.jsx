@@ -20,10 +20,6 @@ function App({ Component, pageProps }) {
           name='viewport'
           content='minimum-scale=1, initial-scale=1, width=device-width'
         />
-        <meta
-          name='description'
-          content='A web app for invoices powered by React, Next.js, TailwindCSS, and Firebase, with full CRUD capabilities and responsive design'
-        />
       </Head>
 
       <AuthProvider>
