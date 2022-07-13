@@ -1,8 +1,10 @@
 const { withGlobalCss } = require('next-global-css')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({enabled: process.env.ANALYZE === 'true'})
 
 const withConfig = withGlobalCss()
 
-module.exports = withConfig(
+module.exports = withBundleAnalyzer(
+   withConfig(
   {
   reactStrictMode: true,
   images: {
@@ -10,4 +12,5 @@ module.exports = withConfig(
   }
  
 }
+)
 )
