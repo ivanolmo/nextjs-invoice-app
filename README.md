@@ -50,10 +50,10 @@ One thing I've learned is to always look for opportunities for improvement (with
 One thing I thought of trying to improve is the mobile Google Lighthouse score. The app feels very fast, but the mobile score says otherwise. The main change between the scores was moving from static site generation and no authentication, to client side rendering with authentication. Lighthouse artifically throttles both the network connection and CPU power when testing in mobile mode, so I'm not spending a lot of time trying to squeeze out a few points. Here is a comparison SSG/no auth to CSR/with auth (desktop scores were surprisingly not affected at all):
 
 Before auth:
-<>
+![lighthouse-mainBranch-mobile-noAuth-SSG](https://user-images.githubusercontent.com/48425752/178687584-77b74cd2-1347-468b-9537-885fd42d29f0.png)
 
 After auth:
-<>
+![lighthouse-mainBranch-mobile-auth-swr](https://user-images.githubusercontent.com/48425752/178687667-881553e1-e677-4d33-aa52-ca2bc1f68527.png)
 
 ## Lessons Learned:
 
