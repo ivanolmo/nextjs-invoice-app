@@ -1,5 +1,5 @@
 import { DotLoader } from 'react-spinners';
 
-export default function LoadingSpinner() {
-  return <DotLoader color='#7c5dfa' size={80} />;
+export default function LoadingSpinner(props) {
+  return <DotLoader color='#7c5dfa' size={props.size || 80} />;
 }

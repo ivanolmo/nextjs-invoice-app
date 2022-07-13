@@ -8,7 +8,6 @@ export default function FilterButton({ setFilters }) {
     paid: false,
   });
   const [showFilters, setShowFilters] = useState(false);
-
   const filterRef = useRef();
   const buttonRef = useRef();
 
@@ -56,12 +55,12 @@ export default function FilterButton({ setFilters }) {
       <div
         ref={buttonRef}
         onClick={handleToggle}
-        className='group flex items-center gap-3 lg:gap-4 cursor-pointer dark:text-white'
+        className='flex items-center gap-3 cursor-pointer group lg:gap-4 dark:text-white'
       >
-        <span className='group-hover:text-indigo-400 dark:group-hover:text-slate-400 text-xs font-bold md:hidden'>
+        <span className='text-xs font-bold group-hover:text-indigo-400 dark:group-hover:text-slate-400 md:hidden'>
           Filter
         </span>
-        <span className='group-hover:text-indigo-400 dark:group-hover:text-slate-400 text-xs lg:text-sm font-bold hidden md:block'>
+        <span className='hidden text-xs font-bold group-hover:text-indigo-400 dark:group-hover:text-slate-400 lg:text-sm md:block'>
           Filter By Status
         </span>
         <div className='w-3 h-2'>
@@ -87,7 +86,7 @@ export default function FilterButton({ setFilters }) {
               onClick={() => handleCheck(status)}
             >
               {checkedStatus[status] ? (
-                <div className='bg-violet-500 flex justify-center items-center w-4 h-4 rounded-sm'>
+                <div className='flex items-center justify-center w-4 h-4 rounded-sm bg-violet-500'>
                   <Image
                     src='/assets/icon-check.svg'
                     alt='check'
@@ -96,7 +95,7 @@ export default function FilterButton({ setFilters }) {
                   />
                 </div>
               ) : (
-                <div className='bg-indigo-100 dark:bg-gray-800 border border-transparent group-hover:border-violet-500 w-4 h-4 rounded-sm'></div>
+                <div className='w-4 h-4 bg-indigo-100 border border-transparent rounded-sm dark:bg-gray-800 group-hover:border-violet-500'></div>
               )}
               <span className='text-xs font-bold capitalize dark:text-white'>
                 {status}

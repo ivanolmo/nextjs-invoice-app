@@ -1,22 +1,25 @@
 import { useField } from 'formik';
 
-import { classNames } from '../../utils/utils';
+import { classNames } from '../../utils';
 
-export default function Input({ label, ...props }) {
+export default function Input({ label, showError, ...props }) {
   const [field, meta] = useField(props);
 
   return (
-    <div className={`mt-6 ${props.classes ? props.classes : undefined}`}>
+    <div
+      className={`mt-6 relative ${props.classes ? props.classes : undefined}`}
+    >
       <label
         htmlFor={props.id || props.name}
         className={classNames(
           meta.touched && meta.error
             ? 'text-red-500'
             : 'text-indigo-400 dark:text-indigo-100',
-          'text-xs tracking-tight'
+          'flex justify-between text-xs tracking-tight'
         )}
       >
-        {label}
+        <span>{label}</span>
+        <span>{showError && meta.error}</span>
       </label>
       <input
         className={classNames(
@@ -28,6 +31,11 @@ export default function Input({ label, ...props }) {
         {...field}
         {...props}
       />
+      {props.icon && (
+        <div className='absolute cursor-pointer right-4 top-1/2'>
+          {props.icon}
+        </div>
+      )}
     </div>
   );
 }

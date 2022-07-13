@@ -2,41 +2,52 @@ import { useContext, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 
+import { useAuth } from '../../context/AuthContext';
 import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
 
 export default function InvoiceEdit({ invoice }) {
   const { setShowEditInvoiceForm } = useContext(InvoiceContext);
-
   const formRef = useRef(null);
 
-  const handleSubmit = () => {
-    formRef.current.handleSubmit();
-  };
+  const { user } = useAuth();
 
   const handleClose = () => {
     setShowEditInvoiceForm(false);
   };
 
-  const onSubmit = async () => {
-    const res = await toast.promise(
-      fetch(`/api/invoice/${invoice.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...formRef.current.values }),
-      }),
-      {
-        pending: 'Invoice is being updated...',
-        success: 'Invoice has been successfully updated!',
-        error: 'There was an error updating this invoice',
-      }
-    );
-    handleClose();
+  // this handles the actual firing of the onSubmit function below
+  const handleSubmit = () => {
+    formRef.current.handleSubmit();
   };
 
+  // submits form data to db, pulling data from child component Formik ...
+  // ... form using ref.current. passed as prop to child form
+  const onSubmit = () => {
+    fetch(`/api/invoice/${invoice.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        token: user.token,
+      },
+      body: JSON.stringify({ ...formRef.current.values }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject('There was an error updating this invoice');
+        }
+
+        toast.success(
+          `Invoice #${invoice.invoiceId} has been successfully updated!`
+        );
+
+        handleClose();
+      })
+      .catch((error) => toast.error(error));
+  };
+
+  // populates form data for existing invoice being edited
   useEffect(() => {
     if (invoice) {
       formRef.current.setValues(invoice);
@@ -46,9 +57,9 @@ export default function InvoiceEdit({ invoice }) {
   return (
     <>
       <div className='hidden md:block absolute inset-0 md:top-[82px] lg:top-0 lg:left-[104px] bg-gradient'></div>
-      <div className='row-start-1 col-start-1 md:w-[616px] bg-white dark:bg-gray-800 p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-50 justify-self-start'>
+      <div className='row-start-1 col-start-1 md:w-[616px] md:h-min bg-white dark:bg-gray-800 p-6 pb-0 md:p-14 md:pb-8 md:rounded-r-2xl z-40 justify-self-start'>
         <div
-          className='group flex items-center cursor-pointer w-fit md:hidden'
+          className='flex items-center cursor-pointer group w-fit md:hidden'
           onClick={() => setShowEditInvoiceForm(false)}
         >
           <div className='w-2 h-3'>
@@ -60,7 +71,7 @@ export default function InvoiceEdit({ invoice }) {
               layout='responsive'
             />
           </div>
-          <span className='text-xs dark:text-white group-hover:text-indigo-400 dark:group-hover:text-slate-400 tracking-tight font-bold ml-6'>
+          <span className='ml-6 text-xs font-bold tracking-tight dark:text-white group-hover:text-indigo-400 dark:group-hover:text-slate-400'>
             Go Back
           </span>
         </div>
