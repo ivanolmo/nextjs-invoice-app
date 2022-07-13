@@ -353,7 +353,7 @@ export default function InvoicePage() {
           )}
         </div>
 
-        {showEditInvoiceForm && <InvoiceEdit invoice={data} />}
+        {showEditInvoiceForm && <InvoiceEdit invoice={data.invoice} />}
       </div>
     </AuthCheck>
   );
