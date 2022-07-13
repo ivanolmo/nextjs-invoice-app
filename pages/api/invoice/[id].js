@@ -12,6 +12,26 @@ export default async function handler(req, res) {
   } = req;
 
   switch (method) {
+    // get single invoice
+    case 'GET':
+      try {
+        const { uid } = await auth.verifyIdToken(token);
+
+        const docRef = await db
+          .collection('users')
+          .doc(uid)
+          .collection('invoices')
+          .doc(id)
+          .get();
+
+        const invoice = docRef.data();
+
+        res.status(200).json({ invoice });
+      } catch (error) {
+        res.status(401).json({ message: 'Unauthorized' });
+      }
+      break;
+
     // delete invoice with the specified id
     case 'DELETE':
       try {
@@ -23,6 +43,7 @@ export default async function handler(req, res) {
           .collection('invoices')
           .doc(id)
           .delete();
+
         res.status(200).json({ message: 'Success' });
       } catch (error) {
         res.status(401).json({ message: 'Unauthorized' });

@@ -11,6 +11,29 @@ export default async function handler(req, res) {
   } = req;
 
   switch (method) {
+    // get all invoices
+    case 'GET':
+      try {
+        const { uid } = await auth.verifyIdToken(token);
+
+        const querySnapshot = await db
+          .collection('users')
+          .doc(uid)
+          .collection('invoices')
+          .orderBy('paymentDue', 'asc')
+          .get();
+
+        const invoices = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        res.status(200).json({ invoices });
+      } catch (error) {
+        res.status(401).json({ message: 'Unauthorized' });
+      }
+      break;
+
     // create new invoice and post to invoices list
     case 'POST':
       try {
