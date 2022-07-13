@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import LoginIcon from '../components/ui/LoginIcon';
 import SignUpIcon from '../components/ui/SignUpIcon';
 
-export default function Invoices() {
+export default function Home() {
   const router = useRouter();
 
   const { user } = useAuth();

@@ -7,7 +7,7 @@ import InvoiceList from '../components/invoice/InvoiceList';
 import AuthCheck from '../components/layout/AuthCheck';
 import { useCollectionData } from '../hooks/useCollectionData';
 
-export default function Home() {
+export default function Invoices() {
   const { showAddInvoiceForm } = useContext(InvoiceContext);
 
   const { user } = useAuth();

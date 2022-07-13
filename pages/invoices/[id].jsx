@@ -28,7 +28,6 @@ export default function InvoicePage() {
   const { user } = useAuth();
 
   const { data, loading, error } = useDocumentData(user, router.query.id);
-  console.log('[id] hook data ', data);
 
   if (error) throw new Error();
 
