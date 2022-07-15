@@ -382,24 +382,18 @@ export async function getServerSideProps(context) {
 
     if (!docRef.exists) {
       return {
-        redirect: {
-          destination: '/invoices',
-          permanent: false,
-        },
+        notFound: true,
       };
     }
 
-    const initialData = { id: docRef.id, ...docRef.data() };
+    const initialData = docRef.data();
 
     return {
       props: { initialData },
     };
   } catch (error) {
     return {
-      redirect: {
-        destination: '/invoices',
-        permanent: false,
-      },
+      props: {},
     };
   }
 }
