@@ -7,7 +7,7 @@ import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
 
-export default function InvoiceEdit({ invoice }) {
+export default function InvoiceEdit({ invoice, setData }) {
   const { setShowEditInvoiceForm } = useContext(InvoiceContext);
   const formRef = useRef(null);
 
@@ -38,11 +38,18 @@ export default function InvoiceEdit({ invoice }) {
           return Promise.reject('There was an error updating this invoice');
         }
 
-        toast.success(
-          `Invoice #${invoice.invoiceId} has been successfully updated!`
-        );
+        if (response.status < 300) {
+          setData((prevData) => ({
+            ...prevData,
+            ...formRef.current.values,
+          }));
 
-        handleClose();
+          toast.success(
+            `Invoice #${invoice.invoiceId} has been successfully updated!`
+          );
+
+          handleClose();
+        }
       })
       .catch((error) => toast.error(error));
   };
