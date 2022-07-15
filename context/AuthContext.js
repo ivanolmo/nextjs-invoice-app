@@ -4,12 +4,13 @@ import {
   deleteUser,
   GithubAuthProvider,
   GoogleAuthProvider,
-  onAuthStateChanged,
+  onIdTokenChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   updateProfile,
 } from 'firebase/auth';
+import nookies from 'nookies';
 
 import { auth } from '../lib/firebase';
 import { createFirestoreUser, deleteFirestoreUser } from '../lib/db';
@@ -24,10 +25,10 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
 
-  // listen for auth state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onIdTokenChanged(auth, async (user) => {
       if (user) {
+        const token = await user.getIdToken();
         setUser({
           uid: user.uid,
           email: user.email,
@@ -38,13 +39,25 @@ export const AuthProvider = ({ children }) => {
             'Email and password',
           token: user.accessToken,
         });
+        nookies.set(undefined, 'token', token, { path: '/' });
       } else {
         setUser(null);
+        nookies.set(undefined, 'token', '', { path: '/' });
       }
       setUserLoading(false);
     });
 
     return () => unsubscribe();
+  }, []);
+
+  // force refreshe Firebase token
+  useEffect(() => {
+    const handle = setInterval(async () => {
+      const user = auth.currentUser;
+      if (user) await user.getIdToken(true);
+    }, 10 * 60 * 1000); // 10 minutes
+
+    return () => clearInterval(handle);
   }, []);
 
   // auth functions
