@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import { auth, db } from '../../../lib/firebaseAdmin';
 import { addDays, generateId } from '../../../utils';
 
@@ -57,7 +55,6 @@ export default async function handler(req, res) {
 
         for (let item of items) {
           item.total = item.quantity * item.price;
-          item.id = nanoid(6);
         }
 
         const newInvoice = {
