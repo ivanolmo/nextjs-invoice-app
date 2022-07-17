@@ -7,7 +7,7 @@ import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
 
-export default function InvoiceEdit({ invoice, setData }) {
+export default function InvoiceEdit({ invoice }) {
   const { setShowEditInvoiceForm } = useContext(InvoiceContext);
   const formRef = useRef(null);
 
@@ -39,11 +39,6 @@ export default function InvoiceEdit({ invoice, setData }) {
         }
 
         if (response.status < 300) {
-          setData((prevData) => ({
-            ...prevData,
-            ...formRef.current.values,
-          }));
-
           toast.success(
             `Invoice #${invoice.invoiceId} has been successfully updated!`
           );

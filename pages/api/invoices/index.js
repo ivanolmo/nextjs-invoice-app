@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { auth, db } from '../../../lib/firebaseAdmin';
 import { addDays, generateId } from '../../../utils';
 
@@ -9,29 +11,6 @@ export default async function handler(req, res) {
   } = req;
 
   switch (method) {
-    // get all invoices
-    case 'GET':
-      try {
-        const { uid } = await auth.verifyIdToken(token);
-
-        const querySnapshot = await db
-          .collection('users')
-          .doc(uid)
-          .collection('invoices')
-          .orderBy('paymentDue', 'asc')
-          .get();
-
-        const invoices = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        res.status(200).json({ invoices });
-      } catch (error) {
-        res.status(401).json({ message: 'Unauthorized' });
-      }
-      break;
-
     // create new invoice and post to invoices list
     case 'POST':
       try {
@@ -39,6 +18,10 @@ export default async function handler(req, res) {
 
         const { createdAt, paymentTerms, items } = body;
 
+        // const formattedCreatedAt =
+        //   createdAt === ''
+        //     ? new Date().toISOString()
+        //     : new Date(createdAt).toISOString();
         const formattedCreatedAt =
           createdAt === ''
             ? new Date().toISOString()
@@ -57,8 +40,11 @@ export default async function handler(req, res) {
           item.total = item.quantity * item.price;
         }
 
+        const id = uuidv4();
+
         const newInvoice = {
           ...body,
+          id,
           invoiceId: generateId(),
           createdAt: formattedCreatedAt,
           paymentDue,
@@ -70,7 +56,8 @@ export default async function handler(req, res) {
           .collection('users')
           .doc(uid)
           .collection('invoices')
-          .add(newInvoice);
+          .doc(id)
+          .set(newInvoice);
 
         res.status(201).json({ message: 'Success' });
       } catch (error) {

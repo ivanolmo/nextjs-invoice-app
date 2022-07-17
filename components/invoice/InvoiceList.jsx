@@ -11,7 +11,7 @@ export default function InvoiceList({ data, loading }) {
 
   useEffect(() => {
     if (!data) return;
-    const filtered = data.invoices?.filter((invoice) => {
+    const filtered = data?.filter((invoice) => {
       if (filters && filters.length > 0) {
         return filters.includes(invoice.status);
       } else {

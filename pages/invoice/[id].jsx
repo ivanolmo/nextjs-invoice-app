@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { doc } from 'firebase/firestore';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { toast } from 'react-toastify';
-import nookies from 'nookies';
 
 import { useAuth } from '../../context/AuthContext';
 import InvoiceContext from '../../context/InvoiceContext';
@@ -17,11 +18,9 @@ import {
   formatDate,
   formatMoney,
 } from '../../utils';
-import { auth, db } from '../../lib/firebaseAdmin';
+import { db } from '../../lib/firebase';
 
-export default function InvoicePage(props) {
-  const [data, setData] = useState(props.initialData);
-  const [loading, setLoading] = useState(true);
+export default function InvoicePage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { showEditInvoiceForm, setShowEditInvoiceForm } =
@@ -31,11 +30,11 @@ export default function InvoicePage(props) {
 
   const { user } = useAuth();
 
-  useEffect(() => {
-    if (data) {
-      setLoading(false);
-    }
-  }, [data]);
+  const [data, loading, error] = useDocumentData(
+    doc(db, `/users/${user.uid}/invoices/${router.query.id}`)
+  );
+
+  if (error) throw new Error();
 
   // closes delete modal, passed as prop to modal cancel button
   const handleCloseDeleteModal = () => setShowDeleteModal(false);
@@ -88,11 +87,6 @@ export default function InvoicePage(props) {
         }
 
         if (response.status < 300) {
-          setData((prevData) => ({
-            ...prevData,
-            status: 'paid',
-          }));
-
           toast.success(
             `Invoice #${data.invoiceId} status has been successfully updated`
           );
@@ -358,42 +352,8 @@ export default function InvoicePage(props) {
           )}
         </div>
 
-        {showEditInvoiceForm && (
-          <InvoiceEdit invoice={data} setData={setData} />
-        )}
+        {showEditInvoiceForm && <InvoiceEdit invoice={data} />}
       </div>
     </AuthCheck>
   );
-}
-
-export async function getServerSideProps(context) {
-  try {
-    const id = context.query.id;
-    const cookies = nookies.get(context);
-    const token = await auth.verifyIdToken(cookies.token);
-    const { uid } = token;
-
-    const docRef = await db
-      .collection('users')
-      .doc(uid)
-      .collection('invoices')
-      .doc(id)
-      .get();
-
-    if (!docRef.exists) {
-      return {
-        notFound: true,
-      };
-    }
-
-    const initialData = docRef.data();
-
-    return {
-      props: { initialData },
-    };
-  } catch (error) {
-    return {
-      props: {},
-    };
-  }
 }
