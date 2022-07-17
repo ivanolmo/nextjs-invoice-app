@@ -10,6 +10,18 @@ export default function Document() {
         />
         <link href='https://identitytoolkit.googleapis.com' rel='preconnect' />
         <link href='https://invoice-appv2.firebase.app' rel='preconnect' />
+        <link
+          href='/assets/favicon-32x32.png'
+          rel='icon'
+          sizes='32x32'
+          type='image/png'
+        />
+        <link
+          href='/assets/favicon-16x16.png'
+          rel='icon'
+          sizes='16x16'
+          type='image/png'
+        />
       </Head>
       <body>
         <Main />
