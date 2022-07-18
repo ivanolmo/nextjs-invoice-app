@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { collection, orderBy, query } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
@@ -10,11 +10,12 @@ import AuthCheck from '../../components/layout/AuthCheck';
 import { db } from '../../lib/firebase';
 
 export default function Invoices() {
+  const [loading, setLoading] = useState(false);
   const { showAddInvoiceForm } = useContext(InvoiceContext);
 
   const { user } = useAuth();
 
-  const [data, loading, error] = useCollectionData(
+  const [data, collectionLoading, error] = useCollectionData(
     user
       ? query(
           collection(db, `/users/${user.uid}/invoices`),
@@ -24,6 +25,14 @@ export default function Invoices() {
   );
 
   if (error) throw new Error();
+
+  useEffect(() => {
+    if (!data && collectionLoading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [data, collectionLoading]);
 
   return (
     <AuthCheck>
