@@ -54,7 +54,7 @@ export default async function handler(req, res) {
 
         const { createdAt, paymentTerms, items } = body;
 
-        const formattedCreatedAt = new Date(createdAt).toISOString();
+        const formattedCreatedAt = new Date(createdAt);
 
         const paymentDue = addDays(formattedCreatedAt, +paymentTerms);
 
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
       break;
 
     default:
-      res.setHeader('Allow', ['PATCH', 'PUT', 'DELETE']);
+      res.setHeader('Allow', ['DELETE', 'PATCH', 'PUT']);
       res.status(405).end(`Method ${method} not allowed`);
       break;
   }

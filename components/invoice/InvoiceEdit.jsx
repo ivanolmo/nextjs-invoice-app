@@ -6,6 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
+import { formatDate } from '../../utils';
 
 export default function InvoiceEdit({ invoice }) {
   const { setShowEditInvoiceForm } = useContext(InvoiceContext);
@@ -50,9 +51,15 @@ export default function InvoiceEdit({ invoice }) {
   };
 
   // populates form data for existing invoice being edited
+  // convert Firebase createdAt timestamp to js date
+  // no need to convert paymentDue timestamp because it is...
+  // ...not used in the invoice form
   useEffect(() => {
     if (invoice) {
-      formRef.current.setValues(invoice);
+      formRef.current.setValues({
+        ...invoice,
+        createdAt: invoice.createdAt.toDate(),
+      });
     }
   }, [invoice]);
 

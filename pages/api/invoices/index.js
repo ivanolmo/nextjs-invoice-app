@@ -18,14 +18,8 @@ export default async function handler(req, res) {
 
         const { createdAt, paymentTerms, items } = body;
 
-        // const formattedCreatedAt =
-        //   createdAt === ''
-        //     ? new Date().toISOString()
-        //     : new Date(createdAt).toISOString();
         const formattedCreatedAt =
-          createdAt === ''
-            ? new Date().toISOString()
-            : new Date(createdAt).toISOString();
+          createdAt === '' ? new Date() : new Date(createdAt);
 
         const paymentDue = !paymentTerms
           ? ''

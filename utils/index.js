@@ -1,6 +1,6 @@
 export function addDays(date, number) {
   const d = new Date(date);
-  return new Date(d.setDate(d.getDate() + number)).toISOString();
+  return new Date(d.setDate(d.getDate() + number));
 }
 
 export function classNames(...classes) {
@@ -13,7 +13,7 @@ export function formatCapitalize(s) {
 }
 
 export function formatDate(d) {
-  let date = new Date(d);
+  let date = d.toDate();
   let options = { month: 'short', day: 'numeric', year: 'numeric' };
 
   return new Intl.DateTimeFormat('en-US', options).format(date);
