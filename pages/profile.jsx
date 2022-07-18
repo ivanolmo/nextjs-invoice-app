@@ -23,15 +23,17 @@ export default function Profile() {
 
   const handleCloseModal = () => setShowDeleteUserModal(false);
 
-  const handleDelete = async () => {
+  const handleDeleteUser = async () => {
     try {
       setLoading(true);
       await deleteAuthUser();
       setLoading(false);
       router.push('/');
     } catch (error) {
+      logOut();
+      router.push('/');
       toast.error(
-        'There was an error deleting your profile, please try again!'
+        'There was an error deleting your profile. Please log back in and try again!'
       );
     }
   };
@@ -102,7 +104,7 @@ export default function Profile() {
           {showDeleteUserModal && (
             <DeleteUserModal
               handleCloseModal={handleCloseModal}
-              handleDelete={handleDelete}
+              handleDeleteUser={handleDeleteUser}
             />
           )}
         </div>
