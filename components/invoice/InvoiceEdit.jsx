@@ -6,6 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import InvoiceContext from '../../context/InvoiceContext';
 import InvoiceForm from './InvoiceForm';
 import Button from '../ui/Button';
+import { formatDate } from '../../utils';
 
 export default function InvoiceEdit({ invoice }) {
   const { setShowEditInvoiceForm } = useContext(InvoiceContext);
@@ -38,19 +39,27 @@ export default function InvoiceEdit({ invoice }) {
           return Promise.reject('There was an error updating this invoice');
         }
 
-        toast.success(
-          `Invoice #${invoice.invoiceId} has been successfully updated!`
-        );
+        if (response.status < 300) {
+          toast.success(
+            `Invoice #${invoice.invoiceId} has been successfully updated!`
+          );
 
-        handleClose();
+          handleClose();
+        }
       })
       .catch((error) => toast.error(error));
   };
 
   // populates form data for existing invoice being edited
+  // convert Firebase createdAt timestamp to js date
+  // no need to convert paymentDue timestamp because it is...
+  // ...not used in the invoice form
   useEffect(() => {
     if (invoice) {
-      formRef.current.setValues(invoice);
+      formRef.current.setValues({
+        ...invoice,
+        createdAt: invoice.createdAt.toDate(),
+      });
     }
   }, [invoice]);
 

@@ -24,11 +24,11 @@ This is the first project where I've used Tailwind for nearly all styling, and I
 
 ### Firebase
 
-This wasn't my first Firebase project, but so far it's been the most in-depth. I'm using both the client side SDK for reading invoices and user management, and the admin SDK in the API/server environment that handles invoice creation, updates, and deletes.
+This wasn't my first Firebase project, but so far it's been the most in-depth. I'm using both the client side SDK for reading invoices and user management, and the admin SDK in the API/server environment that handles invoice creation, updates, and deletes, as well as.
 
 - Authentication
 
-  - Users can create an account with email & password, or use the Google or Github auth provider.
+  - Users can create an account with an email & password, or use the Google or Github auth provider.
   - Other than the welcome, sign in, and sign up pages, all content requires an authenticated user.
   - Users only have access to their own set of invoices.
   - On the user profile page, user's have the ability to delete their account.
@@ -38,29 +38,34 @@ This wasn't my first Firebase project, but so far it's been the most in-depth. I
 
   - All user invoices are saved as a sub-collection under a user's document.
   - Data is kept synchronized in real-time.
-  - Firestore access rules add an additonal layer of data protection. Invoices can only be read and manipulated and user accounts deleted if the request user ID is valid and matches the ID of the document being accessed.
+  - Firestore access rules add an additonal layer of data protection. Invoices can only be read and manipulated and user accounts deleted if the request user ID is valid and matches the ID for the collection of documents being accessed.
 
 - Functions
   - On new user creation, a cloud function is triggered to populate the new user's invoice list with mock data.
+  - On user deletion, another function is triggered that deletes all user data (user document and any associated invoices).
 
 ## Optimizations
 
 One thing I've learned is to always look for opportunities for improvement (within reason). I'm currently researching how to make authenticated content and static generation work. I've found that I can provide a statically generated loading state or skeleton when a page first loads, then hydrate the client with authenticated data. A user will at least see a loading state instead of a blank screen. It's not really necessary for this app, but it's a refactor that I'd like to implement because it seems like a great approach and the knowledge gained will be valuable.
 
-One thing I thought of trying to improve is the mobile Google Lighthouse score. The app feels very fast, but the mobile score says otherwise. The main change between the scores was moving from static site generation and no authentication, to client side rendering with authentication. Lighthouse artifically throttles both the network connection and CPU power when testing in mobile mode, so I'm not spending a lot of time trying to squeeze out a few points. Here is a comparison SSG/no auth to CSR/with auth (desktop scores were surprisingly not affected at all):
+One thing I thought of trying to improve is the mobile Google Lighthouse score. The app feels very fast, but the mobile score says otherwise. The main change between the scores was moving from static site generation and no authentication, to client side rendering with authentication. Lighthouse artifically throttles both the network connection and CPU power when testing in mobile mode, so I'm not spending a lot of time trying to squeeze out a few points.
 
-Before auth:
-![lighthouse-mainBranch-mobile-noAuth-SSG](https://user-images.githubusercontent.com/48425752/178687584-77b74cd2-1347-468b-9537-885fd42d29f0.png)
+Here is a snapshot of mobile testing the `/invoices` page with no authentication and SSG compared to authentication with CSR (desktop testing is not throttled in any way and were not affected):
 
-After auth:
-![lighthouse-mainBranch-mobile-auth-swr](https://user-images.githubusercontent.com/48425752/178687667-881553e1-e677-4d33-aa52-ca2bc1f68527.png)
+Before auth with static site generation:
+
+![lighthouse-mobile-ssg](https://user-images.githubusercontent.com/48425752/179636722-16e96308-4515-49de-89ac-e53fa1f4954a.png)
+
+After auth with client side rendering:
+
+![lighthouse-mobile-auth-csr](https://user-images.githubusercontent.com/48425752/179636732-4cfdec56-f101-47c7-8532-82139014c1a2.png)
 
 ## Lessons Learned:
 
-There are SO MANY WAYS to do the same thing (and also some very common, very reusable patterns). Organization is pretty important. Personally, I've come a long way from previous projects where everything was stuffed into a single `/src` folder.
+There are SO MANY WAYS to do the same thing (and also some very common, very reusable patterns). Organization is pretty important. Personally, I've come a long way from previous projects where everything was stuffed into a single `/src` folder. Taking advantage of a package like `react-firebase-hooks` to keep real time data updated instead of trying to reinvent my own custom fetching definitely made things easier, although I do know of use cases where your own implementation is best.
 
 There's always some new framework, new package, new hook to use. It can get a little overwhelming, and I know I spent a lot of time trying out a bunch of different things in this project (custom hooks, auth, SSG/SSR/CSR/ISR, tiny components, medium sized components, Next.js folder structure navigation, etc.). Overall, I'm happy with my end result.
 
 ## Shoutouts
 
-I really like content put out by [@leerob](https://github.com/leerob) and [Fireship](https://www.youtube.com/c/Fireship). Lee has put out of ton of Next.js content which made it easy for me to get started, and I got a massive headstart with Firebase with content from Jeff at Fireship. There was of course a ton more content on StackOverflow and the general internet, but I can't really list it all.
+I found myself referencing content by [@leerob](https://github.com/leerob) and [Fireship](https://www.youtube.com/c/Fireship) a lot. Lee has put out of ton of Next.js content which made it easy for me to get started, and I got a massive headstart with Firebase with content from Jeff at Fireship. There was of course a ton more content that I got bits of information from on StackOverflow and the general internet, but I can't really list it all.

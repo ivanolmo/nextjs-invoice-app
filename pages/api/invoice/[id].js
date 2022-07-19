@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import { auth, db } from '../../../lib/firebaseAdmin';
 import { addDays } from '../../../utils';
 
@@ -12,26 +10,6 @@ export default async function handler(req, res) {
   } = req;
 
   switch (method) {
-    // get single invoice
-    case 'GET':
-      try {
-        const { uid } = await auth.verifyIdToken(token);
-
-        const docRef = await db
-          .collection('users')
-          .doc(uid)
-          .collection('invoices')
-          .doc(id)
-          .get();
-
-        const invoice = docRef.data();
-
-        res.status(200).json({ invoice });
-      } catch (error) {
-        res.status(401).json({ message: 'Unauthorized' });
-      }
-      break;
-
     // delete invoice with the specified id
     case 'DELETE':
       try {
@@ -76,7 +54,7 @@ export default async function handler(req, res) {
 
         const { createdAt, paymentTerms, items } = body;
 
-        const formattedCreatedAt = new Date(createdAt).toISOString();
+        const formattedCreatedAt = new Date(createdAt);
 
         const paymentDue = addDays(formattedCreatedAt, +paymentTerms);
 
@@ -87,7 +65,6 @@ export default async function handler(req, res) {
 
         for (let item of items) {
           item.total = item.quantity * item.price;
-          item.id = nanoid(6);
         }
 
         const updatedInvoice = {
@@ -113,7 +90,7 @@ export default async function handler(req, res) {
       break;
 
     default:
-      res.setHeader('Allow', ['PATCH', 'PUT', 'DELETE']);
+      res.setHeader('Allow', ['DELETE', 'PATCH', 'PUT']);
       res.status(405).end(`Method ${method} not allowed`);
       break;
   }

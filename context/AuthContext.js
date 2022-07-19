@@ -12,7 +12,7 @@ import {
 } from 'firebase/auth';
 
 import { auth } from '../lib/firebase';
-import { createFirestoreUser, deleteFirestoreUser } from '../lib/db';
+import { createFirestoreUser } from '../lib/db';
 import { formatCapitalize } from '../utils';
 import { toast } from 'react-toastify';
 
@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
 
-  // listen for auth state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -107,12 +106,13 @@ export const AuthProvider = ({ children }) => {
     await signOut(auth);
   };
 
+  // delete user auth record. on success, triggers cloud function to delete...
+  // ...any user invoice docs, and finally deletes user doc
   const deleteAuthUser = async () => {
     try {
-      await deleteFirestoreUser(auth.currentUser.uid);
       await deleteUser(auth.currentUser);
     } catch (error) {
-      console.log(error);
+      throw new Error();
     }
   };
 

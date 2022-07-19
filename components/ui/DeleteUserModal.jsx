@@ -25,7 +25,7 @@ export default function DeleteUserModal(props) {
             containerClasses='bg-red-500 hover:bg-red-300 px-6'
             textClasses='text-white'
             buttonText='Delete'
-            onClick={() => props.handleDelete()}
+            onClick={() => props.handleDeleteUser()}
           />
         </div>
       </div>

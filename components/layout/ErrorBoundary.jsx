@@ -12,7 +12,7 @@ export default class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.log({ error, errorInfo });
+    return { error, errorInfo };
   }
 
   render() {
@@ -23,7 +23,9 @@ export default class ErrorBoundary extends React.Component {
             <h2>Oops, something went wrong!</h2>
             <button
               type='button'
-              onClick={() => this.setState({ hasError: false })}
+              onClick={() => {
+                this.setState({ hasError: false });
+              }}
               className='px-6 py-4 text-xl text-white rounded-md bg-violet-500'
             >
               Try again?

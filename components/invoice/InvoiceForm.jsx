@@ -1,11 +1,12 @@
 import { FieldArray, Form, Formik } from 'formik';
 import { DatePicker } from 'react-formik-ui';
+import { v4 as uuidv4 } from 'uuid';
 
 import Button from '../ui/Button';
 import DeleteIcon from '../ui/DeleteIcon';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
-import { classNames } from '../../utils';
+import { classNames, formatDate } from '../../utils';
 import { formValidationSchema } from '../../utils/validationSchemas';
 
 export default function InvoiceForm(props) {
@@ -247,6 +248,7 @@ export default function InvoiceForm(props) {
                       buttonText='+ Add New Item'
                       onClick={() =>
                         push({
+                          id: uuidv4(),
                           name: '',
                           quantity: '',
                           price: '',

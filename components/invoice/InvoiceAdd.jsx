@@ -13,6 +13,10 @@ export default function InvoiceAdd() {
 
   const { user } = useAuth();
 
+  const handleClose = () => {
+    setShowAddInvoiceForm(false);
+  };
+
   // this handles form submission based on a user saving a complete...
   // ...invoice or a draft invoice. a complete invoice goes through...
   // ...Formik/Yup form validation, and a draft invoice does not
@@ -41,13 +45,15 @@ export default function InvoiceAdd() {
           return Promise.reject('There was an error creating this invoice');
         }
 
-        toast.success(
-          `Invoice has been successfully ${
-            status === 'pending' ? 'created' : 'saved'
-          }!`
-        );
+        if (response.status < 300) {
+          toast.success(
+            `Invoice has been successfully ${
+              status === 'pending' ? 'created' : 'saved'
+            }!`
+          );
 
-        setShowAddInvoiceForm(false);
+          handleClose();
+        }
       })
       .catch((error) => toast.error(error));
   };
@@ -89,7 +95,7 @@ export default function InvoiceAdd() {
             containerClasses='bg-gray-200 hover:bg-indigo-100 dark:bg-violet-50 dark:hover:bg-slate-800 px-4'
             textClasses='text-indigo-400 dark:text-indigo-400 dark:hover:text-slate-400'
             buttonText='Discard'
-            onClick={() => setShowAddInvoiceForm(false)}
+            onClick={() => handleClose()}
           />
           <div className='flex gap-2'>
             <Button
