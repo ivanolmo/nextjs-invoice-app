@@ -25,7 +25,7 @@ export default function InvoiceList({ data, loading }) {
   return (
     <div className='row-start-1 col-start-1 p-6 pb-8 md:px-0 md:py-14 lg:py-20 md:w-[672px] lg:w-[730px]'>
       <UtilityHeader
-        invoiceCount={filteredInvoices.length}
+        invoiceCount={filteredInvoices && filteredInvoices.length}
         setFilters={setFilters}
         loading={loading}
       />

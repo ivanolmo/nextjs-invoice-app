@@ -23,7 +23,7 @@ export default function Invoices() {
       : null
   );
 
-  if (error) throw new Error('asdf');
+  if (error) throw new Error();
 
   return (
     <AuthCheck>
