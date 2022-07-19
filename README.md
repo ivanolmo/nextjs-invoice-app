@@ -6,6 +6,12 @@ Instead of using `localStorage`, I decided to go a step further to add Firebase 
 
 **View the live app hosted with Vercel:** [https://nextjs-invoice-app.vercel.app/](https://nextjs-invoice-app.vercel.app/)
 
+
+
+https://user-images.githubusercontent.com/48425752/179656639-c0ec896f-9cd7-4aed-a273-e05f3dbb9c43.mp4
+
+
+
 ## How it's made
 
 **Tech used:** React with Next.js, Tailwind CSS, and Firebase
