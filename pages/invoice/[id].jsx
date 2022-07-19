@@ -63,11 +63,17 @@ export default function InvoicePage() {
             `Invoice #${data.invoiceId} has been successfully deleted`
           );
 
+          console.log('1');
           handleCloseDeleteModal();
+          console.log('2');
           handleClose();
+          console.log('3');
         }
       })
-      .catch((error) => toast.error(error));
+      .catch((error) => {
+        console.log(error);
+        toast.error(error);
+      });
   };
 
   // handles invoice status update pending -> paid
