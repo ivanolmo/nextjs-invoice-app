@@ -6,11 +6,7 @@ Instead of using `localStorage`, I decided to go a step further to add Firebase 
 
 **View the live app hosted with Vercel:** [https://nextjs-invoice-app.vercel.app/](https://nextjs-invoice-app.vercel.app/)
 
-
-
 https://user-images.githubusercontent.com/48425752/179656639-c0ec896f-9cd7-4aed-a273-e05f3dbb9c43.mp4
-
-
 
 ## How it's made
 
@@ -66,7 +62,7 @@ After auth with client side rendering:
 
 ![lighthouse-mobile-auth-csr](https://user-images.githubusercontent.com/48425752/179636732-4cfdec56-f101-47c7-8532-82139014c1a2.png)
 
-## Lessons Learned:
+## Lessons Learned
 
 There are SO MANY WAYS to do the same thing (and also some very common, very reusable patterns). Organization is pretty important. Personally, I've come a long way from previous projects where everything was stuffed into a single `/src` folder. Taking advantage of a package like `react-firebase-hooks` to keep real time data updated instead of trying to reinvent my own custom fetching definitely made things easier, although I do know of use cases where your own implementation is best.
 
