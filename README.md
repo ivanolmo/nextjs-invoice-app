@@ -1,6 +1,6 @@
 # Full stack invoices app with React, Next.js, Tailwind CSS, and Firebase
 
-This app is a challenge on [Frontendmentor.io](https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl). The goal is to implement a fully functional app where a user has full CRUD control over a list of invoices.
+The goal of this project is to build a fully functional web app where a user has full CRUD control over a list of invoices. The idea and design file are from [Frontendmentor.io](https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl).
 
 Instead of using `localStorage`, I decided to go a step further to add Firebase Authentication, Firestore, and Functions to the project. A user has the ability to access their invoice data with any device.
 
